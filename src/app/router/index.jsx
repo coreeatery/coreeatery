@@ -4,11 +4,16 @@ import PublicLayout from '../../layouts/PublicLayout'
 import AdminLayout from '../../layouts/AdminLayout'
 import CashierLayout from '../../layouts/CashierLayout'
 
+import ProtectedRoute from '../../components/auth/ProtectedRoute'
+
 import HomePage from '../../pages/public/HomePage'
 import MenuPage from '../../pages/public/MenuPage'
 import MenuDetailPage from '../../pages/public/MenuDetailPage'
 import ReservationPage from '../../pages/public/ReservationPage'
 import GalleryPage from '../../pages/public/GalleryPage'
+
+import LoginPage from '../../pages/auth/LoginPage'
+import UnauthorizedPage from '../../pages/auth/UnauthorizedPage'
 
 import AdminDashboardPage from '../../pages/admin/AdminDashboardPage'
 import AdminHomepagePage from '../../pages/admin/AdminHomepagePage'
@@ -42,32 +47,52 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: '/admin',
-    element: <AdminLayout />,
+    path: '/login',
+    element: <LoginPage />,
+  },
+
+  {
+    path: '/unauthorized',
+    element: <UnauthorizedPage />,
+  },
+
+  {
+    element: <ProtectedRoute allowedRoles={['owner', 'admin', 'manager']} />,
     children: [
-      { index: true, element: <AdminDashboardPage /> },
-      { path: 'homepage', element: <AdminHomepagePage /> },
-      { path: 'menu', element: <AdminMenuPage /> },
-      { path: 'reservasi', element: <AdminReservationPage /> },
-      { path: 'galeri', element: <AdminGalleryPage /> },
-      { path: 'promo', element: <AdminPromoPage /> },
-      { path: 'settings', element: <AdminSettingsPage /> },
+      {
+        path: '/admin',
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <AdminDashboardPage /> },
+          { path: 'homepage', element: <AdminHomepagePage /> },
+          { path: 'menu', element: <AdminMenuPage /> },
+          { path: 'reservasi', element: <AdminReservationPage /> },
+          { path: 'galeri', element: <AdminGalleryPage /> },
+          { path: 'promo', element: <AdminPromoPage /> },
+          { path: 'settings', element: <AdminSettingsPage /> },
+        ],
+      },
     ],
   },
 
   {
-    path: '/cashier',
-    element: <CashierLayout />,
+    element: <ProtectedRoute allowedRoles={['owner', 'admin', 'manager', 'cashier']} />,
     children: [
-      { index: true, element: <CashierDashboardPage /> },
-      { path: 'orders', element: <CashierOrdersPage /> },
-      { path: 'orders/new', element: <NewOrderPage /> },
-      { path: 'orders/:id', element: <OrderDetailPage /> },
-      { path: 'payments', element: <CashierPaymentsPage /> },
-      { path: 'transactions', element: <CashierTransactionsPage /> },
-      { path: 'register', element: <CashierRegisterPage /> },
-      { path: 'reports', element: <CashierReportsPage /> },
-      { path: 'settings', element: <CashierSettingsPage /> },
+      {
+        path: '/cashier',
+        element: <CashierLayout />,
+        children: [
+          { index: true, element: <CashierDashboardPage /> },
+          { path: 'orders', element: <CashierOrdersPage /> },
+          { path: 'orders/new', element: <NewOrderPage /> },
+          { path: 'orders/:id', element: <OrderDetailPage /> },
+          { path: 'payments', element: <CashierPaymentsPage /> },
+          { path: 'transactions', element: <CashierTransactionsPage /> },
+          { path: 'register', element: <CashierRegisterPage /> },
+          { path: 'reports', element: <CashierReportsPage /> },
+          { path: 'settings', element: <CashierSettingsPage /> },
+        ],
+      },
     ],
   },
 ])
