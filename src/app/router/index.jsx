@@ -22,6 +22,7 @@ import AdminReservationPage from '../../pages/admin/AdminReservationPage'
 import AdminGalleryPage from '../../pages/admin/AdminGalleryPage'
 import AdminPromoPage from '../../pages/admin/AdminPromoPage'
 import AdminSettingsPage from '../../pages/admin/AdminSettingsPage'
+import { adminDashboardLoader } from '../../features/admin/dashboard'
 
 import CashierDashboardPage from '../../pages/cashier/CashierDashboardPage'
 import CashierOrdersPage from '../../pages/cashier/CashierOrdersPage'
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
-          { index: true, element: <AdminDashboardPage /> },
+          { index: true, element: <AdminDashboardPage />, loader: adminDashboardLoader },
           { path: 'homepage', element: <AdminHomepagePage /> },
           { path: 'menu', element: <AdminMenuPage /> },
           { path: 'reservasi', element: <AdminReservationPage /> },
