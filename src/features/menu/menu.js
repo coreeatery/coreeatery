@@ -9,7 +9,6 @@ export async function getMenuCategories() {
     .order('sort_order', { ascending: true })
 
   if (error) throw error
-
   return data ?? []
 }
 
@@ -39,14 +38,11 @@ export async function getMenuItems() {
     .order('sort_order', { ascending: true })
 
   if (error) throw error
-
   return data ?? []
 }
 
 export async function createMenuCategory(payload) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { data, error } = await supabase
     .from('menu_categories')
@@ -55,14 +51,11 @@ export async function createMenuCategory(payload) {
     .single()
 
   if (error) throw error
-
   return data
 }
 
 export async function updateMenuCategory(id, payload) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { data, error } = await supabase
     .from('menu_categories')
@@ -72,14 +65,11 @@ export async function updateMenuCategory(id, payload) {
     .single()
 
   if (error) throw error
-
   return data
 }
 
 export async function deleteMenuCategory(id) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { error } = await supabase
     .from('menu_categories')
@@ -90,9 +80,7 @@ export async function deleteMenuCategory(id) {
 }
 
 export async function createMenuItem(payload) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { data, error } = await supabase
     .from('menu_items')
@@ -101,14 +89,11 @@ export async function createMenuItem(payload) {
     .single()
 
   if (error) throw error
-
   return data
 }
 
 export async function updateMenuItem(id, payload) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { data, error } = await supabase
     .from('menu_items')
@@ -118,14 +103,11 @@ export async function updateMenuItem(id, payload) {
     .single()
 
   if (error) throw error
-
   return data
 }
 
 export async function deleteMenuItem(id) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { error } = await supabase
     .from('menu_items')
@@ -136,9 +118,7 @@ export async function deleteMenuItem(id) {
 }
 
 export async function createMenuVariant(payload) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { data, error } = await supabase
     .from('menu_variants')
@@ -147,14 +127,11 @@ export async function createMenuVariant(payload) {
     .single()
 
   if (error) throw error
-
   return data
 }
 
 export async function updateMenuVariant(id, payload) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { data, error } = await supabase
     .from('menu_variants')
@@ -164,14 +141,11 @@ export async function updateMenuVariant(id, payload) {
     .single()
 
   if (error) throw error
-
   return data
 }
 
 export async function deleteMenuVariant(id) {
-  if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
-  }
+  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
 
   const { error } = await supabase
     .from('menu_variants')
