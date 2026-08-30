@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../app/providers/useAuth'
 
 export default function ProtectedRoute({ allowedRoles }) {
-  const { user, loading } = useAuth()
+  const { user, profile, loading } = useAuth()
   const location = useLocation()
 
   if (loading) {
@@ -23,9 +23,14 @@ export default function ProtectedRoute({ allowedRoles }) {
     )
   }
 
-  const role = user.user_metadata?.role
+  if (!profile || !profile.is_active) {
+    return <Navigate to="/unauthorized" replace />
+  }
 
-  if (allowedRoles?.length && !allowedRoles.includes(role)) {
+  if (
+    allowedRoles?.length &&
+    !allowedRoles.includes(profile.role)
+  ) {
     return <Navigate to="/unauthorized" replace />
   }
 
