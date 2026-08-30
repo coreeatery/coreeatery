@@ -20,19 +20,35 @@ function ensureSupabase() {
   }
 }
 
+function generatePaymentCode() {
+  const now = new Date()
+  const date = now
+    .toISOString()
+    .slice(0, 10)
+    .replaceAll('-', '')
+
+  const time = now
+    .toTimeString()
+    .slice(0, 8)
+    .replaceAll(':', '')
+
+  const random = Math.floor(1000 + Math.random() * 9000)
+
+  return `PAY-${date}-${time}-${random}`
+}
+
 export async function getPayments({
   orderId = '',
   status = '',
   method = '',
   date = '',
-  search = '',
 } = {}) {
   ensureSupabase()
 
   let query = supabase
     .from('payments')
     .select(PAYMENT_SELECT)
-    .order('paid_at', { ascending: false })
+    .order('created_at', { ascending: false })
 
   if (orderId) {
     query = query.eq('order_id', orderId)
@@ -48,22 +64,15 @@ export async function getPayments({
 
   if (date) {
     query = query
-      .gte('paid_at', `${date}T00:00:00`)
-      .lt('paid_at', `${date}T23:59:59.999`)
-  }
-
-  if (search.trim()) {
-    const term = search.trim()
-
-    query = query.ilike(
-      'payment_code',
-      `%${term}%`,
-    )
+      .gte('created_at', `${date}T00:00:00`)
+      .lt('created_at', `${date}T23:59:59.999`)
   }
 
   const { data, error } = await query
 
-  if (error) throw error
+  if (error) {
+    throw error
+  }
 
   return data ?? []
 }
@@ -77,27 +86,101 @@ export async function getPaymentById(id) {
     .eq('id', id)
     .single()
 
-  if (error) throw error
+  if (error) {
+    throw error
+  }
 
   return data
 }
 
-export async function getOrderPayments(orderId) {
+export async function getPaymentsByOrderId(orderId) {
   return getPayments({ orderId })
 }
 
 export async function createPayment(payload) {
   ensureSupabase()
 
-  const { data, error } = await supabase
+  const amount = Number(payload.amount) || 0
+
+  if (amount <= 0) {
+    throw new Error('Nominal pembayaran harus lebih dari 0.')
+  }
+
+  if (!payload.order_id) {
+    throw new Error('Order wajib dipilih.')
+  }
+
+  if (!payload.method) {
+    throw new Error('Metode pembayaran wajib dipilih.')
+  }
+
+  const { data: order, error: orderError } = await supabase
+    .from('orders')
+    .select(`
+      id,
+      total_amount,
+      payment_status,
+      status
+    `)
+    .eq('id', payload.order_id)
+    .single()
+
+  if (orderError) {
+    throw orderError
+  }
+
+  if (order.payment_status === 'paid') {
+    throw new Error('Order ini sudah dibayar.')
+  }
+
+  const paymentPayload = {
+    payment_code:
+      payload.payment_code || generatePaymentCode(),
+    order_id: payload.order_id,
+    amount,
+    method: payload.method,
+    status: payload.status || 'paid',
+    reference_number: payload.reference_number || null,
+    paid_at: payload.paid_at || new Date().toISOString(),
+    received_by: payload.received_by || null,
+    notes: payload.notes || null,
+  }
+
+  const { data: payment, error: paymentError } = await supabase
     .from('payments')
-    .insert(payload)
+    .insert(paymentPayload)
     .select(PAYMENT_SELECT)
     .single()
 
-  if (error) throw error
+  if (paymentError) {
+    throw paymentError
+  }
 
-  return data
+  const { data: updatedOrder, error: orderUpdateError } =
+    await supabase
+      .from('orders')
+      .update({
+        payment_status: 'paid',
+        status: 'completed',
+      })
+      .eq('id', order.id)
+      .select(`
+        id,
+        order_number,
+        payment_status,
+        status,
+        total_amount
+      `)
+      .single()
+
+  if (orderUpdateError) {
+    throw orderUpdateError
+  }
+
+  return {
+    payment,
+    order: updatedOrder,
+  }
 }
 
 export async function updatePayment(id, payload) {
@@ -110,7 +193,9 @@ export async function updatePayment(id, payload) {
     .select(PAYMENT_SELECT)
     .single()
 
-  if (error) throw error
+  if (error) {
+    throw error
+  }
 
   return data
 }
@@ -121,75 +206,18 @@ export async function cancelPayment(id) {
   })
 }
 
-export function calculateChange(totalAmount, receivedAmount) {
-  const total = Math.max(
-    0,
-    Number(totalAmount) || 0,
-  )
+export function calculatePaymentChange({
+  totalAmount = 0,
+  paidAmount = 0,
+} = {}) {
+  const total = Math.max(0, Number(totalAmount) || 0)
+  const paid = Math.max(0, Number(paidAmount) || 0)
 
-  const received = Math.max(
-    0,
-    Number(receivedAmount) || 0,
-  )
-
-  return Math.max(0, received - total)
-}
-
-export function isPaymentEnough(
-  totalAmount,
-  receivedAmount,
-) {
-  const total = Math.max(
-    0,
-    Number(totalAmount) || 0,
-  )
-
-  const received = Math.max(
-    0,
-    Number(receivedAmount) || 0,
-  )
-
-  return received >= total
-}
-
-export async function markOrderPaid(
-  orderId,
-  paymentStatus = 'paid',
-) {
-  ensureSupabase()
-
-  const { data, error } = await supabase
-    .from('orders')
-    .update({
-      payment_status: paymentStatus,
-    })
-    .eq('id', orderId)
-    .select('*')
-    .single()
-
-  if (error) throw error
-
-  return data
-}
-
-export async function createPaymentAndMarkOrderPaid({
-  payment,
-  orderId,
-}) {
-  if (!payment) {
-    throw new Error('Data pembayaran tidak tersedia.')
+  return {
+    totalAmount: total,
+    paidAmount: paid,
+    remainingAmount: Math.max(0, total - paid),
+    changeAmount: Math.max(0, paid - total),
+    isEnough: paid >= total,
   }
-
-  if (!orderId) {
-    throw new Error('Order ID wajib diisi.')
-  }
-
-  const createdPayment = await createPayment({
-    ...payment,
-    order_id: orderId,
-  })
-
-  await markOrderPaid(orderId, 'paid')
-
-  return createdPayment
 }
