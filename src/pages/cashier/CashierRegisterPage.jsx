@@ -55,7 +55,7 @@ export default function CashierRegisterPage() {
         const { data, error: shiftError } = await supabase
           .from('cash_register_shifts')
           .select('*')
-          .eq('cashier_id', userId)
+          .eq('opened_by', userId)
           .order('opened_at', { ascending: false })
           .limit(1)
           .maybeSingle()
@@ -125,7 +125,7 @@ export default function CashierRegisterPage() {
         await supabase
           .from('cash_register_shifts')
           .select('id')
-          .eq('cashier_id', userId)
+          .eq('opened_by', userId)
           .eq('status', 'open')
           .maybeSingle()
 
@@ -142,7 +142,7 @@ export default function CashierRegisterPage() {
       const { data, error } = await supabase
         .from('cash_register_shifts')
         .insert({
-          cashier_id: userId,
+          opened_by: userId,
           opening_cash: amount,
           status: 'open',
         })
@@ -193,7 +193,7 @@ export default function CashierRegisterPage() {
       const { data, error } = await supabase
         .from('cash_register_shifts')
         .update({
-          closing_cash: amount,
+          actual_cash: amount,
           closed_at: new Date().toISOString(),
           status: 'closed',
         })
@@ -410,9 +410,9 @@ export default function CashierRegisterPage() {
               </p>
 
               <p className="mt-1 font-bold">
-                {shift.closing_cash == null
+                {shift.actual_cash == null
                   ? '-'
-                  : money(shift.closing_cash)}
+                  : money(shift.actual_cash)}
               </p>
             </div>
 

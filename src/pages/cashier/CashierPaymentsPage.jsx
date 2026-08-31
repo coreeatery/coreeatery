@@ -32,7 +32,7 @@ const PAYMENT_METHODS = [
     label: 'QRIS',
   },
   {
-    value: 'debit',
+    value: 'debit_card',
     label: 'Debit',
   },
   {
@@ -44,8 +44,8 @@ const PAYMENT_METHODS = [
     label: 'Transfer Bank',
   },
   {
-    value: 'e_wallet',
-    label: 'E-Wallet',
+    value: 'other',
+    label: 'Lainnya',
   },
 ]
 
@@ -146,7 +146,7 @@ export default function CashierPaymentsPage() {
 
       const result = await createPayment({
         order_id: order.id,
-        amount: totalAmount,
+        amount: paid,
         method,
         reference_number:
           referenceNumber.trim() || null,

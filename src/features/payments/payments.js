@@ -4,6 +4,7 @@ const PAYMENT_SELECT = `
   id,
   payment_code,
   order_id,
+  shift_id,
   amount,
   method,
   status,
@@ -20,8 +21,25 @@ function ensureSupabase() {
   }
 }
 
+async function getCurrentUser() {
+  ensureSupabase()
+
+  const { data, error } = await supabase.auth.getUser()
+
+  if (error) {
+    throw error
+  }
+
+  if (!data?.user?.id) {
+    throw new Error('User kasir belum login.')
+  }
+
+  return data.user
+}
+
 function generatePaymentCode() {
   const now = new Date()
+
   const date = now
     .toISOString()
     .slice(0, 10)
@@ -42,6 +60,7 @@ export async function getPayments({
   status = '',
   method = '',
   date = '',
+  shiftId = '',
 } = {}) {
   ensureSupabase()
 
@@ -60,6 +79,10 @@ export async function getPayments({
 
   if (method) {
     query = query.eq('method', method)
+  }
+
+  if (shiftId) {
+    query = query.eq('shift_id', shiftId)
   }
 
   if (date) {
@@ -97,6 +120,25 @@ export async function getPaymentsByOrderId(orderId) {
   return getPayments({ orderId })
 }
 
+export async function getCurrentOpenShift() {
+  const user = await getCurrentUser()
+
+  const { data, error } = await supabase
+    .from('cash_register_shifts')
+    .select('*')
+    .eq('opened_by', user.id)
+    .eq('status', 'open')
+    .order('opened_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (error) {
+    throw error
+  }
+
+  return data
+}
+
 export async function createPayment(payload) {
   ensureSupabase()
 
@@ -114,10 +156,13 @@ export async function createPayment(payload) {
     throw new Error('Metode pembayaran wajib dipilih.')
   }
 
+  const user = await getCurrentUser()
+
   const { data: order, error: orderError } = await supabase
     .from('orders')
     .select(`
       id,
+      order_number,
       total_amount,
       payment_status,
       status
@@ -133,24 +178,41 @@ export async function createPayment(payload) {
     throw new Error('Order ini sudah dibayar.')
   }
 
+  if (amount < Number(order.total_amount)) {
+    throw new Error('Nominal pembayaran belum mencukupi total order.')
+  }
+
+  const shift = await getCurrentOpenShift()
+
+  if (!shift) {
+    throw new Error(
+      'Tidak ada shift kasir yang terbuka. Buka shift terlebih dahulu.',
+    )
+  }
+
   const paymentPayload = {
     payment_code:
       payload.payment_code || generatePaymentCode(),
-    order_id: payload.order_id,
+    order_id: order.id,
+    shift_id: shift.id,
     amount,
     method: payload.method,
     status: payload.status || 'paid',
-    reference_number: payload.reference_number || null,
-    paid_at: payload.paid_at || new Date().toISOString(),
-    received_by: payload.received_by || null,
+    reference_number:
+      payload.reference_number || null,
+    paid_at:
+      payload.paid_at || new Date().toISOString(),
+    received_by:
+      payload.received_by || user.id,
     notes: payload.notes || null,
   }
 
-  const { data: payment, error: paymentError } = await supabase
-    .from('payments')
-    .insert(paymentPayload)
-    .select(PAYMENT_SELECT)
-    .single()
+  const { data: payment, error: paymentError } =
+    await supabase
+      .from('payments')
+      .insert(paymentPayload)
+      .select(PAYMENT_SELECT)
+      .single()
 
   if (paymentError) {
     throw paymentError
@@ -177,9 +239,40 @@ export async function createPayment(payload) {
     throw orderUpdateError
   }
 
+  let movement = null
+
+  if (payload.method === 'cash') {
+    const { data: movementData, error: movementError } = await supabase
+      .from('cash_register_movements')
+      .insert({
+        shift_id: shift.id,
+        movement_type: 'cash_in',
+        amount,
+        payment_method: 'cash',
+        reference_number:
+          payment.reference_number || payment.payment_code,
+        description: `Pembayaran order ${order.order_number}`,
+        created_by: user.id,
+      })
+      .select('*')
+      .single()
+
+    if (movementError) {
+      throw movementError
+    }
+
+    movement = movementData
+  }
+
   return {
     payment,
     order: updatedOrder,
+    shift,
+    movement,
+    changeAmount: Math.max(
+      0,
+      amount - Number(order.total_amount),
+    ),
   }
 }
 
@@ -210,8 +303,15 @@ export function calculatePaymentChange({
   totalAmount = 0,
   paidAmount = 0,
 } = {}) {
-  const total = Math.max(0, Number(totalAmount) || 0)
-  const paid = Math.max(0, Number(paidAmount) || 0)
+  const total = Math.max(
+    0,
+    Number(totalAmount) || 0,
+  )
+
+  const paid = Math.max(
+    0,
+    Number(paidAmount) || 0,
+  )
 
   return {
     totalAmount: total,

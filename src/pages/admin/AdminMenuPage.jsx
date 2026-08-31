@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   createMenuItem,
   deleteMenuItem,
@@ -6,6 +6,7 @@ import {
   getMenuItems,
   updateMenuItem,
 } from '../../features/menu/menu'
+import { uploadCmsImage } from '../../features/cms/media'
 
 const EMPTY_FORM = {
   category_id: '',
@@ -51,6 +52,8 @@ export default function AdminMenuPage() {
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [formOpen, setFormOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const imageInputRef = useRef(null)
   const [form, setForm] = useState(EMPTY_FORM)
 
   const loadData = useCallback(async () => {
@@ -133,6 +136,25 @@ export default function AdminMenuPage() {
       ...current,
       [field]: value,
     }))
+  }
+
+  async function handleImageUpload(event) {
+    const file = event.target.files?.[0]
+
+    if (!file) return
+
+    setUploadingImage(true)
+    setError('')
+
+    try {
+      const result = await uploadCmsImage(file, 'menu')
+      updateField('image_url', result.publicUrl)
+    } catch (err) {
+      setError(err.message || 'Gagal mengupload foto menu.')
+    } finally {
+      setUploadingImage(false)
+      event.target.value = ''
+    }
   }
 
   function handleNameChange(value) {

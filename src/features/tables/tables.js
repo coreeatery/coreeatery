@@ -18,7 +18,6 @@ function ensureSupabase() {
 
 export async function getTables({
   activeOnly = true,
-  search = '',
 } = {}) {
   ensureSupabase()
 
@@ -29,10 +28,6 @@ export async function getTables({
 
   if (activeOnly) {
     query = query.eq('is_active', true)
-  }
-
-  if (search.trim()) {
-    query = query.ilike('table_number', `%${search.trim()}%`)
   }
 
   const { data, error } = await query
@@ -89,8 +84,4 @@ export async function setTableActive(id, isActive) {
   return updateTable(id, {
     is_active: isActive,
   })
-}
-
-export async function deleteTable(id) {
-  return setTableActive(id, false)
 }
