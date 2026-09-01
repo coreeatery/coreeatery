@@ -421,18 +421,62 @@ export default function AdminMenuPage() {
               />
             </label>
 
-            <label className="space-y-2">
-              <span className="text-sm font-medium">URL Foto</span>
+            <div className="space-y-3 md:col-span-2">
+              <span className="text-sm font-medium">Foto Menu</span>
 
-              <input
-                value={form.image_url}
-                onChange={(event) =>
-                  updateField('image_url', event.target.value)
-                }
-                className="w-full rounded-xl border border-neutral-200 px-4 py-3"
-                placeholder="Untuk sementara"
-              />
-            </label>
+              <div className="flex flex-col gap-4 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-4 sm:flex-row sm:items-center">
+                <div className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-neutral-200">
+                  {form.image_url ? (
+                    <img
+                      src={form.image_url}
+                      alt={form.name_id || 'Foto menu'}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-xs text-neutral-500">
+                      No Image
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                  <input
+                    ref={imageInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => imageInputRef.current?.click()}
+                    disabled={uploadingImage}
+                    className="w-fit rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {uploadingImage
+                      ? 'Mengupload...'
+                      : form.image_url
+                        ? 'Ganti Foto'
+                        : '📷 Pilih Foto dari Galeri'}
+                  </button>
+
+                  {form.image_url && (
+                    <button
+                      type="button"
+                      onClick={() => updateField('image_url', '')}
+                      className="w-fit rounded-xl border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
+                    >
+                      Hapus Foto
+                    </button>
+                  )}
+
+                  <p className="text-xs text-neutral-500">
+                    JPG, PNG, WEBP • Maksimal 5 MB
+                  </p>
+                </div>
+              </div>
+            </div>
 
             <label className="space-y-2">
               <span className="text-sm font-medium">Status</span>
