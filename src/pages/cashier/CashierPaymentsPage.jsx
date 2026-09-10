@@ -7,7 +7,7 @@ import {
 } from '../../features/payments/payments'
 
 const money = (value) =>
-  new Intl.NumberFormat('id-ID', {
+  new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -16,7 +16,7 @@ const money = (value) =>
 const dateTime = (value) => {
   if (!value) return '-'
 
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat(getLocale(language), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))

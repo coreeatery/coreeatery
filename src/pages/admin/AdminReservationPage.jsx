@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
+import { getLanguageFromI18n } from '../../lib/i18n/locale'
 import {
   getReservations,
   getReservationSummary,
@@ -22,7 +24,7 @@ const STATUS_CLASSES = {
 function formatDate(date) {
   if (!date) return '-'
 
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat(getLocale(language), {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
@@ -34,19 +36,30 @@ function formatTime(time) {
   return time.slice(0, 5)
 }
 
-function StatusBadge({ status }) {
+function StatusBadge({ status, t }) {
+  const statusKey = {
+    pending: 'pending',
+    confirmed: 'confirmed',
+    seated: 'seated',
+    completed: 'completed',
+    cancelled: 'cancelled',
+    no_show: 'noShow',
+  }[status]
+
   return (
     <span
       className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
         STATUS_CLASSES[status] ?? 'bg-neutral-100 text-neutral-700'
       }`}
     >
-      {getReservationStatusLabel(status)}
+      {statusKey ? t(`admin.${statusKey}`) : getReservationStatusLabel(status)}
     </span>
   )
 }
 
 export default function AdminReservationPage() {
+  const { t, i18n } = useTranslation()
+  const language = getLanguageFromI18n(i18n)
   const [reservations, setReservations] = useState([])
   const [summary, setSummary] = useState({
     total: 0,
@@ -94,7 +107,7 @@ export default function AdminReservationPage() {
         if (cancelled) return
 
         console.error(err)
-        setError(err.message || 'Gagal mengambil data reservasi.')
+        setError(err.message || t('admin.loadReservationError'))
       } finally {
         if (!cancelled) {
           setLoading(false)
@@ -130,7 +143,7 @@ export default function AdminReservationPage() {
       setSummary(nextSummary)
     } catch (err) {
       console.error(err)
-      setError(err.message || 'Gagal mengubah status reservasi.')
+      setError(err.message || t('admin.updateReservationStatusError'))
     } finally {
       setUpdatingId(null)
     }
@@ -138,7 +151,7 @@ export default function AdminReservationPage() {
 
   async function handleDelete(reservation) {
     const confirmed = window.confirm(
-      `Hapus reservasi ${reservation.reservation_code} untuk ${reservation.customer_name}?`,
+      t('admin.deleteReservationConfirm', { code: reservation.reservation_code, name: reservation.customer_name }),
     )
 
     if (!confirmed) return
@@ -161,33 +174,33 @@ export default function AdminReservationPage() {
       setSummary(nextSummary)
     } catch (err) {
       console.error(err)
-      setError(err.message || 'Gagal menghapus reservasi.')
+      setError(err.message || t('admin.deleteReservationError'))
     } finally {
       setDeletingId(null)
     }
   }
 
   const summaryCards = [
-    ['Total', summary.total],
-    ['Pending', summary.pending],
-    ['Confirmed', summary.confirmed],
-    ['Seated', summary.seated ?? 0],
-    ['Completed', summary.completed],
-    ['Cancelled', summary.cancelled],
-    ['No Show', summary.noShow],
+    [t('common.total'), summary.total],
+    [t('admin.pending'), summary.pending],
+    [t('admin.confirmed'), summary.confirmed],
+    [t('admin.seated'), summary.seated ?? 0],
+    [t('admin.completed'), summary.completed],
+    [t('admin.cancelled'), summary.cancelled],
+    [t('admin.noShow'), summary.noShow],
   ]
 
   return (
     <main className="space-y-6 p-6">
       <header>
         <p className="text-sm font-medium text-neutral-500">
-          CMS RESTORAN
+          {t('common.appName')}
         </p>
         <h1 className="mt-1 text-3xl font-bold tracking-tight">
           Reservasi
         </h1>
         <p className="mt-2 text-sm text-neutral-500">
-          Kelola reservasi pelanggan dan status meja dari dashboard.
+          {t('admin.reservationManagement')}
         </p>
       </header>
 
@@ -207,20 +220,20 @@ export default function AdminReservationPage() {
         <div className="grid gap-3 md:grid-cols-3">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium">
-              Cari reservasi
+              {t('admin.searchReservation')}
             </span>
             <input
               type="search"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Kode, nama, atau nomor HP"
+              placeholder={t('admin.reservationSearchPlaceholder')}
               className="w-full rounded-xl border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-neutral-700"
             />
           </label>
 
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium">
-              Tanggal
+              {t('common.date')}
             </span>
             <input
               type="date"
@@ -232,17 +245,17 @@ export default function AdminReservationPage() {
 
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium">
-              Status
+              {t('common.status')}
             </span>
             <select
               value={status}
               onChange={(event) => setStatus(event.target.value)}
               className="w-full rounded-xl border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-neutral-700"
             >
-              <option value="">Semua status</option>
+              <option value="">{t('admin.allStatuses')}</option>
               {RESERVATION_STATUS_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {option.label}
+                  {t(`admin.${option.value === 'no_show' ? 'noShow' : option.value}`)}
                 </option>
               ))}
             </select>
@@ -259,9 +272,9 @@ export default function AdminReservationPage() {
       <section className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-4">
           <div>
-            <h2 className="font-semibold">Daftar Reservasi</h2>
+            <h2 className="font-semibold">{t('admin.reservationList')}</h2>
             <p className="mt-1 text-xs text-neutral-500">
-              {reservations.length} reservasi ditemukan
+              {t('admin.reservationsFound', { count: reservations.length })}
             </p>
           </div>
 
@@ -271,19 +284,19 @@ export default function AdminReservationPage() {
             disabled={loading}
             className="rounded-xl border border-neutral-300 px-3 py-2 text-sm font-medium hover:bg-neutral-50 disabled:opacity-50"
           >
-            {loading ? 'Memuat...' : 'Refresh'}
+            {loading ? t('common.loading') : t('admin.refresh')}
           </button>
         </div>
 
         {loading ? (
           <div className="p-10 text-center text-sm text-neutral-500">
-            Memuat data reservasi...
+            {t('admin.loadingReservations')}
           </div>
         ) : reservations.length === 0 ? (
           <div className="p-10 text-center">
-            <p className="font-medium">Belum ada reservasi</p>
+            <p className="font-medium">{t('admin.noReservations')}</p>
             <p className="mt-1 text-sm text-neutral-500">
-              Coba ubah filter pencarian atau tanggal.
+              {t('admin.changeReservationFilter')}
             </p>
           </div>
         ) : (
@@ -291,13 +304,13 @@ export default function AdminReservationPage() {
             <table className="min-w-[1000px] w-full text-left text-sm">
               <thead className="border-b border-neutral-200 bg-neutral-50 text-xs uppercase tracking-wide text-neutral-500">
                 <tr>
-                  <th className="px-5 py-3">Reservasi</th>
-                  <th className="px-5 py-3">Pelanggan</th>
-                  <th className="px-5 py-3">Tanggal</th>
-                  <th className="px-5 py-3">Tamu</th>
-                  <th className="px-5 py-3">Meja</th>
-                  <th className="px-5 py-3">Status</th>
-                  <th className="px-5 py-3">Aksi</th>
+                  <th className="px-5 py-3">{t('admin.reservation')}</th>
+                  <th className="px-5 py-3">{t('admin.customer')}</th>
+                  <th className="px-5 py-3">{t('common.date')}</th>
+                  <th className="px-5 py-3">{t('admin.guests')}</th>
+                  <th className="px-5 py-3">{t('admin.table')}</th>
+                  <th className="px-5 py-3">{t('common.status')}</th>
+                  <th className="px-5 py-3">{t('admin.action')}</th>
                 </tr>
               </thead>
 
@@ -323,21 +336,21 @@ export default function AdminReservationPage() {
                     </td>
 
                     <td className="px-5 py-4">
-                      {formatDate(reservation.reservation_date)}
+                      {formatDate(reservation.reservation_date, language)}
                     </td>
 
                     <td className="px-5 py-4">
-                      {reservation.guest_count} orang
+                      {reservation.guest_count} {t('admin.person')}
                     </td>
 
                     <td className="px-5 py-4">
                       {reservation.restaurant_tables?.table_number
-                        ? `Meja ${reservation.restaurant_tables.table_number}`
+                        ? t('admin.tableNumber', { number: reservation.restaurant_tables.table_number })
                         : '-'}
                     </td>
 
                     <td className="px-5 py-4">
-                      <StatusBadge status={reservation.status} />
+                      <StatusBadge status={reservation.status} t={t} />
                     </td>
 
                     <td className="px-5 py-4">
@@ -368,7 +381,7 @@ export default function AdminReservationPage() {
                               key={option.value}
                               value={option.value}
                             >
-                              {option.label}
+                              {t(`admin.${option.value === 'no_show' ? 'noShow' : option.value}`)}
                             </option>
                           ))}
                         </select>
@@ -378,9 +391,7 @@ export default function AdminReservationPage() {
                           disabled={deletingId === reservation.id}
                           onClick={() => handleDelete(reservation)}
                           className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
-                        >
-                          Hapus
-                        </button>
+                        >{t('common.delete')}</button>
                       </div>
                     </td>
                   </tr>
@@ -404,7 +415,7 @@ export default function AdminReservationPage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-                  Detail Reservasi
+                  {t('admin.reservationDetail')}
                 </p>
                 <h2 className="mt-1 text-2xl font-bold">
                   {selectedReservation.reservation_code}
@@ -415,26 +426,24 @@ export default function AdminReservationPage() {
                 type="button"
                 onClick={() => setSelectedReservation(null)}
                 className="rounded-lg px-3 py-2 text-sm hover:bg-neutral-100"
-              >
-                Tutup
-              </button>
+              >{t('common.close')}</button>
             </div>
 
             <div className="mt-6 space-y-4 text-sm">
               <div className="flex items-center justify-between gap-4">
-                <span className="text-neutral-500">Status</span>
-                <StatusBadge status={selectedReservation.status} />
+                <span className="text-neutral-500">{t('common.status')}</span>
+                <StatusBadge status={selectedReservation.status} t={t} />
               </div>
 
               <div className="flex justify-between gap-4">
-                <span className="text-neutral-500">Nama</span>
+                <span className="text-neutral-500">{t('common.name')}</span>
                 <span className="font-medium">
                   {selectedReservation.customer_name}
                 </span>
               </div>
 
               <div className="flex justify-between gap-4">
-                <span className="text-neutral-500">Telepon</span>
+                <span className="text-neutral-500">{t('common.phone')}</span>
                 <span className="font-medium">
                   {selectedReservation.customer_phone}
                 </span>
@@ -450,23 +459,23 @@ export default function AdminReservationPage() {
               )}
 
               <div className="flex justify-between gap-4">
-                <span className="text-neutral-500">Tanggal</span>
+                <span className="text-neutral-500">{t('common.date')}</span>
                 <span className="font-medium">
-                  {formatDate(selectedReservation.reservation_date)}
+                  {formatDate(selectedReservation.reservation_date, language)}
                 </span>
               </div>
 
               <div className="flex justify-between gap-4">
-                <span className="text-neutral-500">Jam</span>
+                <span className="text-neutral-500">{t('common.time')}</span>
                 <span className="font-medium">
                   {formatTime(selectedReservation.reservation_time)}
                 </span>
               </div>
 
               <div className="flex justify-between gap-4">
-                <span className="text-neutral-500">Jumlah tamu</span>
+                <span className="text-neutral-500">{t('admin.guestCount')}</span>
                 <span className="font-medium">
-                  {selectedReservation.guest_count} orang
+                  {selectedReservation.guest_count} {t('admin.person')}
                 </span>
               </div>
 
@@ -474,14 +483,14 @@ export default function AdminReservationPage() {
                 <span className="text-neutral-500">Meja</span>
                 <span className="font-medium">
                   {selectedReservation.restaurant_tables?.table_number
-                    ? `Meja ${selectedReservation.restaurant_tables.table_number}`
-                    : 'Belum ditentukan'}
+                    ? t('admin.tableNumber', { number: selectedReservation.restaurant_tables.table_number })
+                    : t('admin.tableNotAssigned')}
                 </span>
               </div>
 
               {selectedReservation.occasion && (
                 <div className="flex justify-between gap-4">
-                  <span className="text-neutral-500">Acara</span>
+                  <span className="text-neutral-500">{t('admin.event')}</span>
                   <span className="font-medium">
                     {selectedReservation.occasion}
                   </span>
@@ -490,7 +499,7 @@ export default function AdminReservationPage() {
 
               {selectedReservation.notes && (
                 <div>
-                  <p className="text-neutral-500">Catatan</p>
+                  <p className="text-neutral-500">{t('admin.notes')}</p>
                   <p className="mt-1 rounded-xl bg-neutral-50 p-3">
                     {selectedReservation.notes}
                   </p>

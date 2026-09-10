@@ -1,9 +1,9 @@
-export function formatIDR(value) {
-  const amount = Number(value ?? 0)
+import { getLocale } from '../i18n/locale'
 
-  return new Intl.NumberFormat('id-ID', {
+export function formatCurrency(value, language = 'id') {
+  return new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
-  }).format(amount)
+  }).format(Number(value) || 0)
 }

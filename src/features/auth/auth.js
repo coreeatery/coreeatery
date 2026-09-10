@@ -2,7 +2,7 @@ import { supabase } from '../../lib/supabase/client'
 
 export async function signInWithPassword(email, password) {
   if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
+    throw new Error('SUPABASE_NOT_CONFIGURED')
   }
 
   const { data, error } = await supabase.auth.signInWithPassword({

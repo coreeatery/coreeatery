@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
@@ -21,7 +22,7 @@ import { useAuth } from '../../app/providers/useAuth'
 
 const links = [
   {
-    label: 'Dashboard',
+    label: t('cashier.dashboard'),
     to: '/cashier',
     icon: LayoutDashboard,
   },
@@ -56,13 +57,14 @@ const links = [
     icon: BarChart3,
   },
   {
-    label: 'Settings',
+    label: t('cashier.settings'),
     to: '/cashier/settings',
     icon: Settings,
   },
 ]
 
 export default function CashierSidebar() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { profile } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -117,7 +119,7 @@ export default function CashierSidebar() {
 
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-stone-900">
-              {profile?.full_name || 'Cashier'}
+              {profile?.full_name || t('cashier.cashier')}
             </p>
 
             <span className="mt-1 inline-flex rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-600">

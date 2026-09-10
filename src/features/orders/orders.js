@@ -42,7 +42,7 @@ const ORDER_DETAIL_SELECT = `
 
 function ensureSupabase() {
   if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
+    throw new Error('SUPABASE_NOT_CONFIGURED')
   }
 }
 
@@ -128,11 +128,11 @@ export async function updateOrderStatus(id, status) {
   ensureSupabase()
 
   if (!id) {
-    throw new Error('Order wajib dipilih.')
+    throw new Error('ORDER_REQUIRED')
   }
 
   if (!status) {
-    throw new Error('Status order wajib dipilih.')
+    throw new Error('ORDER_STATUS_REQUIRED')
   }
 
   const { data, error } = await supabase.rpc(
@@ -186,7 +186,7 @@ export async function saveOrderTotals(id) {
   ensureSupabase()
 
   if (!id) {
-    throw new Error('Order wajib dipilih.')
+    throw new Error('ORDER_REQUIRED')
   }
 
   const { data, error } = await supabase.rpc(

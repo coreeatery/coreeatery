@@ -17,7 +17,7 @@ const PAYMENT_SELECT = `
 
 function ensureSupabase() {
   if (!supabase) {
-    throw new Error('Supabase belum dikonfigurasi.')
+    throw new Error('SUPABASE_NOT_CONFIGURED')
   }
 }
 
@@ -31,7 +31,7 @@ async function getCurrentUser() {
   }
 
   if (!data?.user?.id) {
-    throw new Error('User kasir belum login.')
+    throw new Error('CASHIER_NOT_LOGGED_IN')
   }
 
   return data.user
@@ -145,15 +145,15 @@ export async function createPayment(payload) {
   const amount = Number(payload.amount) || 0
 
   if (amount <= 0) {
-    throw new Error('Nominal pembayaran harus lebih dari 0.')
+    throw new Error('PAYMENT_AMOUNT_REQUIRED')
   }
 
   if (!payload.order_id) {
-    throw new Error('Order wajib dipilih.')
+    throw new Error('ORDER_REQUIRED')
   }
 
   if (!payload.method) {
-    throw new Error('Metode pembayaran wajib dipilih.')
+    throw new Error('PAYMENT_METHOD_REQUIRED')
   }
 
   const { data, error } = await supabase.rpc(

@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import { getLocale } from '../../lib/i18n/locale';
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getMenuItems } from '../../features/menu/menu'
@@ -8,7 +10,7 @@ import {
 } from '../../features/orders/orders'
 
 const formatRupiah = (value) =>
-  new Intl.NumberFormat('id-ID', {
+  new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -26,6 +28,7 @@ const createOrderNumber = () => {
 }
 
 export default function NewOrderPage() {
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
 
   const [menuItems, setMenuItems] = useState([])
@@ -61,7 +64,7 @@ export default function NewOrderPage() {
         setMenuItems(menu)
         setTables(restaurantTables)
       } catch (err) {
-        setError(err.message || 'Gagal memuat data.')
+        setError(err.message || t('cashier.loadOrderDataError'))
       } finally {
         setLoading(false)
       }
@@ -197,7 +200,7 @@ export default function NewOrderPage() {
 
   async function handleSaveOrder() {
     if (cart.length === 0) {
-      setError('Tambahkan minimal satu menu.')
+      setError(t('cashier.minimumOneMenu'))
       return
     }
 
@@ -224,7 +227,7 @@ export default function NewOrderPage() {
 
       navigate(`/cashier/orders/${order.id}`)
     } catch (err) {
-      setError(err.message || 'Gagal membuat order.')
+      setError(err.message || t('cashier.createOrderError'))
     } finally {
       setSaving(false)
     }
@@ -547,7 +550,7 @@ export default function NewOrderPage() {
               onClick={handleSaveOrder}
               className="w-full rounded-xl bg-black px-4 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {saving ? 'Menyimpan...' : 'Simpan Order'}
+              {saving ? t('common.saving') : t('cashier.saveOrder')}
             </button>
           </div>
         </aside>

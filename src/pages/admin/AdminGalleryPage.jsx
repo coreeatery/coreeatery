@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useState } from 'react'
 import {
   createGalleryItem,
@@ -11,6 +12,7 @@ import {
 } from '../../features/cms/media'
 
 export default function AdminGalleryPage() {
+  const { t, i18n } = useTranslation()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
@@ -24,7 +26,7 @@ export default function AdminGalleryPage() {
       const data = await getGalleryItems()
       setItems(data)
     } catch (err) {
-      setError(err.message || 'Gagal mengambil galeri.')
+      setError(err.message || t('admin.loadGalleryError'))
     } finally {
       setLoading(false)
     }
@@ -65,7 +67,7 @@ export default function AdminGalleryPage() {
 
       await loadGallery()
     } catch (err) {
-      setError(err.message || 'Gagal mengupload gambar.')
+      setError(err.message || t('admin.uploadGalleryError'))
     } finally {
       setUploading(false)
     }
@@ -88,13 +90,13 @@ export default function AdminGalleryPage() {
         ),
       )
     } catch (err) {
-      setError(err.message || 'Gagal mengubah status.')
+      setError(err.message || t('admin.updateGalleryStatusError'))
     }
   }
 
   async function handleDelete(item) {
     const confirmed = window.confirm(
-      `Hapus foto "${item.title || 'Foto'}"?`,
+      `Hapus foto "${item.title || t('admin.photo')}"?`,
     )
 
     if (!confirmed) return
@@ -120,7 +122,7 @@ export default function AdminGalleryPage() {
         current.filter((entry) => entry.id !== item.id),
       )
     } catch (err) {
-      setError(err.message || 'Gagal menghapus foto.')
+      setError(err.message || t('admin.deleteGalleryError'))
     }
   }
 
@@ -142,7 +144,7 @@ export default function AdminGalleryPage() {
         </div>
 
         <label className="cursor-pointer rounded-xl bg-neutral-950 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-neutral-800">
-          {uploading ? 'Mengupload...' : '+ Upload Foto'}
+          {uploading ? t('admin.uploading') : '+ Upload Foto'}
 
           <input
             type="file"
@@ -184,7 +186,7 @@ export default function AdminGalleryPage() {
               <div className="aspect-[4/3] overflow-hidden bg-neutral-100">
                 <img
                   src={item.image_url}
-                  alt={item.alt_text || item.title || 'Gallery'}
+                  alt={item.alt_text || item.title || t("gallery.title")}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -192,13 +194,13 @@ export default function AdminGalleryPage() {
               <div className="space-y-3 p-4">
                 <div>
                   <h2 className="truncate font-semibold">
-                    {item.title || 'Foto restoran'}
+                    {item.title || t('admin.restaurantPhoto')}
                   </h2>
 
                   <p className="mt-1 text-xs text-neutral-500">
                     {item.is_active
-                      ? 'Tampil di website'
-                      : 'Disembunyikan'}
+                      ? t('admin.visibleOnWebsite')
+                      : t('admin.hidden')}
                   </p>
                 </div>
 
@@ -209,8 +211,8 @@ export default function AdminGalleryPage() {
                     className="flex-1 rounded-xl border border-neutral-200 px-3 py-2 text-sm font-medium"
                   >
                     {item.is_active
-                      ? 'Sembunyikan'
-                      : 'Tampilkan'}
+                      ? t('admin.hide')
+                      : t('admin.show')}
                   </button>
 
                   <button

@@ -15,7 +15,7 @@ export default function PublicFooter() {
             </p>
           </div>
           <div>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">Explore</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.explore')}</p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-white/55">
               <Link to="/menu" className="hover:text-white">{t('nav.menu')}</Link>
               <Link to="/reservasi" className="hover:text-white">{t('nav.reservation')}</Link>
@@ -23,7 +23,7 @@ export default function PublicFooter() {
             </div>
           </div>
           <div>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">Reservations</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.reservations')}</p>
             <Link to="/reservasi" className="mt-4 inline-flex text-sm text-white/70 underline decoration-white/20 underline-offset-4 hover:text-white">
               Reserve your table ↗
             </Link>
@@ -31,7 +31,7 @@ export default function PublicFooter() {
         </div>
         <div className="flex flex-col justify-between gap-3 pt-6 text-[9px] uppercase tracking-[0.25em] text-white/30 sm:flex-row">
           <p>© {new Date().getFullYear()} COREÉATERY</p>
-          <p>Crafted with intention</p>
+          <p>{t('public.craftedWithIntention')}</p>
         </div>
       </div>
     </footer>

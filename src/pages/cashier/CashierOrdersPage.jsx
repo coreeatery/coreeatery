@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import { getLocale } from '../../lib/i18n/locale';
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
@@ -7,7 +9,7 @@ import {
 import { ORDER_STATUS_OPTIONS } from '../../features/orders/orderStatus'
 
 const money = (value) =>
-  new Intl.NumberFormat('id-ID', {
+  new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -24,6 +26,7 @@ const statusClass = {
 }
 
 export default function CashierOrdersPage() {
+  const { t, i18n } = useTranslation()
   const [orders, setOrders] = useState([])
   const [status, setStatus] = useState('')
   const [search, setSearch] = useState('')
@@ -43,7 +46,7 @@ export default function CashierOrdersPage() {
       setOrders(data)
     } catch (err) {
       console.error(err)
-      setError(err.message || 'Gagal mengambil data order.')
+      setError(err.message || t('cashier.loadOrdersError'))
     } finally {
       setLoading(false)
     }
@@ -69,7 +72,7 @@ export default function CashierOrdersPage() {
         console.error(err)
 
         if (!cancelled) {
-          setError(err.message || 'Gagal mengambil data order.')
+          setError(err.message || t('cashier.loadOrdersError'))
         }
       } finally {
         if (!cancelled) {
@@ -91,7 +94,7 @@ export default function CashierOrdersPage() {
       await loadOrders()
     } catch (err) {
       console.error(err)
-      setError(err.message || 'Gagal mengubah status order.')
+      setError(err.message || t('cashier.updateOrderStatusError'))
     }
   }
 
@@ -185,13 +188,13 @@ export default function CashierOrdersPage() {
                     </div>
 
                     <div className="mt-2 text-sm opacity-70">
-                      {order.customer_name || 'Pelanggan umum'}
+                      {order.customer_name || t('cashier.generalCustomer')}
                     </div>
 
                     <div className="mt-1 text-sm opacity-60">
                       {order.restaurant_tables
                         ? `Meja ${order.restaurant_tables.table_number}`
-                        : 'Tanpa meja'}
+                        : t('cashier.noTable')}
                     </div>
                   </div>
 

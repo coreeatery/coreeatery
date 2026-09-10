@@ -47,7 +47,7 @@ export default function PublicNavbar() {
           <select
             value={i18n.language}
             onChange={changeLanguage}
-            aria-label="Language"
+            aria-label={t('public.language')}
             className="hidden appearance-none border-0 bg-transparent px-1 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white outline-none sm:block"
           >
             <option className="text-black" value="id">ID</option>
@@ -64,12 +64,12 @@ export default function PublicNavbar() {
 
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={t('public.toggleMenu')}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
             className="inline-flex h-10 w-10 items-center justify-center border border-white/20 lg:hidden"
           >
-            <span className="sr-only">Menu</span>
+            <span className="sr-only">{t('public.toggleMenu')}</span>
             <span className="flex w-4 flex-col gap-1.5">
               <span className="h-px w-full bg-white" />
               <span className="h-px w-3/4 self-end bg-white" />
@@ -102,7 +102,7 @@ export default function PublicNavbar() {
             <select
               value={i18n.language}
               onChange={changeLanguage}
-              aria-label="Language"
+              aria-label={t('public.language')}
               className="border border-white/15 bg-transparent px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white outline-none"
             >
               <option className="text-black" value="id">ID</option>
@@ -115,7 +115,7 @@ export default function PublicNavbar() {
               onClick={() => setOpen(false)}
               className="border border-[#c7aa70] px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#dbc38f]"
             >
-              Reserve a Table ↗
+              {t('public.reserveTable')} ↗
             </Link>
           </div>
         </div>

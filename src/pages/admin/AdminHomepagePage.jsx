@@ -22,8 +22,8 @@ const EMPTY_FORM = {
   reservation_title_en: '',
   reservation_description_id: '',
   reservation_description_en: '',
-  reservation_button_text_id: 'Reservasi Sekarang',
-  reservation_button_text_en: 'Make a Reservation',
+  reservation_button_text_id: t('reservation.request'),
+  reservation_button_text_en: t('public.reserveTable'),
 
   whatsapp_number: '',
   address: '',
@@ -33,6 +33,7 @@ const EMPTY_FORM = {
 }
 
 export default function AdminHomepagePage() {
+  const { t } = useTranslation()
   const [form, setForm] = useState(EMPTY_FORM)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -58,7 +59,7 @@ export default function AdminHomepagePage() {
         }
       } catch (err) {
         if (mounted) {
-          setError(err.message || 'Gagal mengambil pengaturan homepage.')
+          setError(err.message || t('admin.loadHomepageError'))
         }
       } finally {
         if (mounted) {
@@ -98,9 +99,9 @@ export default function AdminHomepagePage() {
 
       updateField(field, result.publicUrl)
 
-      setSuccess('Foto berhasil diupload. Jangan lupa simpan homepage.')
+      setSuccess(t('admin.photoUploadedSaveHomepage'))
     } catch (err) {
-      setError(err.message || 'Gagal mengupload foto.')
+      setError(err.message || t('admin.uploadPhotoError'))
     } finally {
       setUploading('')
       event.target.value = ''
@@ -138,10 +139,10 @@ export default function AdminHomepagePage() {
           form.reservation_description_en.trim() || null,
         reservation_button_text_id:
           form.reservation_button_text_id.trim() ||
-          'Reservasi Sekarang',
+          t('reservation.request'),
         reservation_button_text_en:
           form.reservation_button_text_en.trim() ||
-          'Make a Reservation',
+          t('public.reserveTable'),
 
         whatsapp_number: form.whatsapp_number.trim() || null,
         address: form.address.trim() || null,
@@ -150,9 +151,9 @@ export default function AdminHomepagePage() {
         opening_hours: form.opening_hours.trim() || null,
       })
 
-      setSuccess('Homepage berhasil disimpan.')
+      setSuccess(t('admin.homepageSaved'))
     } catch (err) {
-      setError(err.message || 'Gagal menyimpan homepage.')
+      setError(err.message || t('admin.saveHomepageError'))
     } finally {
       setSaving(false)
     }
@@ -162,7 +163,7 @@ export default function AdminHomepagePage() {
     return (
       <section className="p-6">
         <p className="text-sm text-neutral-500">
-          Memuat Homepage CMS...
+          {t('admin.loadingHomepage')}
         </p>
       </section>
     )
@@ -176,7 +177,7 @@ export default function AdminHomepagePage() {
         </p>
 
         <h1 className="mt-1 text-3xl font-bold tracking-tight">
-          Homepage
+            {t('admin.homepage')}
         </h1>
 
         <p className="mt-2 text-sm text-neutral-500">
@@ -200,7 +201,7 @@ export default function AdminHomepagePage() {
         {/* HERO */}
         <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h2 className="text-xl font-bold">Hero</h2>
+            <h2 className="text-xl font-bold">{t('admin.hero')}</h2>
             <p className="text-sm text-neutral-500">
               Bagian utama yang pertama kali dilihat pengunjung.
             </p>
@@ -241,7 +242,7 @@ export default function AdminHomepagePage() {
           </div>
 
           <ImageUploader
-            label="Foto Hero"
+            label={t('admin.heroPhoto')}
             value={form.hero_image_url}
             inputRef={heroInputRef}
             uploading={uploading === 'hero_image_url'}
@@ -259,7 +260,7 @@ export default function AdminHomepagePage() {
         {/* ABOUT */}
         <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h2 className="text-xl font-bold">Tentang Restoran</h2>
+            <h2 className="text-xl font-bold">{t('admin.restaurantAbout')}</h2>
             <p className="text-sm text-neutral-500">
               Informasi singkat tentang COREÉATERY.
             </p>
@@ -386,7 +387,7 @@ export default function AdminHomepagePage() {
         {/* CONTACT */}
         <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h2 className="text-xl font-bold">Kontak & Informasi</h2>
+            <h2 className="text-xl font-bold">{t('admin.contactInfo')}</h2>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -424,7 +425,7 @@ export default function AdminHomepagePage() {
             />
 
             <Field
-              label="Instagram"
+              label={t("public.instagramLink")}
               value={form.instagram_url}
               onChange={(value) =>
                 updateField('instagram_url', value)
@@ -440,7 +441,7 @@ export default function AdminHomepagePage() {
             disabled={saving}
             className="rounded-xl bg-neutral-950 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {saving ? 'Menyimpan...' : 'Simpan Homepage'}
+            {saving ? t('common.saving') : t('admin.saveHomepage')}
           </button>
         </div>
       </form>
@@ -525,7 +526,7 @@ function ImageUploader({
                 onClick={onRemove}
                 className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-red-600 shadow"
               >
-                Hapus
+                {t('common.delete')}
               </button>
             </div>
           </div>
@@ -540,8 +541,8 @@ function ImageUploader({
 
             <span className="font-semibold">
               {uploading
-                ? 'Mengupload foto...'
-                : 'Pilih Foto dari Galeri'}
+                ? t('admin.uploadingPhoto')
+                : t('admin.choosePhoto')}
             </span>
 
             <span className="text-sm text-neutral-500">

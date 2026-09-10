@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   createMenuItem,
@@ -26,7 +27,7 @@ const EMPTY_FORM = {
 }
 
 function formatRupiah(value) {
-  return new Intl.NumberFormat('id-ID', {
+  return new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -43,6 +44,7 @@ function createSlug(value) {
 }
 
 export default function AdminMenuPage() {
+  const { t } = useTranslation()
   const [items, setItems] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -69,7 +71,7 @@ export default function AdminMenuPage() {
       setItems(menuData)
       setCategories(categoryData)
     } catch (err) {
-      setError(err.message || 'Gagal mengambil data menu.')
+      setError(err.message || t('admin.loadMenuError'))
     } finally {
       setLoading(false)
     }
@@ -150,7 +152,7 @@ export default function AdminMenuPage() {
       const result = await uploadCmsImage(file, 'menu')
       updateField('image_url', result.publicUrl)
     } catch (err) {
-      setError(err.message || 'Gagal mengupload foto menu.')
+      setError(err.message || t('admin.uploadMenuPhotoError'))
     } finally {
       setUploadingImage(false)
       event.target.value = ''
@@ -169,12 +171,12 @@ export default function AdminMenuPage() {
     event.preventDefault()
 
     if (!form.name_id.trim()) {
-      setError('Nama menu wajib diisi.')
+      setError(t('admin.menuNameRequired'))
       return
     }
 
     if (Number(form.base_price) < 0) {
-      setError('Harga tidak boleh negatif.')
+      setError(t('admin.priceCannotBeNegative'))
       return
     }
 
@@ -211,7 +213,7 @@ export default function AdminMenuPage() {
 
       await loadData()
     } catch (err) {
-      setError(err.message || 'Gagal menyimpan menu.')
+      setError(err.message || t('admin.saveMenuError'))
     } finally {
       setSaving(false)
     }
@@ -230,7 +232,7 @@ export default function AdminMenuPage() {
       await deleteMenuItem(item.id)
       await loadData()
     } catch (err) {
-      setError(err.message || 'Gagal menghapus menu.')
+      setError(err.message || t('admin.deleteMenuError'))
     }
   }
 
@@ -248,7 +250,7 @@ export default function AdminMenuPage() {
         ),
       )
     } catch (err) {
-      setError(err.message || 'Gagal mengubah status menu.')
+      setError(err.message || t('admin.updateMenuStatusError'))
     }
   }
 
@@ -274,7 +276,7 @@ export default function AdminMenuPage() {
           onClick={openCreate}
           className="rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
         >
-          + Tambah Menu
+          + {t('admin.addMenu')}
         </button>
       </header>
 
@@ -316,7 +318,7 @@ export default function AdminMenuPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold">
-                {editingId ? 'Edit Menu' : 'Tambah Menu'}
+                {editingId ? t('admin.editMenu') : t('admin.addMenu')}
               </h2>
 
               <p className="text-sm text-neutral-500">
@@ -429,7 +431,7 @@ export default function AdminMenuPage() {
                   {form.image_url ? (
                     <img
                       src={form.image_url}
-                      alt={form.name_id || 'Foto menu'}
+                      alt={form.name_id || t('admin.menuPhoto')}
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -455,9 +457,9 @@ export default function AdminMenuPage() {
                     className="w-fit rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {uploadingImage
-                      ? 'Mengupload...'
+                      ? t('admin.uploading')
                       : form.image_url
-                        ? 'Ganti Foto'
+                        ? t('admin.changePhoto')
                         : '📷 Pilih Foto dari Galeri'}
                   </button>
 
@@ -467,7 +469,7 @@ export default function AdminMenuPage() {
                       onClick={() => updateField('image_url', '')}
                       className="w-fit rounded-xl border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
                     >
-                      Hapus Foto
+                      {t('admin.deletePhoto')}
                     </button>
                   )}
 
@@ -546,7 +548,7 @@ export default function AdminMenuPage() {
               disabled={saving}
               className="rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
             >
-              {saving ? 'Menyimpan...' : 'Simpan Menu'}
+              {saving ? t('common.saving') : t('admin.saveMenu')}
             </button>
           </div>
         </form>
@@ -555,13 +557,13 @@ export default function AdminMenuPage() {
       <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
         {loading ? (
           <div className="p-10 text-center text-sm text-neutral-500">
-            Memuat menu...
+            {t('admin.loadingMenu')}
           </div>
         ) : filteredItems.length === 0 ? (
           <div className="p-10 text-center">
             <p className="font-semibold">Belum ada menu</p>
             <p className="mt-1 text-sm text-neutral-500">
-              Tambahkan menu pertama restoran.
+              {t('admin.emptyMenu')}
             </p>
           </div>
         ) : (
@@ -606,7 +608,7 @@ export default function AdminMenuPage() {
                     </div>
 
                     <p className="mt-1 text-sm text-neutral-500">
-                      {item.menu_categories?.name_id || 'Tanpa kategori'}
+                      {item.menu_categories?.name_id || t('common.noCategory')}
                     </p>
 
                     <p className="mt-1 font-semibold">
@@ -621,7 +623,7 @@ export default function AdminMenuPage() {
                     onClick={() => toggleAvailability(item)}
                     className="rounded-xl border border-neutral-200 px-4 py-2 text-sm font-medium"
                   >
-                    {item.is_available ? 'Tandai Habis' : 'Aktifkan'}
+                    {item.is_available ? t('admin.markUnavailable') : t('admin.activate')}
                   </button>
 
                   <button

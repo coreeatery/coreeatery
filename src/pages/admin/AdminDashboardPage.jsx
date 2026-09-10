@@ -2,17 +2,19 @@ import { useCallback, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { getAdminDashboardData } from '../../features/admin/dashboard'
 import { useAuth } from '../../app/providers/useAuth'
+import { useTranslation } from 'react-i18next'
 
+import { getLanguageFromI18n } from '../../lib/i18n/locale'
 function formatRupiah(value) {
-  return new Intl.NumberFormat('id-ID', {
+  return new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
   }).format(value || 0)
 }
 
-function formatDateTime(value) {
-  return new Intl.DateTimeFormat('id-ID', {
+function formatDateTime(value, language = 'id') {
+  return new Intl.DateTimeFormat(getLocale(language), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))
@@ -60,6 +62,8 @@ function Icon({ children }) {
 }
 
 export default function AdminDashboardPage() {
+  const { t, i18n } = useTranslation()
+  const language = getLanguageFromI18n(i18n)
   const { profile } = useAuth()
 
   const initialData = useLoaderData()
@@ -75,7 +79,7 @@ export default function AdminDashboardPage() {
       const result = await getAdminDashboardData()
       setData(result)
     } catch (err) {
-      setError(err.message || 'Gagal memuat dashboard.')
+      setError(err.message || t('admin.loadDashboardError'))
     } finally {
       setLoading(false)
     }
@@ -95,12 +99,12 @@ export default function AdminDashboardPage() {
             </p>
 
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-950 sm:text-3xl">
-              Dashboard
+              {t('admin.dashboard')}
             </h1>
 
             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-              Selamat datang, {profile?.full_name || 'Admin'}.
-              Berikut kondisi operasional COREÉATERY.
+              {t('admin.welcome', { name: profile?.full_name || t('admin.admin') })}
+              • {t('admin.operationalStatus')}
             </p>
           </div>
 
@@ -133,7 +137,7 @@ export default function AdminDashboardPage() {
               />
             </Icon>
 
-            {loading ? 'Memuat...' : 'Refresh'}
+            {loading ? t('common.loading') : t('common.retry')}
           </button>
         </div>
       </section>
@@ -148,9 +152,9 @@ export default function AdminDashboardPage() {
       {/* STATISTICS */}
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         <StatCard
-          label="Total Omzet"
+          label={t('admin.totalRevenue')}
           value={formatRupiah(stats.revenue)}
-          description="Order berstatus paid"
+          description={t('admin.paidOrders')}
           icon={
             <Icon>
               <path
@@ -163,9 +167,9 @@ export default function AdminDashboardPage() {
         />
 
         <StatCard
-          label="Total Order"
+          label={t('admin.totalOrders')}
           value={stats.orders || 0}
-          description="Seluruh order dibayar"
+          description={t('admin.allPaidOrders')}
           icon={
             <Icon>
               <path
@@ -279,11 +283,11 @@ export default function AdminDashboardPage() {
                     </p>
 
                     <p className="truncate text-xs text-gray-500 sm:text-sm">
-                      {order.customer_name || 'Pelanggan umum'}
+                      {order.customer_name || t('admin.generalCustomer')}
                     </p>
 
                     <p className="mt-1 text-[10px] text-gray-400 sm:text-xs">
-                      {formatDateTime(order.created_at)}
+                      {formatDateTime(order.created_at, language)}
                     </p>
                   </div>
 

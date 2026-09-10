@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import { getLocale } from '../../lib/i18n/locale';
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
@@ -8,7 +10,7 @@ import {
 import { ORDER_STATUS_OPTIONS } from '../../features/orders/orderStatus'
 
 const money = (value) =>
-  new Intl.NumberFormat('id-ID', {
+  new Intl.NumberFormat(getLocale(language), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -17,7 +19,7 @@ const money = (value) =>
 const dateTime = (value) => {
   if (!value) return '-'
 
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat(getLocale(language), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))
@@ -34,6 +36,7 @@ const statusClass = {
 }
 
 export default function OrderDetailPage() {
+  const { t, i18n } = useTranslation()
   const { id } = useParams()
 
   const [order, setOrder] = useState(null)
@@ -59,7 +62,7 @@ export default function OrderDetailPage() {
 
         if (!cancelled) {
           setError(
-            err.message || 'Gagal mengambil detail order.',
+            err.message || t('cashier.loadOrderDetailError'),
           )
         }
       } finally {
@@ -96,7 +99,7 @@ export default function OrderDetailPage() {
     } catch (err) {
       console.error(err)
       setError(
-        err.message || 'Gagal mengubah status order.',
+        err.message || t('cashier.updateOrderStatusError'),
       )
     } finally {
       setSaving(false)
@@ -120,7 +123,7 @@ export default function OrderDetailPage() {
     } catch (err) {
       console.error(err)
       setError(
-        err.message || 'Gagal menghitung ulang total.',
+        err.message || t('cashier.recalculateTotalError'),
       )
     } finally {
       setSaving(false)
@@ -146,7 +149,7 @@ export default function OrderDetailPage() {
         </Link>
 
         <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700">
-          {error || 'Order tidak ditemukan.'}
+          {error || t('cashier.orderNotFound')}
         </div>
       </div>
     )
