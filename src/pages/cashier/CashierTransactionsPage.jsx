@@ -1,7 +1,7 @@
+import { getLocale } from '../../lib/i18n/locale'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getPayments } from '../../features/payments/payments'
-
 const money = (value) =>
   new Intl.NumberFormat(getLocale(language), {
     style: 'currency',

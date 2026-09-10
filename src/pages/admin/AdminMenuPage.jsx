@@ -1,3 +1,4 @@
+import { getLocale } from '../../lib/i18n/locale'
 import { useTranslation } from 'react-i18next'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -8,7 +9,6 @@ import {
   updateMenuItem,
 } from '../../features/menu/menu'
 import { uploadCmsImage } from '../../features/cms/media'
-
 const EMPTY_FORM = {
   category_id: '',
   name_id: '',

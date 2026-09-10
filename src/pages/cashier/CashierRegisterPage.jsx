@@ -1,6 +1,6 @@
+import { getLocale } from '../../lib/i18n/locale'
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase/client'
-
 const money = (value) =>
   new Intl.NumberFormat(getLocale(language), {
     style: 'currency',

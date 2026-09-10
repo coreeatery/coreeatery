@@ -1,8 +1,8 @@
+import { getLocale } from '../../lib/i18n/locale'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getMenuCategories, getMenuItems } from '../../features/menu/menu'
-
 function pick(row, field, language) {
   const suffix = language === 'en' ? 'en' : language === 'zh' ? 'zh' : 'id'
   return row?.[`${field}_${suffix}`] || row?.[`${field}_id`] || ''

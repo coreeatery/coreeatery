@@ -1,3 +1,4 @@
+import { getLocale } from '../../lib/i18n/locale'
 import { useCallback, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { getAdminDashboardData } from '../../features/admin/dashboard'
