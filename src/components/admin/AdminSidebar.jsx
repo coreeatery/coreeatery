@@ -3,18 +3,19 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { signOut } from '../../features/auth/auth'
 
-const links = [
-  [t('admin.dashboard'), '/admin'],
-  [t('admin.homepage'), '/admin/homepage'],
-  [t('admin.menu'), '/admin/menu'],
-  ['Reservasi', '/admin/reservasi'],
-  ['Galeri', '/admin/galeri'],
-  ['Promo', '/admin/promo'],
-  [t('admin.settings'), '/admin/settings'],
-]
+
 
 export default function AdminSidebar() {
   const { t } = useTranslation()
+  const links = [
+    [t('admin.dashboard'), '/admin'],
+    [t('admin.homepage'), '/admin/homepage'],
+    [t('admin.menu'), '/admin/menu'],
+    [t('admin.reservation'), '/admin/reservasi'],
+    [t('admin.gallery'), '/admin/galeri'],
+    [t('admin.promo'), '/admin/promo'],
+    [t('admin.settings'), '/admin/settings'],
+  ]
   const [open, setOpen] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
   const navigate = useNavigate()

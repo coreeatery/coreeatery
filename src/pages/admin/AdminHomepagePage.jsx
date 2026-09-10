@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   getHomepageSettings,
   saveHomepageSettings,
@@ -22,8 +23,8 @@ const EMPTY_FORM = {
   reservation_title_en: '',
   reservation_description_id: '',
   reservation_description_en: '',
-  reservation_button_text_id: t('reservation.request'),
-  reservation_button_text_en: t('public.reserveTable'),
+  reservation_button_text_id: '',
+  reservation_button_text_en: '',
 
   whatsapp_number: '',
   address: '',
@@ -34,7 +35,13 @@ const EMPTY_FORM = {
 
 export default function AdminHomepagePage() {
   const { t } = useTranslation()
-  const [form, setForm] = useState(EMPTY_FORM)
+
+  const emptyForm = {
+    ...EMPTY_FORM,
+    reservation_button_text_id: t('reservation.request'),
+    reservation_button_text_en: t('public.reserveTable'),
+  }
+  const [form, setForm] = useState(emptyForm)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState('')

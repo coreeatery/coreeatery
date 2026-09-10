@@ -20,51 +20,52 @@ import {
 import { signOut } from '../../features/auth/auth'
 import { useAuth } from '../../app/providers/useAuth'
 
-const links = [
-  {
-    label: t('cashier.dashboard'),
-    to: '/cashier',
-    icon: LayoutDashboard,
-  },
-  {
-    label: 'Order Baru',
-    to: '/cashier/orders/new',
-    icon: ShoppingCart,
-  },
-  {
-    label: 'Order Aktif',
-    to: '/cashier/orders',
-    icon: ClipboardList,
-  },
-  {
-    label: 'Pembayaran',
-    to: '/cashier/payments',
-    icon: CreditCard,
-  },
-  {
-    label: 'Transaksi',
-    to: '/cashier/transactions',
-    icon: Receipt,
-  },
-  {
-    label: 'Kasir',
-    to: '/cashier/register',
-    icon: Calculator,
-  },
-  {
-    label: 'Laporan',
-    to: '/cashier/reports',
-    icon: BarChart3,
-  },
-  {
-    label: t('cashier.settings'),
-    to: '/cashier/settings',
-    icon: Settings,
-  },
-]
+
 
 export default function CashierSidebar() {
   const { t } = useTranslation()
+  const links = [
+    {
+      label: t('cashier.dashboard'),
+      to: '/cashier',
+      icon: LayoutDashboard,
+    },
+    {
+      label: t('cashier.newOrder'),
+      to: '/cashier/orders/new',
+      icon: ShoppingCart,
+    },
+    {
+      label: t('cashier.activeOrders'),
+      to: '/cashier/orders',
+      icon: ClipboardList,
+    },
+    {
+      label: t('cashier.payments'),
+      to: '/cashier/payments',
+      icon: CreditCard,
+    },
+    {
+      label: t('cashier.transactions'),
+      to: '/cashier/transactions',
+      icon: Receipt,
+    },
+    {
+      label: t('cashier.register'),
+      to: '/cashier/register',
+      icon: Calculator,
+    },
+    {
+      label: t('cashier.reports'),
+      to: '/cashier/reports',
+      icon: BarChart3,
+    },
+    {
+      label: t('cashier.settings'),
+      to: '/cashier/settings',
+      icon: Settings,
+    },
+  ]
   const navigate = useNavigate()
   const { profile } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)

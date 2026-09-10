@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
-import { getLanguageFromI18n } from '../../lib/i18n/locale'
+import { getLanguageFromI18n, getLocale } from '../../lib/i18n/locale'
 import {
   getReservations,
   getReservationSummary,
@@ -21,7 +21,7 @@ const STATUS_CLASSES = {
   no_show: 'bg-neutral-200 text-neutral-700',
 }
 
-function formatDate(date) {
+function formatDate(date, language) {
   if (!date) return '-'
 
   return new Intl.DateTimeFormat(getLocale(language), {
