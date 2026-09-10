@@ -10,7 +10,7 @@ import {
 } from '../../features/orders/orders'
 
 const formatRupiah = (value) =>
-  new Intl.NumberFormat(getLocale(language), {
+  new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,

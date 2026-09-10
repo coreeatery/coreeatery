@@ -24,7 +24,7 @@ const STATUS_CLASSES = {
 function formatDate(date, language) {
   if (!date) return '-'
 
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getLocale(), {
     day: '2-digit',
     month: 'short',
     year: 'numeric',

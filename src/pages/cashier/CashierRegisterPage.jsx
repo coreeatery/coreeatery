@@ -2,7 +2,7 @@ import { getLocale } from '../../lib/i18n/locale'
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase/client'
 const money = (value) =>
-  new Intl.NumberFormat(getLocale(language), {
+  new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -11,7 +11,7 @@ const money = (value) =>
 const dateTime = (value) => {
   if (!value) return '-'
 
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getLocale(), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))

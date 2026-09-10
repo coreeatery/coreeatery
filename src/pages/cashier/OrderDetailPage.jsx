@@ -10,7 +10,7 @@ import {
 import { ORDER_STATUS_OPTIONS } from '../../features/orders/orderStatus'
 
 const money = (value) =>
-  new Intl.NumberFormat(getLocale(language), {
+  new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -19,7 +19,7 @@ const money = (value) =>
 const dateTime = (value) => {
   if (!value) return '-'
 
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getLocale(), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))

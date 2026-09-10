@@ -1,10 +1,13 @@
+import i18n from 'i18next'
 export const LANGUAGE_LOCALES = {
   id: 'id-ID',
   en: 'en-US',
   zh: 'zh-CN',
 }
 
-export function getLocale(language = 'id') {
+export function getLocale(
+  language = i18n.resolvedLanguage || i18n.language || 'id',
+) {
   return LANGUAGE_LOCALES[language] ?? LANGUAGE_LOCALES.id
 }
 

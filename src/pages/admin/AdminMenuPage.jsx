@@ -27,7 +27,7 @@ const EMPTY_FORM = {
 }
 
 function formatRupiah(value) {
-  return new Intl.NumberFormat(getLocale(language), {
+  return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,

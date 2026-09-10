@@ -6,14 +6,14 @@ import { getSalesReport } from '../../features/reports/reports'
 
 import { getLanguageFromI18n } from '../../lib/i18n/locale'
 const money = (value) =>
-  new Intl.NumberFormat(getLocale(language), {
+  new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
   }).format(Number(value) || 0)
 
 const dateFormatter = new Intl.DateTimeFormat(
-  getLocale(language),
+  getLocale(),
   {
     dateStyle: 'medium',
   },
@@ -399,7 +399,7 @@ export default function CashierReportsPage() {
 
                           <p className="mt-1 text-xs opacity-60">
                             {new Intl.DateTimeFormat(
-                              getLocale(language),
+                              getLocale(),
                               {
                                 dateStyle: 'medium',
                                 timeStyle: 'short',
@@ -457,7 +457,7 @@ export default function CashierReportsPage() {
 
                           <p className="mt-1 text-xs opacity-60">
                             {new Intl.DateTimeFormat(
-                              getLocale(language),
+                              getLocale(),
                               {
                                 dateStyle: 'medium',
                                 timeStyle: 'short',

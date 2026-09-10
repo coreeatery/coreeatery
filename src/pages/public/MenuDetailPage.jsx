@@ -9,7 +9,7 @@ function pick(row, field, language) {
 }
 
 function formatRupiah(value) {
-  return new Intl.NumberFormat(getLocale(language), { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(value) || 0)
+  return new Intl.NumberFormat(getLocale(), { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(value) || 0)
 }
 
 export default function MenuDetailPage() {

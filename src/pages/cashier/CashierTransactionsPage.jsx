@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getPayments } from '../../features/payments/payments'
 const money = (value) =>
-  new Intl.NumberFormat(getLocale(language), {
+  new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -12,7 +12,7 @@ const money = (value) =>
 const dateTime = (value) => {
   if (!value) return '-'
 
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getLocale(), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))

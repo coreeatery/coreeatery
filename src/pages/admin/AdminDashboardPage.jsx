@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import { getLanguageFromI18n } from '../../lib/i18n/locale'
 function formatRupiah(value) {
-  return new Intl.NumberFormat(getLocale(language), {
+  return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
@@ -15,7 +15,7 @@ function formatRupiah(value) {
 }
 
 function formatDateTime(value, language = 'id') {
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getLocale(), {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value))
