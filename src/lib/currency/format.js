@@ -1,7 +1,7 @@
 import { getLocale } from '../i18n/locale'
 
 export function formatCurrency(value, language = 'id') {
-  return new Intl.NumberFormat(getLocale(language), {
+  return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
