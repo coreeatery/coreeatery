@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom'
 import {
   getOrderById,
   updateOrderStatus,
-  calculateOrderTotals,
   saveOrderTotals,
 } from '../../features/orders/orders'
 import { ORDER_STATUS_OPTIONS } from '../../features/orders/orderStatus'
@@ -111,19 +110,7 @@ export default function OrderDetailPage() {
       setSaving(true)
       setError('')
 
-      const totals = calculateOrderTotals(
-        order.order_items || [],
-        {
-          discountAmount: order.discount_amount,
-          taxAmount: order.tax_amount,
-          serviceCharge: order.service_charge,
-        },
-      )
-
-      const updated = await saveOrderTotals(
-        order.id,
-        totals,
-      )
+      const updated = await saveOrderTotals(order.id)
 
       setOrder((current) => ({
         ...current,
@@ -153,7 +140,7 @@ export default function OrderDetailPage() {
       <div className="space-y-4">
         <Link
           to="/cashier/orders"
-          className="text-sm font-semibold hover:underline"
+          className="inline-flex items-center text-sm font-semibold text-stone-950 hover:text-stone-700 hover:underline"
         >
           ← Kembali ke Order
         </Link>
@@ -173,7 +160,7 @@ export default function OrderDetailPage() {
         <div>
           <Link
             to="/cashier/orders"
-            className="text-sm font-semibold opacity-60 hover:opacity-100"
+            className="inline-flex items-center text-sm font-semibold text-stone-950 hover:text-stone-700"
           >
             ← Kembali ke Order
           </Link>

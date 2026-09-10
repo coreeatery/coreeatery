@@ -156,148 +156,30 @@ export async function createPayment(payload) {
     throw new Error('Metode pembayaran wajib dipilih.')
   }
 
-  const user = await getCurrentUser()
-
-  const { data: order, error: orderError } = await supabase
-    .from('orders')
-    .select(`
-      id,
-      order_number,
-      total_amount,
-      payment_status,
-      status
-    `)
-    .eq('id', payload.order_id)
-    .single()
-
-  if (orderError) {
-    throw orderError
-  }
-
-  if (order.payment_status === 'paid') {
-    throw new Error('Order ini sudah dibayar.')
-  }
-
-  if (amount < Number(order.total_amount)) {
-    throw new Error('Nominal pembayaran belum mencukupi total order.')
-  }
-
-  const shift = await getCurrentOpenShift()
-
-  if (!shift) {
-    throw new Error(
-      'Tidak ada shift kasir yang terbuka. Buka shift terlebih dahulu.',
-    )
-  }
-
-  const paymentPayload = {
-    payment_code:
-      payload.payment_code || generatePaymentCode(),
-    order_id: order.id,
-    shift_id: shift.id,
-    amount,
-    method: payload.method,
-    status: payload.status || 'paid',
-    reference_number:
-      payload.reference_number || null,
-    paid_at:
-      payload.paid_at || new Date().toISOString(),
-    received_by:
-      payload.received_by || user.id,
-    notes: payload.notes || null,
-  }
-
-  const { data: payment, error: paymentError } =
-    await supabase
-      .from('payments')
-      .insert(paymentPayload)
-      .select(PAYMENT_SELECT)
-      .single()
-
-  if (paymentError) {
-    throw paymentError
-  }
-
-  const { data: updatedOrder, error: orderUpdateError } =
-    await supabase
-      .from('orders')
-      .update({
-        payment_status: 'paid',
-        status: 'completed',
-      })
-      .eq('id', order.id)
-      .select(`
-        id,
-        order_number,
-        payment_status,
-        status,
-        total_amount
-      `)
-      .single()
-
-  if (orderUpdateError) {
-    throw orderUpdateError
-  }
-
-  let movement = null
-
-  if (payload.method === 'cash') {
-    const { data: movementData, error: movementError } = await supabase
-      .from('cash_register_movements')
-      .insert({
-        shift_id: shift.id,
-        movement_type: 'cash_in',
-        amount,
-        payment_method: 'cash',
-        reference_number:
-          payment.reference_number || payment.payment_code,
-        description: `Pembayaran order ${order.order_number}`,
-        created_by: user.id,
-      })
-      .select('*')
-      .single()
-
-    if (movementError) {
-      throw movementError
-    }
-
-    movement = movementData
-  }
-
-  return {
-    payment,
-    order: updatedOrder,
-    shift,
-    movement,
-    changeAmount: Math.max(
-      0,
-      amount - Number(order.total_amount),
-    ),
-  }
-}
-
-export async function updatePayment(id, payload) {
-  ensureSupabase()
-
-  const { data, error } = await supabase
-    .from('payments')
-    .update(payload)
-    .eq('id', id)
-    .select(PAYMENT_SELECT)
-    .single()
+  const { data, error } = await supabase.rpc(
+    'process_payment_transaction',
+    {
+      p_order_id: payload.order_id,
+      p_amount: amount,
+      p_method: payload.method,
+      p_reference_number: payload.reference_number || null,
+      p_notes: payload.notes || null,
+    },
+  )
 
   if (error) {
     throw error
   }
 
-  return data
+  return {
+    payment: data?.payment ?? null,
+    order: data?.order ?? null,
+    shift: data?.shift ?? null,
+    movement: data?.movement ?? null,
+    changeAmount: Number(data?.change_amount ?? 0),
+  }
 }
 
-export async function cancelPayment(id) {
-  return updatePayment(id, {
-    status: 'cancelled',
-  })
-}
 
 export function calculatePaymentChange({
   totalAmount = 0,

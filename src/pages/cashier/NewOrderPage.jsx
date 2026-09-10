@@ -5,7 +5,6 @@ import { getTables } from '../../features/tables/tables'
 import {
   calculateOrderTotals,
   createOrder,
-  addOrderItem,
 } from '../../features/orders/orders'
 
 const formatRupiah = (value) =>
@@ -210,31 +209,18 @@ export default function NewOrderPage() {
         order_number: createOrderNumber(),
         table_id: tableId || null,
         customer_name: customerName.trim() || null,
-        status: 'pending',
-        payment_status: 'unpaid',
-        subtotal: totals.subtotal,
         discount_amount: totals.discountAmount,
         tax_amount: totals.taxAmount,
         service_charge: totals.serviceCharge,
-        total_amount: totals.totalAmount,
         notes: notes.trim() || null,
+        items: cart.map((item) => ({
+          menu_item_id: item.menu_item_id,
+          variant_id: item.variant_id,
+          quantity: item.quantity,
+          discount_amount: item.discount_amount,
+          notes: item.notes || null,
+        })),
       })
-
-      await Promise.all(
-        cart.map((item) =>
-          addOrderItem({
-            order_id: order.id,
-            menu_item_id: item.menu_item_id,
-            variant_id: item.variant_id,
-            item_name: item.item_name,
-            quantity: item.quantity,
-            unit_price: item.unit_price,
-            discount_amount: item.discount_amount,
-            subtotal: item.subtotal,
-            notes: item.notes || null,
-          }),
-        ),
-      )
 
       navigate(`/cashier/orders/${order.id}`)
     } catch (err) {

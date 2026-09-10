@@ -105,26 +105,19 @@ export async function getOrderById(id) {
 export async function createOrder(payload) {
   ensureSupabase()
 
-  const { data, error } = await supabase
-    .from('orders')
-    .insert(payload)
-    .select(ORDER_SELECT)
-    .single()
-
-  if (error) throw error
-
-  return data
-}
-
-export async function updateOrder(id, payload) {
-  ensureSupabase()
-
-  const { data, error } = await supabase
-    .from('orders')
-    .update(payload)
-    .eq('id', id)
-    .select(ORDER_SELECT)
-    .single()
+  const { data, error } = await supabase.rpc(
+    'create_order_transaction',
+    {
+      p_table_id: payload.table_id || null,
+      p_customer_name: payload.customer_name || null,
+      p_notes: payload.notes || null,
+      p_discount_amount: Number(payload.discount_amount) || 0,
+      p_tax_amount: Number(payload.tax_amount) || 0,
+      p_service_charge: Number(payload.service_charge) || 0,
+      p_items: payload.items || [],
+      p_order_number: payload.order_number || null,
+    },
+  )
 
   if (error) throw error
 
@@ -132,47 +125,27 @@ export async function updateOrder(id, payload) {
 }
 
 export async function updateOrderStatus(id, status) {
-  return updateOrder(id, { status })
-}
-
-export async function addOrderItem(payload) {
   ensureSupabase()
 
-  const { data, error } = await supabase
-    .from('order_items')
-    .insert(payload)
-    .select('*')
-    .single()
+  if (!id) {
+    throw new Error('Order wajib dipilih.')
+  }
+
+  if (!status) {
+    throw new Error('Status order wajib dipilih.')
+  }
+
+  const { data, error } = await supabase.rpc(
+    'update_order_status',
+    {
+      p_order_id: id,
+      p_status: status,
+    },
+  )
 
   if (error) throw error
 
   return data
-}
-
-export async function updateOrderItem(id, payload) {
-  ensureSupabase()
-
-  const { data, error } = await supabase
-    .from('order_items')
-    .update(payload)
-    .eq('id', id)
-    .select('*')
-    .single()
-
-  if (error) throw error
-
-  return data
-}
-
-export async function deleteOrderItem(id) {
-  ensureSupabase()
-
-  const { error } = await supabase
-    .from('order_items')
-    .delete()
-    .eq('id', id)
-
-  if (error) throw error
 }
 
 export function calculateOrderTotals(items = [], {
@@ -209,12 +182,21 @@ export function calculateOrderTotals(items = [], {
   }
 }
 
-export async function saveOrderTotals(id, totals) {
-  return updateOrder(id, {
-    subtotal: totals.subtotal,
-    discount_amount: totals.discountAmount,
-    tax_amount: totals.taxAmount,
-    service_charge: totals.serviceCharge,
-    total_amount: totals.totalAmount,
-  })
+export async function saveOrderTotals(id) {
+  ensureSupabase()
+
+  if (!id) {
+    throw new Error('Order wajib dipilih.')
+  }
+
+  const { data, error } = await supabase.rpc(
+    'recalculate_order_totals',
+    {
+      p_order_id: id,
+    },
+  )
+
+  if (error) throw error
+
+  return data
 }

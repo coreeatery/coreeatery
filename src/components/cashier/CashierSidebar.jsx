@@ -144,7 +144,7 @@ export default function CashierSidebar() {
                 [
                   'group flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-medium transition-all',
                   isActive
-                    ? 'bg-stone-950 text-white shadow-md shadow-stone-900/10'
+                    ? 'bg-stone-950 !text-white shadow-md shadow-stone-900/10'
                     : 'text-stone-600 hover:bg-stone-100 hover:text-stone-950',
                 ].join(' ')
               }
@@ -157,7 +157,12 @@ export default function CashierSidebar() {
                     className="shrink-0"
                   />
 
-                  <span className="truncate">{label}</span>
+                  <span
+                    className="truncate"
+                    style={isActive ? { color: '#ffffff' } : undefined}
+                  >
+                    {label}
+                  </span>
 
                   {isActive && (
                     <span className="ml-auto h-1.5 w-1.5 rounded-full bg-amber-400" />

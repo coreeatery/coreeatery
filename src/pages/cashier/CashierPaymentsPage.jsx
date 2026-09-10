@@ -155,11 +155,12 @@ export default function CashierPaymentsPage() {
 
       setSuccess(result)
 
-      setOrder((current) => ({
-        ...current,
-        payment_status: 'paid',
-        status: 'completed',
-      }))
+      if (result?.order) {
+        setOrder((current) => ({
+          ...current,
+          ...result.order,
+        }))
+      }
     } catch (err) {
       console.error(err)
 

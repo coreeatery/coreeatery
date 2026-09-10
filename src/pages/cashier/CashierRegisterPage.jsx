@@ -139,15 +139,13 @@ export default function CashierRegisterPage() {
         )
       }
 
-      const { data, error } = await supabase
-        .from('cash_register_shifts')
-        .insert({
-          opened_by: userId,
-          opening_cash: amount,
-          status: 'open',
-        })
-        .select('*')
-        .single()
+      const { data, error } = await supabase.rpc(
+        'open_cash_register_shift',
+        {
+          p_register_name: 'Kasir Utama',
+          p_opening_cash: amount,
+        },
+      )
 
       if (error) {
         throw error
@@ -190,16 +188,13 @@ export default function CashierRegisterPage() {
       setError('')
       setMessage('')
 
-      const { data, error } = await supabase
-        .from('cash_register_shifts')
-        .update({
-          actual_cash: amount,
-          closed_at: new Date().toISOString(),
-          status: 'closed',
-        })
-        .eq('id', shift.id)
-        .select('*')
-        .single()
+      const { data, error } = await supabase.rpc(
+        'close_cash_register_shift',
+        {
+          p_shift_id: shift.id,
+          p_actual_cash: amount,
+        },
+      )
 
       if (error) {
         throw error
