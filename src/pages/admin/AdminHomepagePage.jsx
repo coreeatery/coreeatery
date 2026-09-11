@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   getHomepageSettings,
@@ -36,11 +36,14 @@ const EMPTY_FORM = {
 export default function AdminHomepagePage() {
   const { t } = useTranslation()
 
-  const emptyForm = {
-    ...EMPTY_FORM,
-    reservation_button_text_id: t('reservation.request'),
-    reservation_button_text_en: t('public.reserveTable'),
-  }
+  const emptyForm = useMemo(
+    () => ({
+      ...EMPTY_FORM,
+      reservation_button_text_id: t('reservation.request'),
+      reservation_button_text_en: t('public.reserveTable'),
+    }),
+    [t],
+  )
   const [form, setForm] = useState(emptyForm)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -60,7 +63,7 @@ export default function AdminHomepagePage() {
 
         if (mounted && data) {
           setForm({
-            ...EMPTY_FORM,
+            ...emptyForm,
             ...data,
           })
         }
@@ -80,7 +83,7 @@ export default function AdminHomepagePage() {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [emptyForm, t])
 
   function updateField(field, value) {
     setForm((current) => ({
@@ -506,6 +509,8 @@ function ImageUploader({
   onChange,
   onRemove,
 }) {
+  const { t } = useTranslation()
+
   return (
     <div className="mt-5">
       <div className="mb-2 text-sm font-medium">{label}</div>

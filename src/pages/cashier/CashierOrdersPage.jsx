@@ -26,7 +26,7 @@ const statusClass = {
 }
 
 export default function CashierOrdersPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [orders, setOrders] = useState([])
   const [status, setStatus] = useState('')
   const [search, setSearch] = useState('')
@@ -50,7 +50,7 @@ export default function CashierOrdersPage() {
     } finally {
       setLoading(false)
     }
-  }, [status, search])
+  }, [status, search, t])
 
   useEffect(() => {
     let cancelled = false
@@ -86,7 +86,7 @@ export default function CashierOrdersPage() {
     return () => {
       cancelled = true
     }
-  }, [status, search])
+  }, [status, search, t])
 
   async function handleStatusChange(id, nextStatus) {
     try {

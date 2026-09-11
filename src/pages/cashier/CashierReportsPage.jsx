@@ -1,10 +1,8 @@
 import { getLocale } from '../../lib/i18n/locale'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { getSalesReport } from '../../features/reports/reports'
 
-import { getLanguageFromI18n } from '../../lib/i18n/locale'
 const money = (value) =>
   new Intl.NumberFormat(getLocale(), {
     style: 'currency',
@@ -40,8 +38,6 @@ function getFirstDayOfMonth() {
 }
 
 export default function CashierReportsPage() {
-  const { t, i18n } = useTranslation()
-  const language = getLanguageFromI18n(i18n)
   const [startDate, setStartDate] = useState(
     getFirstDayOfMonth(),
   )

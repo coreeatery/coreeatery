@@ -1,6 +1,6 @@
 import { getLocale } from '../i18n/locale'
 
-export function formatCurrency(value, language = 'id') {
+export function formatCurrency(value) {
   return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'IDR',

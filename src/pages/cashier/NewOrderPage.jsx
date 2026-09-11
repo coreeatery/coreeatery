@@ -28,7 +28,7 @@ const createOrderNumber = () => {
 }
 
 export default function NewOrderPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const [menuItems, setMenuItems] = useState([])
@@ -71,7 +71,7 @@ export default function NewOrderPage() {
     }
 
     loadData()
-  }, [])
+  }, [t])
 
   const categories = useMemo(() => {
     const map = new Map()

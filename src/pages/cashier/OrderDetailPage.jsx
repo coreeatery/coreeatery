@@ -36,7 +36,7 @@ const statusClass = {
 }
 
 export default function OrderDetailPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { id } = useParams()
 
   const [order, setOrder] = useState(null)
@@ -77,7 +77,7 @@ export default function OrderDetailPage() {
     return () => {
       cancelled = true
     }
-  }, [id])
+  }, [id, t])
 
   async function handleStatusChange(nextStatus) {
     if (!order || nextStatus === order.status) return

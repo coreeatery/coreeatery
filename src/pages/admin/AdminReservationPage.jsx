@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
-import { getLanguageFromI18n, getLocale } from '../../lib/i18n/locale'
+import { getLocale } from '../../lib/i18n/locale'
 import {
   getReservations,
   getReservationSummary,
@@ -21,7 +21,7 @@ const STATUS_CLASSES = {
   no_show: 'bg-neutral-200 text-neutral-700',
 }
 
-function formatDate(date, language) {
+function formatDate(date) {
   if (!date) return '-'
 
   return new Intl.DateTimeFormat(getLocale(), {
@@ -58,8 +58,7 @@ function StatusBadge({ status, t }) {
 }
 
 export default function AdminReservationPage() {
-  const { t, i18n } = useTranslation()
-  const language = getLanguageFromI18n(i18n)
+  const { t } = useTranslation()
   const [reservations, setReservations] = useState([])
   const [summary, setSummary] = useState({
     total: 0,
@@ -120,7 +119,7 @@ export default function AdminReservationPage() {
     return () => {
       cancelled = true
     }
-  }, [status, date, search, refreshKey])
+  }, [status, date, search, refreshKey, t])
 
   async function handleStatusChange(id, nextStatus) {
     setUpdatingId(id)
@@ -336,7 +335,7 @@ export default function AdminReservationPage() {
                     </td>
 
                     <td className="px-5 py-4">
-                      {formatDate(reservation.reservation_date, language)}
+                      {formatDate(reservation.reservation_date)}
                     </td>
 
                     <td className="px-5 py-4">
@@ -461,7 +460,7 @@ export default function AdminReservationPage() {
               <div className="flex justify-between gap-4">
                 <span className="text-neutral-500">{t('common.date')}</span>
                 <span className="font-medium">
-                  {formatDate(selectedReservation.reservation_date, language)}
+                  {formatDate(selectedReservation.reservation_date)}
                 </span>
               </div>
 

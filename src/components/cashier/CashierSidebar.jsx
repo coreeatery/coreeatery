@@ -6,7 +6,6 @@ import {
   Calculator,
   ClipboardList,
   CreditCard,
-  FileText,
   LayoutDashboard,
   LogOut,
   Menu,

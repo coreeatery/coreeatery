@@ -1,6 +1,6 @@
 import { getLocale } from '../i18n/locale'
 
-export function formatDateTime(value, language = 'id') {
+export function formatDateTime(value) {
   if (!value) return '-'
 
   return new Intl.DateTimeFormat(getLocale(), {
@@ -10,7 +10,7 @@ export function formatDateTime(value, language = 'id') {
   }).format(new Date(value))
 }
 
-export function formatDate(value, language = 'id') {
+export function formatDate(value) {
   if (!value) return '-'
 
   return new Intl.DateTimeFormat(getLocale(), {

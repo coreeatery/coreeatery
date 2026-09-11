@@ -5,7 +5,6 @@ import { getAdminDashboardData } from '../../features/admin/dashboard'
 import { useAuth } from '../../app/providers/useAuth'
 import { useTranslation } from 'react-i18next'
 
-import { getLanguageFromI18n } from '../../lib/i18n/locale'
 function formatRupiah(value) {
   return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
@@ -14,7 +13,7 @@ function formatRupiah(value) {
   }).format(value || 0)
 }
 
-function formatDateTime(value, language = 'id') {
+function formatDateTime(value) {
   return new Intl.DateTimeFormat(getLocale(), {
     dateStyle: 'medium',
     timeStyle: 'short',
@@ -63,8 +62,7 @@ function Icon({ children }) {
 }
 
 export default function AdminDashboardPage() {
-  const { t, i18n } = useTranslation()
-  const language = getLanguageFromI18n(i18n)
+  const { t } = useTranslation()
   const { profile } = useAuth()
 
   const initialData = useLoaderData()
@@ -84,7 +82,7 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [t])
 
   const stats = data?.stats ?? {}
 
@@ -288,7 +286,7 @@ export default function AdminDashboardPage() {
                     </p>
 
                     <p className="mt-1 text-[10px] text-gray-400 sm:text-xs">
-                      {formatDateTime(order.created_at, language)}
+                      {formatDateTime(order.created_at)}
                     </p>
                   </div>
 

@@ -12,7 +12,7 @@ import {
 } from '../../features/cms/media'
 
 export default function AdminGalleryPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
@@ -30,9 +30,12 @@ export default function AdminGalleryPage() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [t])
 
   useEffect(() => {
+    // Intentional async data-loading effect. The loader updates
+    // local UI state after synchronizing with Supabase.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadGallery()
   }, [loadGallery])
 
@@ -220,7 +223,7 @@ export default function AdminGalleryPage() {
                     onClick={() => handleDelete(item)}
                     className="rounded-xl border border-red-200 px-3 py-2 text-sm font-medium text-red-600"
                   >
-                    Hapus
+                    {t('common.delete')}
                   </button>
                 </div>
               </div>

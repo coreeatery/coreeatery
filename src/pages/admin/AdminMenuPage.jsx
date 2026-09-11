@@ -75,7 +75,7 @@ export default function AdminMenuPage() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [t])
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
