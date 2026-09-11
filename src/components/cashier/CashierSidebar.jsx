@@ -22,7 +22,13 @@ import { useAuth } from '../../app/providers/useAuth'
 
 
 export default function CashierSidebar() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const currentLanguage = (i18n.resolvedLanguage || i18n.language || 'id').split('-')[0]
+
+  const handleLanguageChange = async (language) => {
+    if (language === currentLanguage) return
+    await i18n.changeLanguage(language)
+  }
   const links = [
     {
       label: t('cashier.dashboard'),
@@ -175,6 +181,40 @@ export default function CashierSidebar() {
           ))}
         </div>
       </nav>
+
+      {/* LANGUAGE */}
+      <div className="mx-4 mb-3 rounded-xl border border-stone-200 bg-stone-50 p-2">
+        <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-stone-400">
+          Language
+        </div>
+
+        <div className="grid grid-cols-3 gap-1">
+          {[
+            { code: 'id', label: 'ID' },
+            { code: 'en', label: 'EN' },
+            { code: 'zh', label: '中文' },
+          ].map(({ code, label }) => {
+            const active = currentLanguage === code
+
+            return (
+              <button
+                key={code}
+                type="button"
+                onClick={() => handleLanguageChange(code)}
+                aria-pressed={active}
+                className={[
+                  'rounded-lg px-2 py-2 text-xs font-semibold transition-all',
+                  active
+                    ? 'bg-stone-950 text-white shadow-sm'
+                    : 'text-stone-500 hover:bg-stone-200 hover:text-stone-950',
+                ].join(' ')}
+              >
+                {label}
+              </button>
+            )
+          })}
+        </div>
+      </div>
 
       {/* STATUS */}
       <div className="mx-4 mb-3 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2.5">
