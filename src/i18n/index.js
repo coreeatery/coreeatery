@@ -281,6 +281,11 @@ const resources = {
 },
 
       cashier: {
+        system: 'Sistem Kasir',
+        operational: 'Operasional',
+        systemActive: 'Sistem aktif',
+        openMenu: 'Buka menu',
+        closeMenu: 'Tutup menu',
         dashboard: 'Dashboard',
         newOrder: 'Order Baru',
         activeOrders: 'Order Aktif',
@@ -605,6 +610,11 @@ galleryDescription:
 },
 
       cashier: {
+        system: 'Cashier System',
+        operational: 'Operations',
+        systemActive: 'System active',
+        openMenu: 'Open menu',
+        closeMenu: 'Close menu',
         dashboard: 'Dashboard',
         newOrder: 'New Order',
         activeOrders: 'Active Orders',
@@ -922,6 +932,11 @@ galleryDescription: '一览餐厅空间、餐桌以及其中发生的美好时�
 },
 
       cashier: {
+        system: '收银系统',
+        operational: '运营',
+        systemActive: '系统运行中',
+        openMenu: '打开菜单',
+        closeMenu: '关闭菜单',
         dashboard: '收银台控制台',
         newOrder: '新订单',
         activeOrders: '当前订单',

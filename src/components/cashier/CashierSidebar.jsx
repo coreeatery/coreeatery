@@ -109,7 +109,7 @@ export default function CashierSidebar() {
             <div className="mt-1 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
               <span className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
-                Cashier System
+                {t('cashier.system')}
               </span>
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function CashierSidebar() {
       {/* NAVIGATION */}
       <nav className="flex-1 overflow-y-auto px-3 py-5">
         <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-stone-400">
-          Operasional
+          {t('cashier.operational')}
         </p>
 
         <div className="space-y-1">
@@ -185,7 +185,7 @@ export default function CashierSidebar() {
       {/* LANGUAGE */}
       <div className="mx-4 mb-3 rounded-xl border border-stone-200 bg-stone-50 p-2">
         <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[0.18em] text-stone-400">
-          Language
+          {t('common.language')}
         </div>
 
         <div className="grid grid-cols-3 gap-1">
@@ -221,7 +221,7 @@ export default function CashierSidebar() {
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-emerald-500" />
           <span className="text-xs font-medium text-emerald-700">
-            Sistem aktif
+            {t('cashier.systemActive')}
           </span>
         </div>
       </div>
@@ -237,7 +237,7 @@ export default function CashierSidebar() {
           <LogOut size={18} className="shrink-0" />
 
           <span>
-            {loggingOut ? 'Keluar...' : 'Keluar dari Sistem'}
+            {loggingOut ? t('common.loggingOut') : t('cashier.logout')}
           </span>
         </button>
       </div>
@@ -257,7 +257,7 @@ export default function CashierSidebar() {
             <p className="text-xs font-bold tracking-[0.16em] text-stone-950">
               COREÉATERY
             </p>
-            <p className="text-[10px] text-stone-500">CASHIER</p>
+            <p className="text-[10px] text-stone-500">{t('cashier.cashier')}</p>
           </div>
         </div>
 
@@ -265,7 +265,7 @@ export default function CashierSidebar() {
           type="button"
           onClick={() => setMobileOpen((value) => !value)}
           className="flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white text-stone-700 shadow-sm"
-          aria-label="Buka menu"
+          aria-label={t("cashier.openMenu")}
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -281,7 +281,7 @@ export default function CashierSidebar() {
         <>
           <button
             type="button"
-            aria-label="Tutup menu"
+            aria-label={t("cashier.closeMenu")}
             onClick={closeMobile}
             className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden"
           />
