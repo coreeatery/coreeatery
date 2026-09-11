@@ -201,6 +201,34 @@ a.bg-black[aria-disabled='true'],
   color: #ffffff !important;
 }
 
+
+/* Keep dark action surfaces readable across all dark background variants. */
+button[class*="bg-black"],
+a[class*="bg-black"],
+[role="button"][class*="bg-black"],
+button[class*="bg-[#201d18]"],
+a[class*="bg-[#201d18]"],
+[role="button"][class*="bg-[#201d18]"],
+button[class*="bg-[#171512]"],
+a[class*="bg-[#171512]"],
+[role="button"][class*="bg-[#171512]"],
+button[class*="bg-stone-900"],
+a[class*="bg-stone-900"],
+[role="button"][class*="bg-stone-900"],
+button[class*="bg-neutral-900"],
+a[class*="bg-neutral-900"],
+[role="button"][class*="bg-neutral-900"] {
+  color: #ffffff !important;
+}
+
+button[class*="bg-black"]:disabled,
+button[class*="bg-[#201d18]"]:disabled,
+button[class*="bg-[#171512]"]:disabled,
+button[class*="bg-stone-900"]:disabled,
+button[class*="bg-neutral-900"]:disabled {
+  color: #ffffff !important;
+}
+
 @media (max-width: 640px) {
   .container {
     width: min(100% - 24px, 1200px);

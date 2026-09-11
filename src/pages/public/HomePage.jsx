@@ -88,7 +88,7 @@ export default function HomePage() {
   const aboutDescription = pickLanguage(settings, 'about_description', language)
   const reservationTitle = pickLanguage(settings, 'reservation_title', language) || t('public.findYourTable')
   const reservationDescription = pickLanguage(settings, 'reservation_description', language)
-  const reservationButton = pickLanguage(settings, 'reservation_button_text', language) || 'Reservasi Sekarang'
+  const reservationButton = pickLanguage(settings, 'reservation_button_text', language).trim() || 'Reservasi Sekarang'
 
   return (
     <main className="bg-[#f5f1e8] text-[#201d18]">
