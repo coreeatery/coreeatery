@@ -187,6 +187,20 @@ button svg {
   flex-shrink: 0;
 }
 
+
+/* Keep every dark action surface readable, including disabled actions. */
+button.bg-black,
+a.bg-black,
+[role='button'].bg-black {
+  color: #ffffff !important;
+}
+
+button.bg-black:disabled,
+a.bg-black[aria-disabled='true'],
+[role='button'].bg-black[aria-disabled='true'] {
+  color: #ffffff !important;
+}
+
 @media (max-width: 640px) {
   .container {
     width: min(100% - 24px, 1200px);
