@@ -15,6 +15,7 @@ export default function AdminSidebar() {
     [t('admin.gallery'), '/admin/galeri'],
     [t('admin.promo'), '/admin/promo'],
     [t('admin.settings'), '/admin/settings'],
+    ['Operations Hub', '/admin/operations'],
   ]
   const [open, setOpen] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)

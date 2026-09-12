@@ -1,0 +1,9 @@
+{
+  "name": "COREÉATERY",
+  "short_name": "COREÉATERY",
+  "start_url": "/cashier",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111827",
+  "description": "Restaurant POS and Business Operating System"
+}

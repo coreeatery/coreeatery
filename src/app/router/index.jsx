@@ -22,6 +22,7 @@ import AdminReservationPage from '../../pages/admin/AdminReservationPage'
 import AdminGalleryPage from '../../pages/admin/AdminGalleryPage'
 import AdminPromoPage from '../../pages/admin/AdminPromoPage'
 import AdminSettingsPage from '../../pages/admin/AdminSettingsPage'
+import OperationsHubPage from '../../pages/admin/OperationsHubPage'
 import { adminDashboardLoader } from '../../features/admin/dashboard'
 
 import CashierDashboardPage from '../../pages/cashier/CashierDashboardPage'
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
           { path: 'galeri', element: <AdminGalleryPage /> },
           { path: 'promo', element: <AdminPromoPage /> },
           { path: 'settings', element: <AdminSettingsPage /> },
+          { path: 'operations', element: <OperationsHubPage /> },
         ],
       },
     ],
