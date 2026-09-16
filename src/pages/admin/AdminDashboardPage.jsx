@@ -124,7 +124,10 @@ export default function AdminDashboardPage() {
 
   const stats = data?.stats || {}
   const alerts = data?.alerts || {}
-  const salesTrend = data?.salesTrend || []
+  const salesTrend = useMemo(
+    () => data?.salesTrend || [],
+    [data?.salesTrend],
+  )
   const topMenu = data?.topMenu || []
 
   const maxSales = useMemo(
