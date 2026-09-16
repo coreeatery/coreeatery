@@ -1,60 +1,115 @@
 import { supabase } from '../../lib/supabase/client'
 
-function getTodayRange() {
-  const start = new Date()
-  start.setHours(0, 0, 0, 0)
+const TIME_ZONE = 'Asia/Jakarta'
 
-  const end = new Date(start)
-  end.setDate(end.getDate() + 1)
+function getJakartaDateParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date)
+
+  return Object.fromEntries(
+    parts
+      .filter((part) => part.type !== 'literal')
+      .map((part) => [part.type, part.value]),
+  )
+}
+
+function getJakartaDate(date = new Date()) {
+  const parts = getJakartaDateParts(date)
+  return `${parts.year}-${parts.month}-${parts.day}`
+}
+
+function shiftDate(dateString, days) {
+  const date = new Date(`${dateString}T00:00:00+07:00`)
+  date.setUTCDate(date.getUTCDate() + days)
+  return date.toISOString().slice(0, 10)
+}
+
+function getJakartaRange(days = 1) {
+  const today = getJakartaDate()
+  const startDate = shiftDate(today, -(days - 1))
+  const endDate = shiftDate(today, 1)
 
   return {
-    start: start.toISOString(),
-    end: end.toISOString(),
+    startDate,
+    endDate,
+    start: `${startDate}T00:00:00+07:00`,
+    end: `${endDate}T00:00:00+07:00`,
   }
+}
+
+function emptyDashboard() {
+  return {
+    stats: {
+      revenue: 0,
+      transactions: 0,
+      activeOrders: 0,
+      todayReservations: 0,
+      activeMenu: 0,
+    },
+    salesTrend: [],
+    topMenu: [],
+    alerts: {
+      lowStock: 0,
+      kitchen: 0,
+      purchasing: 0,
+    },
+    recentPayments: [],
+    recentOrders: [],
+  }
+}
+
+function sum(items, field) {
+  return items.reduce(
+    (total, item) => total + Number(item[field] || 0),
+    0,
+  )
 }
 
 export async function getAdminDashboardData() {
   if (!supabase) {
-    return {
-      stats: {
-        revenue: 0,
-        orders: 0,
-        todayOrders: 0,
-        todayReservations: 0,
-        activeMenu: 0,
-        todayPayments: 0,
-      },
-      recentOrders: [],
-      recentReservations: [],
-    }
+    return emptyDashboard()
   }
 
-  const { start, end } = getTodayRange()
+  const today = getJakartaDate()
+  const range7 = getJakartaRange(7)
 
   const [
-    ordersResult,
-    todayOrdersResult,
-    reservationsResult,
-    activeMenuResult,
     paymentsResult,
+    activeOrdersResult,
+    todayReservationsResult,
+    activeMenuResult,
+    inventoryResult,
+    kitchenResult,
+    purchasingResult,
+    recentPaymentsResult,
     recentOrdersResult,
-    recentReservationsResult,
+    salesTrendResult,
+    topMenuResult,
   ] = await Promise.all([
     supabase
-      .from('orders')
-      .select('total_amount')
-      .eq('payment_status', 'paid'),
+      .from('payments')
+      .select('id, payment_code, order_id, amount, method, paid_at, created_at')
+      .eq('status', 'paid')
+      .gte('paid_at', range7.start)
+      .lt('paid_at', range7.end)
+      .order('paid_at', { ascending: false }),
 
     supabase
       .from('orders')
-      .select('id', { count: 'exact', head: true })
-      .gte('created_at', start)
-      .lt('created_at', end),
+      .select('id, order_number, customer_name, status, payment_status, total_amount, created_at')
+      .neq('status', 'completed')
+      .neq('status', 'cancelled')
+      .order('created_at', { ascending: false }),
 
     supabase
       .from('reservations')
       .select('id', { count: 'exact', head: true })
-      .eq('reservation_date', start.slice(0, 10)),
+      .eq('reservation_date', today)
+      .neq('status', 'cancelled'),
 
     supabase
       .from('menu_items')
@@ -63,11 +118,37 @@ export async function getAdminDashboardData() {
       .eq('is_available', true),
 
     supabase
+      .from('inventory_items')
+      .select('id, name, current_stock, min_stock')
+      .eq('is_active', true),
+
+    supabase
+      .from('kitchen_tickets')
+      .select('id', { count: 'exact', head: true })
+      .in('status', ['queued', 'preparing', 'ready']),
+
+    supabase
+      .from('purchase_orders')
+      .select('id', { count: 'exact', head: true })
+      .neq('status', 'cancelled'),
+
+    supabase
       .from('payments')
-      .select('amount')
+      .select(`
+        id,
+        payment_code,
+        order_id,
+        amount,
+        method,
+        paid_at,
+        orders (
+          order_number,
+          customer_name
+        )
+      `)
       .eq('status', 'paid')
-      .gte('paid_at', start)
-      .lt('paid_at', end),
+      .order('paid_at', { ascending: false })
+      .limit(6),
 
     supabase
       .from('orders')
@@ -81,59 +162,146 @@ export async function getAdminDashboardData() {
         created_at
       `)
       .order('created_at', { ascending: false })
-      .limit(8),
+      .limit(6),
 
     supabase
-      .from('reservations')
+      .from('payments')
+      .select('amount, paid_at')
+      .eq('status', 'paid')
+      .gte('paid_at', range7.start)
+      .lt('paid_at', range7.end)
+      .order('paid_at', { ascending: true }),
+
+    supabase
+      .from('order_items')
       .select(`
-        id,
-        reservation_code,
-        customer_name,
-        reservation_date,
-        reservation_time,
-        guest_count,
-        status
+        quantity,
+        item_name,
+        menu_item_id,
+        orders!inner (
+          status,
+          payment_status
+        )
       `)
-      .order('reservation_date', { ascending: false })
-      .order('reservation_time', { ascending: false })
-      .limit(8),
+      .eq('orders.payment_status', 'paid')
+      .neq('orders.status', 'cancelled'),
   ])
 
   const errors = [
-    ordersResult.error,
-    todayOrdersResult.error,
-    reservationsResult.error,
-    activeMenuResult.error,
     paymentsResult.error,
+    activeOrdersResult.error,
+    todayReservationsResult.error,
+    activeMenuResult.error,
+    inventoryResult.error,
+    kitchenResult.error,
+    purchasingResult.error,
+    recentPaymentsResult.error,
     recentOrdersResult.error,
-    recentReservationsResult.error,
+    salesTrendResult.error,
+    topMenuResult.error,
   ].filter(Boolean)
 
   if (errors.length) {
+    console.error('DASHBOARD_QUERY_ERRORS', {
+      payments: paymentsResult.error,
+      activeOrders: activeOrdersResult.error,
+      reservations: todayReservationsResult.error,
+      activeMenu: activeMenuResult.error,
+      inventory: inventoryResult.error,
+      kitchen: kitchenResult.error,
+      purchasing: purchasingResult.error,
+      recentPayments: recentPaymentsResult.error,
+      recentOrders: recentOrdersResult.error,
+      salesTrend: salesTrendResult.error,
+      topMenu: topMenuResult.error,
+    })
     throw errors[0]
   }
 
-  const revenue = (ordersResult.data ?? []).reduce(
-    (total, order) => total + Number(order.total_amount || 0),
-    0,
+  const payments = paymentsResult.data ?? []
+  const todayStart = `${today}T00:00:00+07:00`
+  const tomorrow = shiftDate(today, 1)
+  const todayEnd = `${tomorrow}T00:00:00+07:00`
+
+  const todayPayments = payments.filter(
+    (payment) =>
+      payment.paid_at >= todayStart &&
+      payment.paid_at < todayEnd,
   )
 
-  const todayPayments = (paymentsResult.data ?? []).reduce(
-    (total, payment) => total + Number(payment.amount || 0),
-    0,
+  const revenue = sum(todayPayments, 'amount')
+
+  const lowStock = (inventoryResult.data ?? []).filter(
+    (item) =>
+      Number(item.current_stock) <= Number(item.min_stock),
   )
+
+  const salesByDate = new Map()
+
+  for (let index = 0; index < 7; index += 1) {
+    const date = shiftDate(today, -(6 - index))
+
+    salesByDate.set(date, {
+      date,
+      label: new Intl.DateTimeFormat('id-ID', {
+        timeZone: TIME_ZONE,
+        day: '2-digit',
+        month: 'short',
+      }).format(new Date(`${date}T12:00:00+07:00`)),
+      amount: 0,
+    })
+  }
+
+  for (const payment of salesTrendResult.data ?? []) {
+    const date = getJakartaDate(new Date(payment.paid_at))
+    const row = salesByDate.get(date)
+
+    if (row) {
+      row.amount += Number(payment.amount || 0)
+    }
+  }
+
+  const menuTotals = new Map()
+
+  for (const item of topMenuResult.data ?? []) {
+    const name = item.item_name || 'Menu'
+    const current = menuTotals.get(name) || 0
+
+    menuTotals.set(
+      name,
+      current + Number(item.quantity || 0),
+    )
+  }
+
+  const topMenu = [...menuTotals.entries()]
+    .map(([name, quantity]) => ({
+      name,
+      quantity,
+    }))
+    .sort((a, b) => b.quantity - a.quantity)
+    .slice(0, 5)
 
   return {
     stats: {
       revenue,
-      orders: ordersResult.data?.length ?? 0,
-      todayOrders: todayOrdersResult.count ?? 0,
-      todayReservations: reservationsResult.count ?? 0,
+      transactions: todayPayments.length,
+      activeOrders: activeOrdersResult.data?.length ?? 0,
+      todayReservations: todayReservationsResult.count ?? 0,
       activeMenu: activeMenuResult.count ?? 0,
-      todayPayments,
     },
+
+    salesTrend: [...salesByDate.values()],
+
+    topMenu,
+
+    alerts: {
+      lowStock: lowStock.length,
+      kitchen: kitchenResult.count ?? 0,
+      purchasing: purchasingResult.count ?? 0,
+    },
+
+    recentPayments: recentPaymentsResult.data ?? [],
     recentOrders: recentOrdersResult.data ?? [],
-    recentReservations: recentReservationsResult.data ?? [],
   }
 }
 
