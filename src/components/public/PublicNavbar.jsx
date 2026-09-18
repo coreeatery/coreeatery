@@ -58,9 +58,7 @@ export default function PublicNavbar() {
           <Link
             to="/reservasi"
             className="hidden border border-[#c7aa70]/70 px-5 py-2.5 text-[9px] font-semibold uppercase tracking-[0.25em] transition hover:bg-[#c7aa70] hover:text-[#171512] sm:inline-flex"
-          >
-            Reserve
-          </Link>
+          >{t("public.reserveTable")}</Link>
 
           <button
             type="button"

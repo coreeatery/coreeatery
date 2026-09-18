@@ -1,3 +1,20 @@
+import { useEffect, useState } from "react"
+import { getHomepageSettings, saveHomepageSettings } from "../../features/cms/homepage"
+
+const EMPTY = { whatsapp_number: "", address: "", google_maps_url: "", instagram_url: "", opening_hours: "" }
+
 export default function AdminSettingsPage() {
-  return <div><h1 className="text-3xl font-bold">Admin Settings</h1></div>
+  const [form, setForm] = useState(EMPTY)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
+
+  useEffect(() => { let active = true; getHomepageSettings().then((data) => { if (active && data) setForm({ ...EMPTY, ...data }) }).catch((err) => active && setError(err.message || "Gagal memuat pengaturan restoran.")).finally(() => active && setLoading(false)); return () => { active = false } }, [])
+  const update = (key, value) => { setForm((current) => ({ ...current, [key]: value })); setError(""); setSuccess("") }
+  const submit = async (event) => { event.preventDefault(); const whatsapp = form.whatsapp_number.replace(/[^0-9+]/g, ""); if (form.whatsapp_number && !/^\+?[0-9]{8,16}$/.test(whatsapp)) { setError("Nomor WhatsApp harus berisi 8–16 digit."); return } for (const value of [form.google_maps_url, form.instagram_url]) { if (value && !/^https:\/\//i.test(value)) { setError("URL harus dimulai dengan https://."); return } } setSaving(true); try { await saveHomepageSettings({ whatsapp_number: whatsapp || null, address: form.address.trim() || null, google_maps_url: form.google_maps_url.trim() || null, instagram_url: form.instagram_url.trim() || null, opening_hours: form.opening_hours.trim() || null }); setSuccess("Pengaturan restoran berhasil disimpan.") } catch (err) { setError(err.message || "Gagal menyimpan pengaturan restoran.") } finally { setSaving(false) } }
+  if (loading) return <section className="p-6 text-sm text-neutral-500">Memuat pengaturan restoran...</section>
+  return <section className="max-w-3xl space-y-6"><header><p className="text-sm font-medium uppercase tracking-wider text-neutral-500">CMS RESTORAN</p><h1 className="mt-1 text-3xl font-bold tracking-tight">Pengaturan Restoran</h1><p className="mt-2 text-sm text-neutral-500">Kelola kontak publik yang tersedia pada homepage. Logo tidak dapat dikelola karena schema belum mendukungnya.</p></header>{error && <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}{success && <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">{success}</div>}<form onSubmit={submit} className="grid gap-5 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"><Field label="Nomor WhatsApp" value={form.whatsapp_number} onChange={(value) => update("whatsapp_number", value)} placeholder="628xxxxxxxxxx" /><Field label="Jam operasional" value={form.opening_hours} onChange={(value) => update("opening_hours", value)} placeholder="10.00 – 22.00" /><Area label="Alamat" value={form.address} onChange={(value) => update("address", value)} /><Field label="URL Google Maps" value={form.google_maps_url} onChange={(value) => update("google_maps_url", value)} placeholder="https://maps.google.com/..." /><Field label="URL Instagram" value={form.instagram_url} onChange={(value) => update("instagram_url", value)} placeholder="https://instagram.com/..." /><button disabled={saving} className="w-fit rounded-xl bg-neutral-950 px-6 py-3 text-sm font-semibold text-white disabled:opacity-50">{saving ? "Menyimpan..." : "Simpan pengaturan"}</button></form></section>
 }
+function Field({ label, value, onChange, placeholder = "" }) { return <label><span className="text-sm font-medium">{label}</span><input value={value || ""} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="mt-2 w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm" /></label> }
+function Area({ label, value, onChange }) { return <label><span className="text-sm font-medium">{label}</span><textarea value={value || ""} onChange={(event) => onChange(event.target.value)} rows="4" className="mt-2 w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm" /></label> }
