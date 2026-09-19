@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { getLocale } from '../../lib/i18n/locale';
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   getOrderById,
@@ -43,6 +43,7 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const orderActionRef = useRef(false)
 
   useEffect(() => {
     let cancelled = false
@@ -80,7 +81,14 @@ export default function OrderDetailPage() {
   }, [id, t])
 
   async function handleStatusChange(nextStatus) {
-    if (!order || nextStatus === order.status) return
+    if (
+      !order ||
+      nextStatus === order.status ||
+      orderActionRef.current ||
+      saving
+    ) return
+
+    orderActionRef.current = true
 
     try {
       setSaving(true)
@@ -102,12 +110,15 @@ export default function OrderDetailPage() {
         err.message || t('cashier.updateOrderStatusError'),
       )
     } finally {
+      orderActionRef.current = false
       setSaving(false)
     }
   }
 
   async function handleRecalculate() {
-    if (!order) return
+    if (!order || orderActionRef.current || saving) return
+
+    orderActionRef.current = true
 
     try {
       setSaving(true)
@@ -126,6 +137,7 @@ export default function OrderDetailPage() {
         err.message || t('cashier.recalculateTotalError'),
       )
     } finally {
+      orderActionRef.current = false
       setSaving(false)
     }
   }

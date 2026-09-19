@@ -1,5 +1,5 @@
 import { getLocale } from '../../lib/i18n/locale'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../../lib/supabase/client'
 const money = (value) =>
   new Intl.NumberFormat(getLocale(), {
@@ -25,6 +25,7 @@ export default function CashierRegisterPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const shiftActionRef = useRef(false)
 
   useEffect(() => {
     let cancelled = false
@@ -91,6 +92,8 @@ export default function CashierRegisterPage() {
   async function handleOpenShift(event) {
     event.preventDefault()
 
+    if (shiftActionRef.current || saving) return
+
     const amount = Number(openingCash) || 0
 
     if (amount < 0) {
@@ -102,6 +105,8 @@ export default function CashierRegisterPage() {
       setError('Supabase belum dikonfigurasi.')
       return
     }
+
+    shiftActionRef.current = true
 
     try {
       setSaving(true)
@@ -160,12 +165,15 @@ export default function CashierRegisterPage() {
         err.message || 'Gagal membuka shift.',
       )
     } finally {
+      shiftActionRef.current = false
       setSaving(false)
     }
   }
 
   async function handleCloseShift(event) {
     event.preventDefault()
+
+    if (shiftActionRef.current || saving) return
 
     if (!shift) {
       return
@@ -182,6 +190,8 @@ export default function CashierRegisterPage() {
       setError('Supabase belum dikonfigurasi.')
       return
     }
+
+    shiftActionRef.current = true
 
     try {
       setSaving(true)
@@ -209,6 +219,7 @@ export default function CashierRegisterPage() {
         err.message || 'Gagal menutup shift.',
       )
     } finally {
+      shiftActionRef.current = false
       setSaving(false)
     }
   }

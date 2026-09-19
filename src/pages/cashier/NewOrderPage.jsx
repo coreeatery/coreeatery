@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { getLocale } from '../../lib/i18n/locale';
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getMenuItems } from '../../features/menu/menu'
 import { getTables } from '../../features/tables/tables'
@@ -49,6 +49,7 @@ export default function NewOrderPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const orderSubmissionRef = useRef(false)
 
   useEffect(() => {
     async function loadData() {
@@ -199,10 +200,14 @@ export default function NewOrderPage() {
   }
 
   async function handleSaveOrder() {
+    if (orderSubmissionRef.current || saving) return
+
     if (cart.length === 0) {
       setError(t('cashier.minimumOneMenu'))
       return
     }
+
+    orderSubmissionRef.current = true
 
     try {
       setSaving(true)
@@ -229,6 +234,7 @@ export default function NewOrderPage() {
     } catch (err) {
       setError(err.message || t('cashier.createOrderError'))
     } finally {
+      orderSubmissionRef.current = false
       setSaving(false)
     }
   }

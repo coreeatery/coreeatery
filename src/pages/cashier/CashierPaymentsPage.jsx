@@ -1,5 +1,5 @@
 import { getLocale } from '../../lib/i18n/locale'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { getOrderById } from '../../features/orders/orders'
 import {
@@ -58,6 +58,7 @@ export default function CashierPaymentsPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(null)
+  const paymentSubmissionRef = useRef(false)
 
   const [method, setMethod] = useState('cash')
   const [paidAmount, setPaidAmount] = useState('')
@@ -115,6 +116,8 @@ export default function CashierPaymentsPage() {
   async function handleSubmit(event) {
     event.preventDefault()
 
+    if (paymentSubmissionRef.current || saving) return
+
     if (!order) {
       setError('Order tidak ditemukan.')
       return
@@ -138,6 +141,8 @@ export default function CashierPaymentsPage() {
       )
       return
     }
+
+    paymentSubmissionRef.current = true
 
     try {
       setSaving(true)
@@ -169,6 +174,7 @@ export default function CashierPaymentsPage() {
           'Pembayaran gagal diproses.',
       )
     } finally {
+      paymentSubmissionRef.current = false
       setSaving(false)
     }
   }
