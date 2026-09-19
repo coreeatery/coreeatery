@@ -9,22 +9,29 @@ import { uploadCmsImage } from '../../features/cms/media'
 const EMPTY_FORM = {
   hero_title_id: '',
   hero_title_en: '',
+  hero_title_zh: '',
   hero_subtitle_id: '',
   hero_subtitle_en: '',
+  hero_subtitle_zh: '',
   hero_image_url: '',
 
   about_title_id: '',
   about_title_en: '',
+  about_title_zh: '',
   about_description_id: '',
   about_description_en: '',
+  about_description_zh: '',
   about_image_url: '',
 
   reservation_title_id: '',
   reservation_title_en: '',
+  reservation_title_zh: '',
   reservation_description_id: '',
   reservation_description_en: '',
+  reservation_description_zh: '',
   reservation_button_text_id: '',
   reservation_button_text_en: '',
+  reservation_button_text_zh: '',
 
   whatsapp_number: '',
   address: '',
@@ -129,30 +136,40 @@ export default function AdminHomepagePage() {
       await saveHomepageSettings({
         hero_title_id: form.hero_title_id.trim() || null,
         hero_title_en: form.hero_title_en.trim() || null,
+        hero_title_zh: form.hero_title_zh.trim() || null,
         hero_subtitle_id: form.hero_subtitle_id.trim() || null,
         hero_subtitle_en: form.hero_subtitle_en.trim() || null,
+        hero_subtitle_zh: form.hero_subtitle_zh.trim() || null,
         hero_image_url: form.hero_image_url.trim() || null,
 
         about_title_id: form.about_title_id.trim() || null,
         about_title_en: form.about_title_en.trim() || null,
+        about_title_zh: form.about_title_zh.trim() || null,
         about_description_id: form.about_description_id.trim() || null,
         about_description_en: form.about_description_en.trim() || null,
+        about_description_zh: form.about_description_zh.trim() || null,
         about_image_url: form.about_image_url.trim() || null,
 
         reservation_title_id:
           form.reservation_title_id.trim() || null,
         reservation_title_en:
           form.reservation_title_en.trim() || null,
+        reservation_title_zh:
+          form.reservation_title_zh.trim() || null,
         reservation_description_id:
           form.reservation_description_id.trim() || null,
         reservation_description_en:
           form.reservation_description_en.trim() || null,
+        reservation_description_zh:
+          form.reservation_description_zh.trim() || null,
         reservation_button_text_id:
           form.reservation_button_text_id.trim() ||
           t('reservation.request'),
         reservation_button_text_en:
           form.reservation_button_text_en.trim() ||
           t('public.reserveTable'),
+        reservation_button_text_zh:
+          form.reservation_button_text_zh.trim() || null,
 
         whatsapp_number: form.whatsapp_number.trim() || null,
         address: form.address.trim() || null,
@@ -232,6 +249,13 @@ export default function AdminHomepagePage() {
               placeholder="Enjoy the Ultimate Dining Experience"
             />
 
+            <Field
+              label="Judul 中文"
+              value={form.hero_title_zh}
+              onChange={(value) => updateField('hero_title_zh', value)}
+              placeholder="尽享非凡餐饮体验"
+            />
+
             <TextAreaField
               label="Subtitle Indonesia"
               value={form.hero_subtitle_id}
@@ -248,6 +272,13 @@ export default function AdminHomepagePage() {
                 updateField('hero_subtitle_en', value)
               }
               placeholder="Delicious food, cozy atmosphere, memorable experience."
+            />
+
+            <TextAreaField
+              label="Subtitle 中文"
+              value={form.hero_subtitle_zh}
+              onChange={(value) => updateField('hero_subtitle_zh', value)}
+              placeholder="美味佳肴、舒适氛围与难忘体验。"
             />
           </div>
 
@@ -289,6 +320,12 @@ export default function AdminHomepagePage() {
               onChange={(value) => updateField('about_title_en', value)}
             />
 
+            <Field
+              label="Judul 中文"
+              value={form.about_title_zh}
+              onChange={(value) => updateField('about_title_zh', value)}
+            />
+
             <TextAreaField
               label="Deskripsi Indonesia"
               value={form.about_description_id}
@@ -302,6 +339,14 @@ export default function AdminHomepagePage() {
               value={form.about_description_en}
               onChange={(value) =>
                 updateField('about_description_en', value)
+              }
+            />
+
+            <TextAreaField
+              label="Deskripsi 中文"
+              value={form.about_description_zh}
+              onChange={(value) =>
+                updateField('about_description_zh', value)
               }
             />
           </div>
@@ -348,6 +393,14 @@ export default function AdminHomepagePage() {
               }
             />
 
+            <Field
+              label="Judul 中文"
+              value={form.reservation_title_zh}
+              onChange={(value) =>
+                updateField('reservation_title_zh', value)
+              }
+            />
+
             <TextAreaField
               label="Deskripsi Indonesia"
               value={form.reservation_description_id}
@@ -370,6 +423,14 @@ export default function AdminHomepagePage() {
               }
             />
 
+            <TextAreaField
+              label="Deskripsi 中文"
+              value={form.reservation_description_zh}
+              onChange={(value) =>
+                updateField('reservation_description_zh', value)
+              }
+            />
+
             <Field
               label="Teks Tombol Indonesia"
               value={form.reservation_button_text_id}
@@ -389,6 +450,14 @@ export default function AdminHomepagePage() {
                   'reservation_button_text_en',
                   value,
                 )
+              }
+            />
+
+            <Field
+              label="Teks Tombol 中文"
+              value={form.reservation_button_text_zh}
+              onChange={(value) =>
+                updateField('reservation_button_text_zh', value)
               }
             />
           </div>

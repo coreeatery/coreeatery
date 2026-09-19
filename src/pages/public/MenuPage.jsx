@@ -1,19 +1,16 @@
 import { getLocale } from '../../lib/i18n/locale'
+import { normalizeLanguage, pickLocalized } from '../../lib/i18n/content'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getMenuCategories, getMenuItems } from '../../features/menu/menu'
-function pick(row, field, language) {
-  const suffix = language === 'en' ? 'en' : language === 'zh' ? 'zh' : 'id'
-  return row?.[`${field}_${suffix}`] || row?.[`${field}_id`] || ''
-}
-
 function formatRupiah(value) {
   return new Intl.NumberFormat(getLocale(), { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(value) || 0)
 }
 
 export default function MenuPage() {
   const { t, i18n } = useTranslation()
+  const language = normalizeLanguage(i18n.resolvedLanguage || i18n.language)
   const [items, setItems] = useState([])
   const [categories, setCategories] = useState([])
   const [activeCategory, setActiveCategory] = useState('all')
@@ -28,10 +25,10 @@ export default function MenuPage() {
         setItems(menuData.filter((item) => item.status === 'active' && item.is_available))
         setCategories(categoryData.filter((category) => category.is_active))
       })
-      .catch((err) => mounted && setError(err.message || 'Gagal memuat menu.'))
+      .catch(() => mounted && setError(t('public.loadMenuError')))
       .finally(() => mounted && setLoading(false))
     return () => { mounted = false }
-  }, [])
+  }, [t])
 
   const filteredItems = useMemo(() => activeCategory === 'all' ? items : items.filter((item) => item.category_id === activeCategory), [items, activeCategory])
 
@@ -45,9 +42,9 @@ export default function MenuPage() {
       </section>
 
       <section className="mx-auto max-w-[1400px] px-6 py-12 sm:px-10 lg:px-16 lg:py-16">
-        {categories.length > 0 && <div className="mb-14 flex gap-6 overflow-x-auto border-b border-[#d8d0c1] pb-0">{[{ id: 'all', label: t('common.all') }, ...categories.map((category) => ({ id: category.id, label: pick(category, 'name', i18n.language) || category.name_id }))].map((category) => <button key={category.id} type="button" onClick={() => setActiveCategory(category.id)} className={`whitespace-nowrap border-b-2 px-1 pb-4 text-[9px] font-semibold uppercase tracking-[0.28em] transition ${activeCategory === category.id ? 'border-[#b79b63] text-[#8f7850]' : 'border-transparent text-[#6e6659] hover:text-[#201d18]'}`}>{category.label}</button>)}</div>}
+        {categories.length > 0 && <div className="mb-14 flex gap-6 overflow-x-auto border-b border-[#d8d0c1] pb-0">{[{ id: 'all', label: t('common.all') }, ...categories.map((category) => ({ id: category.id, label: pickLocalized(category, 'name', language) }))].map((category) => <button key={category.id} type="button" onClick={() => setActiveCategory(category.id)} className={`whitespace-nowrap border-b-2 px-1 pb-4 text-[9px] font-semibold uppercase tracking-[0.28em] transition ${activeCategory === category.id ? 'border-[#b79b63] text-[#8f7850]' : 'border-transparent text-[#6e6659] hover:text-[#201d18]'}`}>{category.label}</button>)}</div>}
 
-        {filteredItems.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('menu.noAvailable')}</p></div> : <div className="grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{filteredItems.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#ddd4c4]">{item.image_url ? <img src={item.image_url} alt={pick(item, 'name', i18n.language)} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex justify-between gap-5"><div><p className="text-[9px] uppercase tracking-[0.2em] text-[#9b8355]">{item.menu_categories?.name_id || 'COREÉATERY'}</p><h2 className="mt-2 font-serif text-2xl">{pick(item, 'name', i18n.language) || item.name_id}</h2>{pick(item, 'description', i18n.language) && <p className="mt-2 line-clamp-2 text-xs leading-6 text-[#6e6659]">{pick(item, 'description', i18n.language)}</p>}</div><p className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</p></div></Link>)}</div>}
+        {filteredItems.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('menu.noAvailable')}</p></div> : <div className="grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{filteredItems.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#ddd4c4]">{item.image_url ? <img src={item.image_url} alt={pickLocalized(item, 'name', language)} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex justify-between gap-5"><div><p className="text-[9px] uppercase tracking-[0.2em] text-[#9b8355]">{pickLocalized(item.menu_categories, 'name', language) || 'COREÉATERY'}</p><h2 className="mt-2 font-serif text-2xl">{pickLocalized(item, 'name', language)}</h2>{pickLocalized(item, 'description', language) && <p className="mt-2 line-clamp-2 text-xs leading-6 text-[#6e6659]">{pickLocalized(item, 'description', language)}</p>}</div><p className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</p></div></Link>)}</div>}
       </section>
     </main>
   )

@@ -62,6 +62,14 @@ const resources = {
 
       public: {
         findYourTable: 'Temukan meja Anda di COREÉATERY.',
+        defaultHeroTitle: 'Nikmati Pengalaman Kuliner Terbaik',
+        defaultAboutTitle: 'Rasa yang dibuat dengan niat.',
+        defaultReservationButton: 'Reservasi Sekarang',
+        loadHomepageError: 'Gagal memuat homepage.',
+        loadMenuError: 'Gagal memuat menu.',
+        loadMenuDetailError: 'Gagal memuat detail menu.',
+        loadGalleryError: 'Gagal memuat galeri.',
+        reservationFailed: 'Reservasi gagal dikirim. Silakan coba lagi.',
         signatureDescription: 'Beberapa pilihan yang layak dinikmati dengan selera yang baik.',
 
         explore: 'Jelajahi',
@@ -391,6 +399,14 @@ const resources = {
 
       public: {
         findYourTable: 'Find your table at COREÉATERY.',
+        defaultHeroTitle: 'Enjoy an Exceptional Dining Experience',
+        defaultAboutTitle: 'Flavour made with intention.',
+        defaultReservationButton: 'Reserve Now',
+        loadHomepageError: 'Failed to load the homepage.',
+        loadMenuError: 'Failed to load the menu.',
+        loadMenuDetailError: 'Failed to load menu details.',
+        loadGalleryError: 'Failed to load the gallery.',
+        reservationFailed: 'Your reservation could not be sent. Please try again.',
         signatureDescription: 'A few things worth arriving hungry for.',
 
         explore: 'Explore',
@@ -720,6 +736,14 @@ galleryDescription:
 
       public: {
         findYourTable: '在 COREÉATERY 找到属于您的座位。',
+        defaultHeroTitle: '尽享非凡餐饮体验',
+        defaultAboutTitle: '用心打造的风味。',
+        defaultReservationButton: '立即预订',
+        loadHomepageError: '主页加载失败。',
+        loadMenuError: '菜单加载失败。',
+        loadMenuDetailError: '菜单详情加载失败。',
+        loadGalleryError: '画廊加载失败。',
+        reservationFailed: '预订发送失败，请重试。',
         signatureDescription: '一些值得带着好胃口前来的精选美味。',
 
         explore: '探索',
@@ -807,6 +831,7 @@ galleryDescription: '一览餐厅空间、餐桌以及其中发生的美好时�
         notesPlaceholder: '例如：生日、纪念日、饮食需求...',
         sending: '正在发送请求...',
         request: '提交预订请求',
+        requiredFields: '请填写姓名、WhatsApp 号码、日期和时间。',
       },
 
       auth: {

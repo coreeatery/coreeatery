@@ -307,6 +307,23 @@ export async function getAdminDashboardData() {
 
 export async function adminDashboardLoader() {
   try {
+    if (!supabase) {
+      return await getAdminDashboardData()
+    }
+
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession()
+
+    if (sessionError) {
+      throw sessionError
+    }
+
+    if (!session?.user) {
+      throw new Error('Session autentikasi belum tersedia.')
+    }
+
     return await getAdminDashboardData()
   } catch (error) {
     throw new Response(

@@ -1,4 +1,5 @@
 import { getLocale } from '../../lib/i18n/locale'
+import { normalizeLanguage, pickLocalized } from '../../lib/i18n/content'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -6,11 +7,6 @@ import { getHomepageSettings } from '../../features/cms/homepage'
 import { getGalleryItems } from '../../features/cms/gallery'
 import { getActivePromotions } from '../../features/cms/promotions'
 import { getMenuItems } from '../../features/menu/menu'
-function pickLanguage(row, field, language) {
-  const suffix = language === 'en' ? 'en' : language === 'zh' ? 'zh' : 'id'
-  return row?.[`${field}_${suffix}`] || row?.[`${field}_id`] || row?.[field] || ''
-}
-
 function formatRupiah(value) {
   return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
@@ -32,7 +28,7 @@ function SectionLabel({ children, light = false }) {
 
 export default function HomePage() {
   const { t, i18n } = useTranslation()
-  const language = i18n.language
+  const language = normalizeLanguage(i18n.resolvedLanguage || i18n.language)
   const [settings, setSettings] = useState(null)
   const [featured, setFeatured] = useState([])
   const [gallery, setGallery] = useState([])
@@ -55,15 +51,15 @@ export default function HomePage() {
         setFeatured(menu.filter((item) => item.status === 'active' && item.is_available && item.is_featured).slice(0, 4))
         setGallery(galleryData.filter((item) => item.is_active).slice(0, 6))
         setPromotions(promoData.slice(0, 2))
-      } catch (err) {
-        if (mounted) setError(err.message || 'Gagal memuat homepage.')
+      } catch {
+        if (mounted) setError(t('public.loadHomepageError'))
       } finally {
         if (mounted) setLoading(false)
       }
     }
     load()
     return () => { mounted = false }
-  }, [])
+  }, [t])
 
   const whatsappUrl = useMemo(() => {
     const number = settings?.whatsapp_number?.replace(/\D/g, '')
@@ -82,13 +78,13 @@ export default function HomePage() {
     return <main className="flex min-h-[70vh] items-center justify-center bg-[#f5f1e8] px-6"><div className="max-w-xl text-center"><p className="text-xs uppercase tracking-[0.4em] text-[#9b8355]">COREÉATERY</p><h1 className="mt-6 font-serif text-4xl">{t('common.noData')}</h1><Link to="/admin/homepage" className="mt-8 inline-flex bg-[#201d18] px-7 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">{t('admin.homepage')}</Link></div></main>
   }
 
-  const heroTitle = pickLanguage(settings, 'hero_title', language) || 'Nikmati Pengalaman Kuliner Terbaik'
-  const heroSubtitle = pickLanguage(settings, 'hero_subtitle', language)
-  const aboutTitle = pickLanguage(settings, 'about_title', language) || 'Rasa yang dibuat dengan niat.'
-  const aboutDescription = pickLanguage(settings, 'about_description', language)
-  const reservationTitle = pickLanguage(settings, 'reservation_title', language) || t('public.findYourTable')
-  const reservationDescription = pickLanguage(settings, 'reservation_description', language)
-  const reservationButton = pickLanguage(settings, 'reservation_button_text', language).trim() || 'Reservasi Sekarang'
+  const heroTitle = pickLocalized(settings, 'hero_title', language) || t('public.defaultHeroTitle')
+  const heroSubtitle = pickLocalized(settings, 'hero_subtitle', language)
+  const aboutTitle = pickLocalized(settings, 'about_title', language) || t('public.defaultAboutTitle')
+  const aboutDescription = pickLocalized(settings, 'about_description', language)
+  const reservationTitle = pickLocalized(settings, 'reservation_title', language) || t('public.findYourTable')
+  const reservationDescription = pickLocalized(settings, 'reservation_description', language)
+  const reservationButton = pickLocalized(settings, 'reservation_button_text', language).trim() || t('public.defaultReservationButton')
 
   return (
     <main className="bg-[#f5f1e8] text-[#201d18]">
@@ -110,11 +106,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {promotions.length > 0 && <section className="border-b border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto grid max-w-[1400px] md:grid-cols-2">{promotions.map((promo) => <article key={promo.id} className="grid min-h-[260px] grid-cols-[1fr_0.9fr] border-b border-[#d8d0c1] last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"><div className="flex flex-col justify-center p-7 sm:p-10"><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('public.limitedOffering')}</p><h2 className="mt-4 font-serif text-2xl sm:text-3xl">{pickLanguage(promo, 'title', language) || promo.title_id}</h2>{promo.discount_text && <p className="mt-3 text-sm text-[#9b8355]">{promo.discount_text}</p>}</div>{promo.image_url ? <img src={promo.image_url} alt={pickLanguage(promo, 'title', language)} className="h-full min-h-[260px] w-full object-cover" /> : <div className="bg-[#dcd3c2]" />}</article>)}</div></section>}
+      {promotions.length > 0 && <section className="border-b border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto grid max-w-[1400px] md:grid-cols-2">{promotions.map((promo) => <article key={promo.id} className="grid min-h-[260px] grid-cols-[1fr_0.9fr] border-b border-[#d8d0c1] last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"><div className="flex flex-col justify-center p-7 sm:p-10"><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('public.limitedOffering')}</p><h2 className="mt-4 font-serif text-2xl sm:text-3xl">{pickLocalized(promo, 'title', language)}</h2>{promo.discount_text && <p className="mt-3 text-sm text-[#9b8355]">{promo.discount_text}</p>}</div>{promo.image_url ? <img src={promo.image_url} alt={pickLocalized(promo, 'title', language)} className="h-full min-h-[260px] w-full object-cover" /> : <div className="bg-[#dcd3c2]" />}</article>)}</div></section>}
 
-      {(settings.about_title_id || settings.about_title_en || settings.about_description_id || settings.about_description_en || settings.about_image_url) && <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-36"><div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24"><div className="order-2 lg:order-1"><SectionLabel>{t('public.ourPhilosophy')}</SectionLabel><h2 className="mt-7 max-w-xl font-serif text-4xl font-normal leading-tight sm:text-5xl lg:text-6xl">{aboutTitle}</h2>{aboutDescription && <p className="mt-7 max-w-xl whitespace-pre-line text-sm leading-8 text-[#6e6659] sm:text-base">{aboutDescription}</p>}<div className="mt-9 flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-[#9b8355]"><span className="h-px w-8 bg-[#b79b63]" />{t('public.craftedWithIntention')}</div></div>{settings.about_image_url && <div className="order-1 lg:order-2"><div className="relative"><div className="absolute -bottom-4 -left-4 h-full w-full border border-[#c9b589]/60" /><img src={settings.about_image_url} alt={aboutTitle} className="relative aspect-[4/5] w-full object-cover sm:aspect-[4/3]" /></div></div>}</div></section>}
+      {(settings.about_title_id || settings.about_title_en || settings.about_title_zh || settings.about_description_id || settings.about_description_en || settings.about_description_zh || settings.about_image_url) && <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-36"><div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24"><div className="order-2 lg:order-1"><SectionLabel>{t('public.ourPhilosophy')}</SectionLabel><h2 className="mt-7 max-w-xl font-serif text-4xl font-normal leading-tight sm:text-5xl lg:text-6xl">{aboutTitle}</h2>{aboutDescription && <p className="mt-7 max-w-xl whitespace-pre-line text-sm leading-8 text-[#6e6659] sm:text-base">{aboutDescription}</p>}<div className="mt-9 flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-[#9b8355]"><span className="h-px w-8 bg-[#b79b63]" />{t('public.craftedWithIntention')}</div></div>{settings.about_image_url && <div className="order-1 lg:order-2"><div className="relative"><div className="absolute -bottom-4 -left-4 h-full w-full border border-[#c9b589]/60" /><img src={settings.about_image_url} alt={aboutTitle} className="relative aspect-[4/5] w-full object-cover sm:aspect-[4/3]" /></div></div>}</div></section>}
 
-      {featured.length > 0 && <section className="border-y border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><SectionLabel>{t('public.signatureMenu')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.signatureDescription')}</h2></div><Link to="/menu" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('public.viewFullMenu')} ↗</Link></div><div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{featured.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#d9d1c2]">{item.image_url ? <img src={item.image_url} alt={pickLanguage(item, 'name', language) || item.name_id} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.25em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex items-start justify-between gap-4 border-t border-[#d4c9b7] pt-4"><div><p className="text-[9px] uppercase tracking-[0.22em] text-[#9b8355]">{item.menu_categories?.name_id || t('menu.signature')}</p><h3 className="mt-2 font-serif text-xl">{pickLanguage(item, 'name', language) || item.name_id}</h3></div><span className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</span></div></Link>)}</div></div></section>}
+      {featured.length > 0 && <section className="border-y border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><SectionLabel>{t('public.signatureMenu')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.signatureDescription')}</h2></div><Link to="/menu" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('public.viewFullMenu')} ↗</Link></div><div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{featured.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#d9d1c2]">{item.image_url ? <img src={item.image_url} alt={pickLocalized(item, 'name', language)} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.25em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex items-start justify-between gap-4 border-t border-[#d4c9b7] pt-4"><div><p className="text-[9px] uppercase tracking-[0.22em] text-[#9b8355]">{pickLocalized(item.menu_categories, 'name', language) || t('menu.signature')}</p><h3 className="mt-2 font-serif text-xl">{pickLocalized(item, 'name', language)}</h3></div><span className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</span></div></Link>)}</div></div></section>}
 
       {gallery.length > 0 && <section className="bg-[#f5f1e8]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex items-end justify-between gap-8"><div><SectionLabel>{t('public.theExperience')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.insideCoreatery')}</h2></div><Link to="/galeri" className="hidden text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:block">{t('public.viewGallery')} ↗</Link></div><div className="mt-12 grid auto-rows-[170px] grid-cols-2 gap-3 sm:auto-rows-[220px] sm:grid-cols-4 lg:auto-rows-[260px]">{gallery.map((item, index) => <Link key={item.id} to="/galeri" className={`group overflow-hidden ${index === 0 ? 'col-span-2 row-span-2' : index === 3 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></Link>)}</div><Link to="/galeri" className="mt-8 inline-flex text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:hidden">{t('public.viewGallery')} ↗</Link></div></section>}
 
