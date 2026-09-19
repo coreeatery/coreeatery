@@ -1,0 +1,504 @@
+===== HARDCODED CONTENT =====
+src/App.jsx:2:import heroImg from './assets/hero.png'
+src/App.jsx:13:        <div className="hero">
+src/App.jsx:14:          <img src={heroImg} className="base" width="170" height="179" alt="" />
+src/app/router/index.jsx:12:import ReservationPage from '../../pages/public/ReservationPage'
+src/app/router/index.jsx:13:import GalleryPage from '../../pages/public/GalleryPage'
+src/app/router/index.jsx:21:import AdminReservationPage from '../../pages/admin/AdminReservationPage'
+src/app/router/index.jsx:22:import AdminGalleryPage from '../../pages/admin/AdminGalleryPage'
+src/app/router/index.jsx:23:import AdminPromoPage from '../../pages/admin/AdminPromoPage'
+src/app/router/index.jsx:46:      { path: 'reservasi', element: <ReservationPage /> },
+src/app/router/index.jsx:47:      { path: 'galeri', element: <GalleryPage /> },
+src/app/router/index.jsx:71:          { path: 'reservasi', element: <AdminReservationPage /> },
+src/app/router/index.jsx:72:          { path: 'galeri', element: <AdminGalleryPage /> },
+src/app/router/index.jsx:73:          { path: 'promo', element: <AdminPromoPage /> },
+src/components/public/PublicFooter.jsx:21:              <Link to="/reservasi" className="hover:text-white">{t('nav.reservation')}</Link>
+src/components/public/PublicFooter.jsx:22:              <Link to="/galeri" className="hover:text-white">{t('nav.gallery')}</Link>
+src/components/public/PublicFooter.jsx:26:            <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.reservations')}</p>
+src/components/public/PublicNavbar.jsx:8:  { to: '/reservasi', key: 'reservation' },
+src/components/public/PublicNavbar.jsx:9:  { to: '/galeri', key: 'gallery' },
+src/components/admin/AdminSidebar.jsx:60:    [t('admin.reservation', 'Reservasi'), '/admin/reservasi'],
+src/components/admin/AdminSidebar.jsx:61:    [t('admin.gallery', 'Galeri'), '/admin/galeri'],
+src/components/admin/AdminSidebar.jsx:62:    [t('admin.promo', 'Promo'), '/admin/promo'],
+src/pages/public/GalleryPage.jsx:4:import { getGalleryItems } from '../../features/cms/gallery'
+src/pages/public/GalleryPage.jsx:6:export default function GalleryPage() {
+src/pages/public/GalleryPage.jsx:13:    getGalleryItems()
+src/pages/public/GalleryPage.jsx:19:  if (loading) return <main className="flex min-h-[80vh] items-center justify-center bg-[#f5f1e8]"><p className="font-serif italic text-[#6e6659]">{t('gallery.loading')}</p></main>
+src/pages/public/GalleryPage.jsx:22:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="bg-[#201d18] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28"><div className="mx-auto max-w-[1400px]"><p className="text-[9px] uppercase tracking-[0.45em] text-[#dbc38f]">{t('gallery.visualJournal')}</p><h1 className="mt-5 font-serif text-5xl sm:text-7xl">{t('gallery.title')}</h1><p className="mt-6 max-w-xl text-sm leading-8 text-white/50">{t('gallery.description')}</p></div></section><section className="mx-auto max-w-[1400px] px-6 py-12 sm:px-10 lg:px-16 lg:py-20">{items.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('gallery.empty')}</p></div> : <div className="grid auto-rows-[190px] grid-cols-2 gap-3 sm:auto-rows-[240px] sm:grid-cols-3 lg:auto-rows-[300px]">{items.map((item, index) => <figure key={item.id} className={`group relative overflow-hidden bg-[#ddd4c4] ${index % 7 === 0 ? 'col-span-2 row-span-2' : index % 5 === 0 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />{item.title && <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-5 pb-5 pt-14 text-xs text-white/85 opacity-0 transition group-hover:opacity-100">{item.title}</figcaption>}</figure>)}</div>}<div className="mt-14 border-t border-[#d2c8b7] pt-8"><Link to="/reservasi" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('gallery.reserveTable')} ↗</Link></div></section></main>
+src/pages/public/HomePage.jsx:6:import { getGalleryItems } from '../../features/cms/gallery'
+src/pages/public/HomePage.jsx:7:import { getActivePromotions } from '../../features/cms/promotions'
+src/pages/public/HomePage.jsx:37:  const [featured, setFeatured] = useState([])
+src/pages/public/HomePage.jsx:38:  const [gallery, setGallery] = useState([])
+src/pages/public/HomePage.jsx:39:  const [promotions, setPromotions] = useState([])
+src/pages/public/HomePage.jsx:47:        const [homepage, menu, galleryData, promoData] = await Promise.all([
+src/pages/public/HomePage.jsx:50:          getGalleryItems(),
+src/pages/public/HomePage.jsx:51:          getActivePromotions(),
+src/pages/public/HomePage.jsx:55:        setFeatured(menu.filter((item) => item.status === 'active' && item.is_available && item.is_featured).slice(0, 4))
+src/pages/public/HomePage.jsx:56:        setGallery(galleryData.filter((item) => item.is_active).slice(0, 6))
+src/pages/public/HomePage.jsx:57:        setPromotions(promoData.slice(0, 2))
+src/pages/public/HomePage.jsx:68:  const whatsappUrl = useMemo(() => {
+src/pages/public/HomePage.jsx:69:    const number = settings?.whatsapp_number?.replace(/\D/g, '')
+src/pages/public/HomePage.jsx:85:  const heroTitle = pickLanguage(settings, 'hero_title', language) || 'Nikmati Pengalaman Kuliner Terbaik'
+src/pages/public/HomePage.jsx:86:  const heroSubtitle = pickLanguage(settings, 'hero_subtitle', language)
+src/pages/public/HomePage.jsx:87:  const aboutTitle = pickLanguage(settings, 'about_title', language) || 'Rasa yang dibuat dengan niat.'
+src/pages/public/HomePage.jsx:88:  const aboutDescription = pickLanguage(settings, 'about_description', language)
+src/pages/public/HomePage.jsx:89:  const reservationTitle = pickLanguage(settings, 'reservation_title', language) || t('public.findYourTable')
+src/pages/public/HomePage.jsx:90:  const reservationDescription = pickLanguage(settings, 'reservation_description', language)
+src/pages/public/HomePage.jsx:91:  const reservationButton = pickLanguage(settings, 'reservation_button_text', language).trim() || 'Reservasi Sekarang'
+src/pages/public/HomePage.jsx:96:        {settings.hero_image_url && <img src={settings.hero_image_url} alt={heroTitle} className="absolute inset-0 h-full w-full object-cover" />}
+src/pages/public/HomePage.jsx:102:            <h1 className="mt-7 max-w-5xl font-serif text-[3.3rem] font-normal leading-[0.94] tracking-[-0.035em] sm:text-6xl lg:text-8xl">{heroTitle}</h1>
+src/pages/public/HomePage.jsx:103:            {heroSubtitle && <p className="mt-7 max-w-2xl text-sm leading-7 text-white/70 sm:text-base sm:leading-8">{heroSubtitle}</p>}
+src/pages/public/HomePage.jsx:105:              <Link to="/reservasi" className="inline-flex items-center gap-4 bg-[#c7aa70] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#171512] transition hover:bg-[#e1ca98]">{reservationButton}<span>↗</span></Link>
+src/pages/public/HomePage.jsx:112:      {promotions.length > 0 && <section className="border-b border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto grid max-w-[1400px] md:grid-cols-2">{promotions.map((promo) => <article key={promo.id} className="grid min-h-[260px] grid-cols-[1fr_0.9fr] border-b border-[#d8d0c1] last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"><div className="flex flex-col justify-center p-7 sm:p-10"><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('public.limitedOffering')}</p><h2 className="mt-4 font-serif text-2xl sm:text-3xl">{pickLanguage(promo, 'title', language) || promo.title_id}</h2>{promo.discount_text && <p className="mt-3 text-sm text-[#9b8355]">{promo.discount_text}</p>}</div>{promo.image_url ? <img src={promo.image_url} alt={pickLanguage(promo, 'title', language)} className="h-full min-h-[260px] w-full object-cover" /> : <div className="bg-[#dcd3c2]" />}</article>)}</div></section>}
+src/pages/public/HomePage.jsx:114:      {(settings.about_title_id || settings.about_description_id || settings.about_image_url) && <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24"><div className="order-2 lg:order-1"><SectionLabel>{t('public.ourPhilosophy')}</SectionLabel><h2 className="mt-7 max-w-xl font-serif text-4xl font-normal leading-tight sm:text-5xl lg:text-6xl">{aboutTitle}</h2>{aboutDescription && <p className="mt-7 max-w-xl whitespace-pre-line text-sm leading-8 text-[#6e6659] sm:text-base">{aboutDescription}</p>}<div className="mt-9 flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-[#9b8355]"><span className="h-px w-8 bg-[#b79b63]" />{t('public.craftedWithIntention')}</div></div>{settings.about_image_url && <div className="order-1 lg:order-2"><div className="relative"><div className="absolute -bottom-4 -left-4 h-full w-full border border-[#c9b589]/60" /><img src={settings.about_image_url} alt={aboutTitle} className="relative aspect-[4/5] w-full object-cover sm:aspect-[4/3]" /></div></div>}</div></section>}
+src/pages/public/HomePage.jsx:116:      {featured.length > 0 && <section className="border-y border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><SectionLabel>{t('public.signatureMenu')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.signatureDescription')}</h2></div><Link to="/menu" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('public.viewFullMenu')} ↗</Link></div><div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{featured.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#d9d1c2]">{item.image_url ? <img src={item.image_url} alt={item.name_id} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.25em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex items-start justify-between gap-4"><div><p className="text-[9px] uppercase tracking-[0.22em] text-[#9b8355]">{item.menu_categories?.name_id || t('menu.signature')}</p><h3 className="mt-2 font-serif text-xl">{pickLanguage(item, 'name', language) || item.name_id}</h3></div><span className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</span></div></Link>)}</div></div></section>}
+src/pages/public/HomePage.jsx:118:      {gallery.length > 0 && <section className="bg-[#f5f1e8]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex items-end justify-between gap-8"><div><SectionLabel>{t('public.theExperience')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.insideCoreatery')}</h2></div><Link to="/galeri" className="hidden text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:block">{t('public.viewGallery')} ↗</Link></div><div className="mt-12 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] sm:grid-cols-3 lg:auto-rows-[260px]">{gallery.map((item, index) => <Link key={item.id} to="/galeri" className={`group overflow-hidden ${index === 0 ? 'col-span-2 row-span-2' : index === 3 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></Link>)}</div><Link to="/galeri" className="mt-8 inline-flex text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:hidden">{t('public.viewGallery')} ↗</Link></div></section>}
+src/pages/public/HomePage.jsx:120:      <section className="relative overflow-hidden bg-[#171512] text-white"><div className="mx-auto grid max-w-[1400px] lg:grid-cols-2"><div className="flex min-h-[500px] items-center px-6 py-20 sm:px-10 lg:px-16"><div className="max-w-xl"><SectionLabel light>{t('public.privateDining')}</SectionLabel><h2 className="mt-7 font-serif text-4xl leading-tight sm:text-5xl">{t('public.makeTheMoment')}<br /><span className="italic text-[#cdb47e]">{t('public.trulyYours')}</span></h2><p className="mt-7 text-sm leading-8 text-white/55 sm:text-base">{t('public.privateDiningDescription')}</p><Link to="/reservasi" className="mt-9 inline-flex items-center gap-4 border border-white/25 px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] transition hover:border-[#c7aa70] hover:bg-[#c7aa70] hover:text-[#171512]">{t('public.planYourVisit')} ↗</Link></div></div><div className="relative min-h-[360px] lg:min-h-[500px]">{settings.about_image_url && <img src={settings.about_image_url} alt="COREÉATERY dining experience" className="absolute inset-0 h-full w-full object-cover opacity-70" />}<div className="absolute inset-0 bg-gradient-to-r from-[#171512] via-transparent to-transparent" /></div></div></section>
+src/pages/public/HomePage.jsx:122:      <section className="bg-[#f5f1e8]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="border-y border-[#cfc5b3] py-16 text-center sm:py-20"><SectionLabel><span className="inline-block">{t('public.reserveYourTable')}</span></SectionLabel><h2 className="mx-auto mt-7 max-w-4xl font-serif text-4xl leading-tight sm:text-5xl lg:text-7xl">{reservationTitle}</h2>{reservationDescription && <p className="mx-auto mt-7 max-w-2xl whitespace-pre-line text-sm leading-8 text-[#6e6659] sm:text-base">{reservationDescription}</p>}<div className="mt-9 flex flex-wrap justify-center gap-3"><Link to="/reservasi" className="inline-flex items-center gap-4 bg-[#201d18] px-8 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[#9b8355]">{reservationButton} ↗</Link>{whatsappUrl && <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex border border-[#201d18] px-8 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] transition hover:bg-[#201d18] hover:text-white">{t('public.whatsapp')}</a>}</div></div></div></section>
+src/pages/public/HomePage.jsx:124:      <section className="bg-[#201d18] text-white"><div className="mx-auto grid max-w-[1400px] gap-10 px-6 py-16 sm:grid-cols-3 sm:px-10 lg:px-16">{settings.address && <div><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.visitUs')}</p><p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/50">{settings.address}</p>{settings.google_maps_url && <a href={settings.google_maps_url} target="_blank" rel="noreferrer" className="mt-4 inline-block text-[9px] uppercase tracking-[0.25em] text-white/70 underline underline-offset-4">{t('public.openMaps')} ↗</a>}</div>}{settings.opening_hours && <div><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.openingHours')}</p><p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/50">{settings.opening_hours}</p></div>}{settings.instagram_url && <div><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.followAlong')}</p><a href={settings.instagram_url} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm text-white/65 underline decoration-white/20 underline-offset-4 hover:text-white">{t('public.instagramLink')} ↗</a></div>}</div></section>
+src/pages/public/ReservationPage.jsx:3:import { createReservation } from '../../features/reservations/reservations'
+src/pages/public/ReservationPage.jsx:6:const INITIAL = { customer_name: '', customer_phone: '', customer_email: '', reservation_date: '', reservation_time: '', guest_count: 2, occasion: 'Dine In', notes: '' }
+src/pages/public/ReservationPage.jsx:8:export default function ReservationPage() {
+src/pages/public/ReservationPage.jsx:25:    if (!form.customer_name.trim() || !form.customer_phone.trim() || !form.reservation_date || !form.reservation_time) {
+src/pages/public/ReservationPage.jsx:26:      setError(t('reservation.requiredFields'))
+src/pages/public/ReservationPage.jsx:31:      const reservation = await createReservation({ ...form, customer_name: form.customer_name.trim(), customer_phone: form.customer_phone.trim(), customer_email: form.customer_email.trim() || null, guest_count: Number(form.guest_count), occasion: form.occasion.trim() || null, notes: form.notes.trim() || null, status: 'pending', table_id: null, created_by: null })
+src/pages/public/ReservationPage.jsx:32:      setSuccess(reservation)
+src/pages/public/ReservationPage.jsx:41:  if (success) return <main className="min-h-[80vh] bg-[#f5f1e8] px-6 pb-24 pt-32 text-[#201d18]"><div className="mx-auto max-w-2xl border-y border-[#cfc5b3] py-16 text-center"><p className="text-[9px] font-semibold uppercase tracking-[0.4em] text-[#9b8355]">{t('reservation.received')}</p><h1 className="mt-6 font-serif text-5xl">{t('reservation.seeYouSoon')}</h1><p className="mx-auto mt-6 max-w-lg text-sm leading-8 text-[#6e6659]">Permintaan reservasi Anda sudah kami terima dan menunggu konfirmasi dari tim COREÉATERY.</p><div className="mt-8 border border-[#d2c8b7] bg-[#eee8dc] px-6 py-5"><p className="text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">{t('reservation.code')}</p><p className="mt-2 font-serif text-2xl">{success.reservation_code}</p></div><button type="button" onClick={() => setSuccess(null)} className="mt-8 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline underline-offset-8">{t('reservation.another')}</button></div></main>
+src/pages/public/ReservationPage.jsx:43:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="bg-[#201d18] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28"><div className="mx-auto max-w-[1400px]"><p className="text-[9px] uppercase tracking-[0.45em] text-[#dbc38f]">{t('reservation.title')}</p><h1 className="mt-5 font-serif text-5xl sm:text-7xl">{t('reservation.pageTitle')}</h1><p className="mt-6 max-w-xl text-sm leading-8 text-white/50">{t('reservation.intro')}</p></div></section><section className="mx-auto grid max-w-[1200px] gap-12 px-6 py-16 sm:px-10 lg:grid-cols-[0.65fr_1.35fr] lg:px-16 lg:py-24"><aside><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('reservation.beforeVisit')}</p><h2 className="mt-5 font-serif text-3xl">{t('reservation.details')}</h2><p className="mt-5 text-sm leading-8 text-[#6e6659]">{t('reservation.note')}</p><div className="mt-8 border-t border-[#d2c8b7] pt-6"><p className="text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">{t('reservation.availableSlots')}</p><p className="mt-3 text-sm leading-7 text-[#6e6659]">10:00 · 12:00 · 14:00<br />16:00 · 18:00 · 20:00</p></div></aside><form onSubmit={submit} className="border border-[#d2c8b7] bg-[#eee8dc] p-6 sm:p-9">{error && <div className="mb-7 border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}<div className="grid gap-6 sm:grid-cols-2"><Field label={t('reservation.name')} value={form.customer_name} onChange={(v) => update('customer_name', v)} required /><Field label={t('reservation.whatsapp')} type="tel" value={form.customer_phone} onChange={(v) => update('customer_phone', v)} required /><Field label={t('reservation.email')} type="email" value={form.customer_email} onChange={(v) => update('customer_email', v)} /><Field label={t('reservation.guestCount')} type="number" min="1" max="50" value={form.guest_count} onChange={(v) => update('guest_count', v)} required /><Field label={t('reservation.date')} type="date" min={minDate} value={form.reservation_date} onChange={(v) => update('reservation_date', v)} required /><label className="block"><span className="mb-2 block text-[9px] font-semibold uppercase tracking-[0.25em] text-[#6e6659]">{t('reservation.time')}</span><select value={form.reservation_time} onChange={(e) => update('reservation_time', e.target.value)} required className="h-12 w-full border border-[#cfc5b3] bg-[#f8f4eb] px-4 text-sm outline-none focus:border-[#9b8355]"><option value="">{t('reservation.selectTime')}</option>{TIME_SLOTS.map((slot) => <option key={slot} value={slot}>{slot}</option>)}</select></label><Field label={t('reservation.occasion')} value={form.occasion} onChange={(v) => update('occasion', v)} /></div><label className="mt-6 block"><span className="mb-2 block text-[9px] font-semibold uppercase tracking-[0.25em] text-[#6e6659]">{t('reservation.notes')}</span><textarea value={form.notes} onChange={(e) => update('notes', e.target.value)} rows="4" placeholder={t('reservation.notesPlaceholder')} className="w-full border border-[#cfc5b3] bg-[#f8f4eb] px-4 py-3 text-sm outline-none focus:border-[#9b8355]" /></label><button disabled={saving} className="mt-8 w-full bg-[#201d18] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[#9b8355] disabled:cursor-not-allowed disabled:opacity-50">{saving ? t('reservation.sending') : `${t('reservation.request')} ↗`}</button></form></section></main>
+src/pages/admin/AdminDashboardPage.jsx:256:              value={stats.todayReservations || 0}
+src/pages/admin/AdminHomepagePage.jsx:10:  hero_title_id: '',
+src/pages/admin/AdminHomepagePage.jsx:11:  hero_title_en: '',
+src/pages/admin/AdminHomepagePage.jsx:12:  hero_subtitle_id: '',
+src/pages/admin/AdminHomepagePage.jsx:13:  hero_subtitle_en: '',
+src/pages/admin/AdminHomepagePage.jsx:14:  hero_image_url: '',
+src/pages/admin/AdminHomepagePage.jsx:16:  about_title_id: '',
+src/pages/admin/AdminHomepagePage.jsx:17:  about_title_en: '',
+src/pages/admin/AdminHomepagePage.jsx:18:  about_description_id: '',
+src/pages/admin/AdminHomepagePage.jsx:19:  about_description_en: '',
+src/pages/admin/AdminHomepagePage.jsx:20:  about_image_url: '',
+src/pages/admin/AdminHomepagePage.jsx:22:  reservation_title_id: '',
+src/pages/admin/AdminHomepagePage.jsx:23:  reservation_title_en: '',
+src/pages/admin/AdminHomepagePage.jsx:24:  reservation_description_id: '',
+src/pages/admin/AdminHomepagePage.jsx:25:  reservation_description_en: '',
+src/pages/admin/AdminHomepagePage.jsx:26:  reservation_button_text_id: '',
+src/pages/admin/AdminHomepagePage.jsx:27:  reservation_button_text_en: '',
+src/pages/admin/AdminHomepagePage.jsx:29:  whatsapp_number: '',
+src/pages/admin/AdminHomepagePage.jsx:30:  address: '',
+src/pages/admin/AdminHomepagePage.jsx:32:  instagram_url: '',
+src/pages/admin/AdminHomepagePage.jsx:33:  opening_hours: '',
+src/pages/admin/AdminHomepagePage.jsx:42:      reservation_button_text_id: t('reservation.request'),
+src/pages/admin/AdminHomepagePage.jsx:43:      reservation_button_text_en: t('public.reserveTable'),
+src/pages/admin/AdminHomepagePage.jsx:54:  const heroInputRef = useRef(null)
+src/pages/admin/AdminHomepagePage.jsx:55:  const aboutInputRef = useRef(null)
+src/pages/admin/AdminHomepagePage.jsx:130:        hero_title_id: form.hero_title_id.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:131:        hero_title_en: form.hero_title_en.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:132:        hero_subtitle_id: form.hero_subtitle_id.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:133:        hero_subtitle_en: form.hero_subtitle_en.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:134:        hero_image_url: form.hero_image_url.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:136:        about_title_id: form.about_title_id.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:137:        about_title_en: form.about_title_en.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:138:        about_description_id: form.about_description_id.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:139:        about_description_en: form.about_description_en.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:140:        about_image_url: form.about_image_url.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:142:        reservation_title_id:
+src/pages/admin/AdminHomepagePage.jsx:143:          form.reservation_title_id.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:144:        reservation_title_en:
+src/pages/admin/AdminHomepagePage.jsx:145:          form.reservation_title_en.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:146:        reservation_description_id:
+src/pages/admin/AdminHomepagePage.jsx:147:          form.reservation_description_id.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:148:        reservation_description_en:
+src/pages/admin/AdminHomepagePage.jsx:149:          form.reservation_description_en.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:150:        reservation_button_text_id:
+src/pages/admin/AdminHomepagePage.jsx:151:          form.reservation_button_text_id.trim() ||
+src/pages/admin/AdminHomepagePage.jsx:152:          t('reservation.request'),
+src/pages/admin/AdminHomepagePage.jsx:153:        reservation_button_text_en:
+src/pages/admin/AdminHomepagePage.jsx:154:          form.reservation_button_text_en.trim() ||
+src/pages/admin/AdminHomepagePage.jsx:157:        whatsapp_number: form.whatsapp_number.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:158:        address: form.address.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:160:        instagram_url: form.instagram_url.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:161:        opening_hours: form.opening_hours.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:211:        {/* HERO */}
+src/pages/admin/AdminHomepagePage.jsx:214:            <h2 className="text-xl font-bold">{t('admin.hero')}</h2>
+src/pages/admin/AdminHomepagePage.jsx:223:              value={form.hero_title_id}
+src/pages/admin/AdminHomepagePage.jsx:224:              onChange={(value) => updateField('hero_title_id', value)}
+src/pages/admin/AdminHomepagePage.jsx:230:              value={form.hero_title_en}
+src/pages/admin/AdminHomepagePage.jsx:231:              onChange={(value) => updateField('hero_title_en', value)}
+src/pages/admin/AdminHomepagePage.jsx:236:              label="Subtitle Indonesia"
+src/pages/admin/AdminHomepagePage.jsx:237:              value={form.hero_subtitle_id}
+src/pages/admin/AdminHomepagePage.jsx:239:                updateField('hero_subtitle_id', value)
+src/pages/admin/AdminHomepagePage.jsx:245:              label="Subtitle English"
+src/pages/admin/AdminHomepagePage.jsx:246:              value={form.hero_subtitle_en}
+src/pages/admin/AdminHomepagePage.jsx:248:                updateField('hero_subtitle_en', value)
+src/pages/admin/AdminHomepagePage.jsx:255:            label={t('admin.heroPhoto')}
+src/pages/admin/AdminHomepagePage.jsx:256:            value={form.hero_image_url}
+src/pages/admin/AdminHomepagePage.jsx:257:            inputRef={heroInputRef}
+src/pages/admin/AdminHomepagePage.jsx:258:            uploading={uploading === 'hero_image_url'}
+src/pages/admin/AdminHomepagePage.jsx:262:                'hero_image_url',
+src/pages/admin/AdminHomepagePage.jsx:263:                'homepage/hero',
+src/pages/admin/AdminHomepagePage.jsx:266:            onRemove={() => updateField('hero_image_url', '')}
+src/pages/admin/AdminHomepagePage.jsx:270:        {/* ABOUT */}
+src/pages/admin/AdminHomepagePage.jsx:273:            <h2 className="text-xl font-bold">{t('admin.restaurantAbout')}</h2>
+src/pages/admin/AdminHomepagePage.jsx:282:              value={form.about_title_id}
+src/pages/admin/AdminHomepagePage.jsx:283:              onChange={(value) => updateField('about_title_id', value)}
+src/pages/admin/AdminHomepagePage.jsx:288:              value={form.about_title_en}
+src/pages/admin/AdminHomepagePage.jsx:289:              onChange={(value) => updateField('about_title_en', value)}
+src/pages/admin/AdminHomepagePage.jsx:294:              value={form.about_description_id}
+src/pages/admin/AdminHomepagePage.jsx:296:                updateField('about_description_id', value)
+src/pages/admin/AdminHomepagePage.jsx:302:              value={form.about_description_en}
+src/pages/admin/AdminHomepagePage.jsx:304:                updateField('about_description_en', value)
+src/pages/admin/AdminHomepagePage.jsx:310:            label="Foto About"
+src/pages/admin/AdminHomepagePage.jsx:311:            value={form.about_image_url}
+src/pages/admin/AdminHomepagePage.jsx:312:            inputRef={aboutInputRef}
+src/pages/admin/AdminHomepagePage.jsx:313:            uploading={uploading === 'about_image_url'}
+src/pages/admin/AdminHomepagePage.jsx:317:                'about_image_url',
+src/pages/admin/AdminHomepagePage.jsx:318:                'homepage/about',
+src/pages/admin/AdminHomepagePage.jsx:321:            onRemove={() => updateField('about_image_url', '')}
+src/pages/admin/AdminHomepagePage.jsx:325:        {/* RESERVATION */}
+src/pages/admin/AdminHomepagePage.jsx:337:              value={form.reservation_title_id}
+src/pages/admin/AdminHomepagePage.jsx:339:                updateField('reservation_title_id', value)
+src/pages/admin/AdminHomepagePage.jsx:345:              value={form.reservation_title_en}
+src/pages/admin/AdminHomepagePage.jsx:347:                updateField('reservation_title_en', value)
+src/pages/admin/AdminHomepagePage.jsx:353:              value={form.reservation_description_id}
+src/pages/admin/AdminHomepagePage.jsx:356:                  'reservation_description_id',
+src/pages/admin/AdminHomepagePage.jsx:364:              value={form.reservation_description_en}
+src/pages/admin/AdminHomepagePage.jsx:367:                  'reservation_description_en',
+src/pages/admin/AdminHomepagePage.jsx:375:              value={form.reservation_button_text_id}
+src/pages/admin/AdminHomepagePage.jsx:378:                  'reservation_button_text_id',
+src/pages/admin/AdminHomepagePage.jsx:386:              value={form.reservation_button_text_en}
+src/pages/admin/AdminHomepagePage.jsx:389:                  'reservation_button_text_en',
+src/pages/admin/AdminHomepagePage.jsx:397:        {/* CONTACT */}
+src/pages/admin/AdminHomepagePage.jsx:400:            <h2 className="text-xl font-bold">{t('admin.contactInfo')}</h2>
+src/pages/admin/AdminHomepagePage.jsx:405:              label="Nomor WhatsApp"
+src/pages/admin/AdminHomepagePage.jsx:406:              value={form.whatsapp_number}
+src/pages/admin/AdminHomepagePage.jsx:408:                updateField('whatsapp_number', value)
+src/pages/admin/AdminHomepagePage.jsx:415:              value={form.opening_hours}
+src/pages/admin/AdminHomepagePage.jsx:417:                updateField('opening_hours', value)
+src/pages/admin/AdminHomepagePage.jsx:424:              value={form.address}
+src/pages/admin/AdminHomepagePage.jsx:425:              onChange={(value) => updateField('address', value)}
+src/pages/admin/AdminHomepagePage.jsx:438:              label={t("public.instagramLink")}
+src/pages/admin/AdminHomepagePage.jsx:439:              value={form.instagram_url}
+src/pages/admin/AdminHomepagePage.jsx:441:                updateField('instagram_url', value)
+src/pages/admin/AdminHomepagePage.jsx:443:              placeholder="https://instagram.com/..."
+src/pages/admin/AdminMenuPage.jsx:24:  is_featured: false,
+src/pages/admin/AdminMenuPage.jsx:127:      is_featured: Boolean(item.is_featured),
+src/pages/admin/AdminMenuPage.jsx:198:      is_featured: Boolean(form.is_featured),
+src/pages/admin/AdminMenuPage.jsx:528:                checked={form.is_featured}
+src/pages/admin/AdminMenuPage.jsx:530:                  updateField('is_featured', event.target.checked)
+src/pages/admin/AdminMenuPage.jsx:597:                      {item.is_featured && (
+src/pages/admin/AdminReservationPage.jsx:5:  getReservations,
+src/pages/admin/AdminReservationPage.jsx:6:  getReservationSummary,
+src/pages/admin/AdminReservationPage.jsx:7:  updateReservationStatus,
+src/pages/admin/AdminReservationPage.jsx:8:  deleteReservation,
+src/pages/admin/AdminReservationPage.jsx:9:} from '../../features/reservations/reservations'
+src/pages/admin/AdminReservationPage.jsx:11:  RESERVATION_STATUS_OPTIONS,
+src/pages/admin/AdminReservationPage.jsx:12:  getReservationStatusLabel,
+src/pages/admin/AdminReservationPage.jsx:13:} from '../../features/reservations/reservationStatus'
+src/pages/admin/AdminReservationPage.jsx:55:      {statusKey ? t(`admin.${statusKey}`) : getReservationStatusLabel(status)}
+src/pages/admin/AdminReservationPage.jsx:60:export default function AdminReservationPage() {
+src/pages/admin/AdminReservationPage.jsx:62:  const [reservations, setReservations] = useState([])
+src/pages/admin/AdminReservationPage.jsx:76:  const [selectedReservation, setSelectedReservation] = useState(null)
+src/pages/admin/AdminReservationPage.jsx:92:        const [reservationData, summaryData] = await Promise.all([
+src/pages/admin/AdminReservationPage.jsx:93:          getReservations({
+src/pages/admin/AdminReservationPage.jsx:98:          getReservationSummary(date),
+src/pages/admin/AdminReservationPage.jsx:103:        setReservations(reservationData)
+src/pages/admin/AdminReservationPage.jsx:109:        setError(err.message || t('admin.loadReservationError'))
+src/pages/admin/AdminReservationPage.jsx:129:      const updated = await updateReservationStatus(id, nextStatus)
+src/pages/admin/AdminReservationPage.jsx:131:      setReservations((current) =>
+src/pages/admin/AdminReservationPage.jsx:132:        current.map((reservation) =>
+src/pages/admin/AdminReservationPage.jsx:133:          reservation.id === id ? { ...reservation, ...updated } : reservation,
+src/pages/admin/AdminReservationPage.jsx:137:      setSelectedReservation((current) =>
+src/pages/admin/AdminReservationPage.jsx:141:      const nextSummary = await getReservationSummary(date)
+src/pages/admin/AdminReservationPage.jsx:145:      setError(err.message || t('admin.updateReservationStatusError'))
+src/pages/admin/AdminReservationPage.jsx:151:  async function handleDelete(reservation) {
+src/pages/admin/AdminReservationPage.jsx:153:      t('admin.deleteReservationConfirm', { code: reservation.reservation_code, name: reservation.customer_name }),
+src/pages/admin/AdminReservationPage.jsx:158:    setDeletingId(reservation.id)
+src/pages/admin/AdminReservationPage.jsx:162:      await deleteReservation(reservation.id)
+src/pages/admin/AdminReservationPage.jsx:164:      setReservations((current) =>
+src/pages/admin/AdminReservationPage.jsx:165:        current.filter((item) => item.id !== reservation.id),
+src/pages/admin/AdminReservationPage.jsx:168:      if (selectedReservation?.id === reservation.id) {
+src/pages/admin/AdminReservationPage.jsx:169:        setSelectedReservation(null)
+src/pages/admin/AdminReservationPage.jsx:172:      const nextSummary = await getReservationSummary(date)
+src/pages/admin/AdminReservationPage.jsx:176:      setError(err.message || t('admin.deleteReservationError'))
+src/pages/admin/AdminReservationPage.jsx:202:          {t('admin.reservationManagement')}
+src/pages/admin/AdminReservationPage.jsx:222:              {t('admin.searchReservation')}
+src/pages/admin/AdminReservationPage.jsx:228:              placeholder={t('admin.reservationSearchPlaceholder')}
+src/pages/admin/AdminReservationPage.jsx:255:              {RESERVATION_STATUS_OPTIONS.map((option) => (
+src/pages/admin/AdminReservationPage.jsx:274:            <h2 className="font-semibold">{t('admin.reservationList')}</h2>
+src/pages/admin/AdminReservationPage.jsx:276:              {t('admin.reservationsFound', { count: reservations.length })}
+src/pages/admin/AdminReservationPage.jsx:292:            {t('admin.loadingReservations')}
+src/pages/admin/AdminReservationPage.jsx:294:        ) : reservations.length === 0 ? (
+src/pages/admin/AdminReservationPage.jsx:296:            <p className="font-medium">{t('admin.noReservations')}</p>
+src/pages/admin/AdminReservationPage.jsx:298:              {t('admin.changeReservationFilter')}
+src/pages/admin/AdminReservationPage.jsx:306:                  <th className="px-5 py-3">{t('admin.reservation')}</th>
+src/pages/admin/AdminReservationPage.jsx:317:                {reservations.map((reservation) => (
+src/pages/admin/AdminReservationPage.jsx:318:                  <tr key={reservation.id} className="hover:bg-neutral-50">
+src/pages/admin/AdminReservationPage.jsx:321:                        {reservation.reservation_code}
+src/pages/admin/AdminReservationPage.jsx:324:                        {formatTime(reservation.reservation_time)}
+src/pages/admin/AdminReservationPage.jsx:330:                        {reservation.customer_name}
+src/pages/admin/AdminReservationPage.jsx:333:                        {reservation.customer_phone}
+src/pages/admin/AdminReservationPage.jsx:338:                      {formatDate(reservation.reservation_date)}
+src/pages/admin/AdminReservationPage.jsx:342:                      {reservation.guest_count} {t('admin.person')}
+src/pages/admin/AdminReservationPage.jsx:346:                      {reservation.restaurant_tables?.table_number
+src/pages/admin/AdminReservationPage.jsx:347:                        ? t('admin.tableNumber', { number: reservation.restaurant_tables.table_number })
+src/pages/admin/AdminReservationPage.jsx:352:                      <StatusBadge status={reservation.status} t={t} />
+src/pages/admin/AdminReservationPage.jsx:360:                            setSelectedReservation(reservation)
+src/pages/admin/AdminReservationPage.jsx:368:                          value={reservation.status}
+src/pages/admin/AdminReservationPage.jsx:369:                          disabled={updatingId === reservation.id}
+src/pages/admin/AdminReservationPage.jsx:372:                              reservation.id,
+src/pages/admin/AdminReservationPage.jsx:378:                          {RESERVATION_STATUS_OPTIONS.map((option) => (
+src/pages/admin/AdminReservationPage.jsx:390:                          disabled={deletingId === reservation.id}
+src/pages/admin/AdminReservationPage.jsx:391:                          onClick={() => handleDelete(reservation)}
+src/pages/admin/AdminReservationPage.jsx:404:      {selectedReservation && (
+src/pages/admin/AdminReservationPage.jsx:409:              setSelectedReservation(null)
+src/pages/admin/AdminReservationPage.jsx:417:                  {t('admin.reservationDetail')}
+src/pages/admin/AdminReservationPage.jsx:420:                  {selectedReservation.reservation_code}
+src/pages/admin/AdminReservationPage.jsx:426:                onClick={() => setSelectedReservation(null)}
+src/pages/admin/AdminReservationPage.jsx:434:                <StatusBadge status={selectedReservation.status} t={t} />
+src/pages/admin/AdminReservationPage.jsx:440:                  {selectedReservation.customer_name}
+src/pages/admin/AdminReservationPage.jsx:445:                <span className="text-neutral-500">{t('common.phone')}</span>
+src/pages/admin/AdminReservationPage.jsx:447:                  {selectedReservation.customer_phone}
+src/pages/admin/AdminReservationPage.jsx:451:              {selectedReservation.customer_email && (
+src/pages/admin/AdminReservationPage.jsx:455:                    {selectedReservation.customer_email}
+src/pages/admin/AdminReservationPage.jsx:463:                  {formatDate(selectedReservation.reservation_date)}
+src/pages/admin/AdminReservationPage.jsx:470:                  {formatTime(selectedReservation.reservation_time)}
+src/pages/admin/AdminReservationPage.jsx:477:                  {selectedReservation.guest_count} {t('admin.person')}
+src/pages/admin/AdminReservationPage.jsx:484:                  {selectedReservation.restaurant_tables?.table_number
+src/pages/admin/AdminReservationPage.jsx:485:                    ? t('admin.tableNumber', { number: selectedReservation.restaurant_tables.table_number })
+src/pages/admin/AdminReservationPage.jsx:490:              {selectedReservation.occasion && (
+src/pages/admin/AdminReservationPage.jsx:494:                    {selectedReservation.occasion}
+src/pages/admin/AdminReservationPage.jsx:499:              {selectedReservation.notes && (
+src/pages/admin/AdminReservationPage.jsx:503:                    {selectedReservation.notes}
+src/pages/admin/AdminGalleryPage.jsx:4:  createGalleryItem,
+src/pages/admin/AdminGalleryPage.jsx:5:  deleteGalleryItem,
+src/pages/admin/AdminGalleryPage.jsx:6:  getGalleryItems,
+src/pages/admin/AdminGalleryPage.jsx:7:  updateGalleryItem,
+src/pages/admin/AdminGalleryPage.jsx:8:} from '../../features/cms/gallery'
+src/pages/admin/AdminGalleryPage.jsx:14:export default function AdminGalleryPage() {
+src/pages/admin/AdminGalleryPage.jsx:21:  const loadGallery = useCallback(async () => {
+src/pages/admin/AdminGalleryPage.jsx:26:      const data = await getGalleryItems()
+src/pages/admin/AdminGalleryPage.jsx:29:      setError(err.message || t('admin.loadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:39:    loadGallery()
+src/pages/admin/AdminGalleryPage.jsx:40:  }, [loadGallery])
+src/pages/admin/AdminGalleryPage.jsx:55:        'gallery',
+src/pages/admin/AdminGalleryPage.jsx:59:        await createGalleryItem({
+src/pages/admin/AdminGalleryPage.jsx:71:      await loadGallery()
+src/pages/admin/AdminGalleryPage.jsx:73:      setError(err.message || t('admin.uploadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:81:      await updateGalleryItem(item.id, {
+src/pages/admin/AdminGalleryPage.jsx:96:      setError(err.message || t('admin.updateGalleryStatusError'))
+src/pages/admin/AdminGalleryPage.jsx:110:      await deleteGalleryItem(item.id)
+src/pages/admin/AdminGalleryPage.jsx:128:      setError(err.message || t('admin.deleteGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:192:                  alt={item.alt_text || item.title || t("gallery.title")}
+src/pages/admin/AdminPromoPage.jsx:1:export default function AdminPromoPage() {
+src/pages/admin/AdminPromoPage.jsx:2:  return <div><h1 className="text-3xl font-bold">Promotion Management</h1></div>
+src/pages/admin/OperationsHubPage.jsx:22: {tab==='suppliers'&&<Panel title="Suppliers"><div className="space-y-2">{suppliers.map(x=><div key={x.id} className="rounded-xl bg-gray-50 p-3"><b>{x.name}</b><div className="text-xs text-gray-500">{x.contact_name||''} {x.phone||''} {x.email||''}</div></div>)}</div></Panel>}
+src/pages/cashier/CashierRegisterPage.jsx:22:  const [openingCash, setOpeningCash] = useState('')
+src/pages/cashier/CashierRegisterPage.jsx:94:    const amount = Number(openingCash) || 0
+src/pages/cashier/CashierRegisterPage.jsx:146:          p_opening_cash: amount,
+src/pages/cashier/CashierRegisterPage.jsx:155:      setOpeningCash('')
+src/pages/cashier/CashierRegisterPage.jsx:301:                htmlFor="opening-cash"
+src/pages/cashier/CashierRegisterPage.jsx:308:                id="opening-cash"
+src/pages/cashier/CashierRegisterPage.jsx:311:                value={openingCash}
+src/pages/cashier/CashierRegisterPage.jsx:313:                  setOpeningCash(event.target.value)
+src/pages/cashier/CashierRegisterPage.jsx:343:              {money(shift.opening_cash)}
+src/pages/cashier/CashierRegisterPage.jsx:398:                {money(shift.opening_cash)}
+src/pages/auth/LoginPage.jsx:141:                  Kelola pesanan, reservasi, menu, promosi, kasir, dan
+src/features/auth/permissions.js:4:  MANAGE_RESERVATIONS: 'manage_reservations',
+src/features/auth/permissions.js:5:  MANAGE_GALLERY: 'manage_gallery',
+src/features/auth/permissions.js:6:  MANAGE_PROMOTIONS: 'manage_promotions',
+src/features/auth/permissions.js:25:    PERMISSIONS.MANAGE_RESERVATIONS,
+src/features/auth/permissions.js:26:    PERMISSIONS.MANAGE_GALLERY,
+src/features/auth/permissions.js:27:    PERMISSIONS.MANAGE_PROMOTIONS,
+src/features/auth/permissions.js:37:    PERMISSIONS.MANAGE_RESERVATIONS,
+src/features/auth/permissions.js:38:    PERMISSIONS.MANAGE_PROMOTIONS,
+src/features/auth/profile.js:16:    .select('id, full_name, phone, avatar_url, role, is_active')
+src/features/reservations/reservations.js:3:const RESERVATION_SELECT = `
+src/features/reservations/reservations.js:5:  reservation_code,
+src/features/reservations/reservations.js:7:  customer_phone,
+src/features/reservations/reservations.js:9:  reservation_date,
+src/features/reservations/reservations.js:10:  reservation_time,
+src/features/reservations/reservations.js:26:export async function getReservations({
+src/features/reservations/reservations.js:34:    .from('reservations')
+src/features/reservations/reservations.js:35:    .select(RESERVATION_SELECT)
+src/features/reservations/reservations.js:36:    .order('reservation_date', { ascending: true })
+src/features/reservations/reservations.js:37:    .order('reservation_time', { ascending: true })
+src/features/reservations/reservations.js:44:    query = query.eq('reservation_date', date)
+src/features/reservations/reservations.js:51:      `reservation_code.ilike.%${term}%,customer_name.ilike.%${term}%,customer_phone.ilike.%${term}%`,
+src/features/reservations/reservations.js:62:export async function getReservationById(id) {
+src/features/reservations/reservations.js:68:    .from('reservations')
+src/features/reservations/reservations.js:69:    .select(RESERVATION_SELECT)
+src/features/reservations/reservations.js:78:export async function createReservation(payload) {
+src/features/reservations/reservations.js:84:    .from('reservations')
+src/features/reservations/reservations.js:86:    .select(RESERVATION_SELECT)
+src/features/reservations/reservations.js:94:export async function updateReservation(id, payload) {
+src/features/reservations/reservations.js:100:    .from('reservations')
+src/features/reservations/reservations.js:103:    .select(RESERVATION_SELECT)
+src/features/reservations/reservations.js:111:export async function updateReservationStatus(id, status) {
+src/features/reservations/reservations.js:112:  return updateReservation(id, { status })
+src/features/reservations/reservations.js:115:export async function deleteReservation(id) {
+src/features/reservations/reservations.js:121:    .from('reservations')
+src/features/reservations/reservations.js:128:export async function getReservationSummary(date = '') {
+src/features/reservations/reservations.js:142:    .from('reservations')
+src/features/reservations/reservations.js:146:    query = query.eq('reservation_date', date)
+src/features/reservations/reservationStatus.js:1:export const RESERVATION_STATUS = {
+src/features/reservations/reservationStatus.js:10:export const RESERVATION_STATUS_OPTIONS = [
+src/features/reservations/reservationStatus.js:12:    value: RESERVATION_STATUS.PENDING,
+src/features/reservations/reservationStatus.js:16:    value: RESERVATION_STATUS.CONFIRMED,
+src/features/reservations/reservationStatus.js:20:    value: RESERVATION_STATUS.SEATED,
+src/features/reservations/reservationStatus.js:24:    value: RESERVATION_STATUS.COMPLETED,
+src/features/reservations/reservationStatus.js:28:    value: RESERVATION_STATUS.CANCELLED,
+src/features/reservations/reservationStatus.js:32:    value: RESERVATION_STATUS.NO_SHOW,
+src/features/reservations/reservationStatus.js:37:export const RESERVATION_STATUS_LABELS = {
+src/features/reservations/reservationStatus.js:46:export function getReservationStatusLabel(status) {
+src/features/reservations/reservationStatus.js:47:  return RESERVATION_STATUS_LABELS[status] ?? status
+src/features/cms/gallery.js:3:const TABLE = 'gallery_items'
+src/features/cms/gallery.js:5:export async function getGalleryItems() {
+src/features/cms/gallery.js:21:export async function createGalleryItem(payload) {
+src/features/cms/gallery.js:37:export async function updateGalleryItem(id, payload) {
+src/features/cms/gallery.js:54:export async function deleteGalleryItem(id) {
+src/features/cms/promotions.js:3:export async function getActivePromotions() {
+src/features/cms/promotions.js:8:    .from('promotions')
+src/features/admin/dashboard.js:50:      todayReservations: 0,
+src/features/admin/dashboard.js:83:    todayReservationsResult,
+src/features/admin/dashboard.js:109:      .from('reservations')
+src/features/admin/dashboard.js:111:      .eq('reservation_date', today)
+src/features/admin/dashboard.js:193:    todayReservationsResult.error,
+src/features/admin/dashboard.js:208:      reservations: todayReservationsResult.error,
+src/features/admin/dashboard.js:289:      todayReservations: todayReservationsResult.count ?? 0,
+src/i18n/index.js:37:        phone: 'Telepon',
+src/i18n/index.js:52:        noReservation: 'Belum ada reservasi',
+src/i18n/index.js:59:        reservation: 'Reservasi',
+src/i18n/index.js:60:        gallery: 'Galeri',
+src/i18n/index.js:68:        reservations: 'Reservasi',
+src/i18n/index.js:77:        viewGallery: 'Lihat galeri',
+src/i18n/index.js:80:        openingHours: 'Jam Operasional',
+src/i18n/index.js:84:        whatsapp: 'WhatsApp',
+src/i18n/index.js:85:        instagram: 'Instagram',
+src/i18n/index.js:89:        theGallery: 'Galeri',
+src/i18n/index.js:97:        galleryDescription:
+src/i18n/index.js:102:  instagramLink: "Instagram",
+src/i18n/index.js:120:      gallery: {
+src/i18n/index.js:130:      reservation: {
+src/i18n/index.js:147:        whatsapp: 'WhatsApp',
+src/i18n/index.js:158:        requiredFields: 'Nama, nomor WhatsApp, tanggal, dan waktu wajib diisi.',
+src/i18n/index.js:183:        reservationManagement: 'Kelola reservasi pelanggan dan status meja dari dashboard.',
+src/i18n/index.js:184:        searchReservation: 'Cari reservasi',
+src/i18n/index.js:185:        reservationSearchPlaceholder: 'Kode, nama, atau nomor HP',
+src/i18n/index.js:188:        reservationsFound: '{{count}} reservasi ditemukan',
+src/i18n/index.js:189:        loadingReservations: 'Memuat data reservasi...',
+src/i18n/index.js:190:        noReservations: 'Belum ada reservasi',
+src/i18n/index.js:191:        changeReservationFilter: 'Coba ubah filter pencarian atau tanggal.',
+src/i18n/index.js:192:        reservationDetail: 'Detail Reservasi',
+src/i18n/index.js:198:        deleteReservationConfirm: 'Hapus reservasi {{code}} untuk {{name}}? Tindakan ini tidak dapat dibatalkan.',
+src/i18n/index.js:199:        loadReservationError: 'Gagal mengambil data reservasi.',
+src/i18n/index.js:200:        updateReservationStatusError: 'Gagal mengubah status reservasi.',
+src/i18n/index.js:201:        deleteReservationError: 'Gagal menghapus reservasi.',
+src/i18n/index.js:213:        heroPhoto: 'Foto Hero',
+src/i18n/index.js:226:        gallery: 'Galeri',
+src/i18n/index.js:227:        promo: 'Promo',
+src/i18n/index.js:229:        hero: 'Hero',
+src/i18n/index.js:230:        restaurantAbout: 'Tentang Restoran',
+src/i18n/index.js:231:        reservations: 'Reservasi',
+src/i18n/index.js:232:        contactInfo: 'Kontak & Informasi',
+src/i18n/index.js:233:        promotionManagement: 'Manajemen Promosi',
+src/i18n/index.js:244:        reservationList: 'Daftar Reservasi',
+src/i18n/index.js:245:        reservation: 'Reservasi',
+src/i18n/index.js:254:        phone: 'Telepon',
+src/i18n/index.js:264:  deleteGalleryError: "Gagal menghapus foto galeri.",
+src/i18n/index.js:268:  loadGalleryError: "Gagal memuat galeri.",
+src/i18n/index.js:276:  updateGalleryStatusError: "Gagal memperbarui status galeri.",
+src/i18n/index.js:277:  uploadGalleryError: "Gagal mengunggah foto galeri.",
+src/i18n/index.js:366:        phone: 'Phone',
+src/i18n/index.js:381:        noReservation: 'No reservations',
+src/i18n/index.js:388:        reservation: 'Reservation',
+src/i18n/index.js:389:        gallery: 'Gallery',
+src/i18n/index.js:397:        reservations: 'Reservations',
+src/i18n/index.js:406:        viewGallery: 'View gallery',
+src/i18n/index.js:409:        openingHours: 'Opening Hours',
+src/i18n/index.js:413:        whatsapp: 'WhatsApp',
+src/i18n/index.js:414:        instagram: 'Instagram',
+src/i18n/index.js:418:        theGallery: 'The Gallery',
+src/i18n/index.js:426:galleryDescription:
+src/i18n/index.js:431:  instagramLink: "Instagram",
+src/i18n/index.js:449:      gallery: {
+src/i18n/index.js:450:        loading: 'Opening the gallery...',
+src/i18n/index.js:451:        title: 'The Gallery',
+src/i18n/index.js:459:      reservation: {
+src/i18n/index.js:460:        received: 'Reservation Received',
+src/i18n/index.js:463:          'Your reservation request has been received and is awaiting confirmation from the COREÉATERY team.',
+src/i18n/index.js:464:        code: 'Reservation Code',
+src/i18n/index.js:465:        another: 'Make another reservation',
+src/i18n/index.js:466:        title: 'Reservations',
+src/i18n/index.js:469:          'Choose your preferred time. Our team will contact you for confirmation.',
+src/i18n/index.js:473:          'Reservations are submitted as requests first. Final confirmation is handled by the restaurant team.',
+src/i18n/index.js:476:        whatsapp: 'WhatsApp',
+src/i18n/index.js:486:        request: 'Request Reservation',
+src/i18n/index.js:487:        requiredFields: 'Name, WhatsApp number, date, and time are required.',
+src/i18n/index.js:512:        reservationManagement: 'Manage customer reservations and table status from the dashboard.',
+src/i18n/index.js:513:        searchReservation: 'Search reservations',
+src/i18n/index.js:514:        reservationSearchPlaceholder: 'Code, name, or phone number',
+src/i18n/index.js:517:        reservationsFound: '{{count}} reservations found',
+src/i18n/index.js:518:        loadingReservations: 'Loading reservation data...',
+src/i18n/index.js:519:        noReservations: 'No reservations yet',
+src/i18n/index.js:520:        changeReservationFilter: 'Try changing the search filter or date.',
+src/i18n/index.js:521:        reservationDetail: 'Reservation Detail',
+src/i18n/index.js:527:        deleteReservationConfirm: 'Delete reservation {{code}} for {{name}}? This action cannot be undone.',
+src/i18n/index.js:528:        loadReservationError: 'Failed to load reservations.',
+src/i18n/index.js:529:        updateReservationStatusError: 'Failed to update reservation status.',
+src/i18n/index.js:530:        deleteReservationError: 'Failed to delete reservation.',
+src/i18n/index.js:542:        heroPhoto: 'Hero Photo',
+src/i18n/index.js:555:        reservation: 'Reservations',
+src/i18n/index.js:556:        gallery: 'Gallery',
+src/i18n/index.js:557:        promo: 'Promotions',
+src/i18n/index.js:559:        hero: 'Hero',
+src/i18n/index.js:560:        restaurantAbout: 'About the Restaurant',
+src/i18n/index.js:561:        reservations: 'Reservations',
+src/i18n/index.js:562:        contactInfo: 'Contact & Information',
+src/i18n/index.js:563:        promotionManagement: 'Promotion Management',
+src/i18n/index.js:574:        reservationList: 'Reservation List',
+src/i18n/index.js:583:        phone: 'Phone',
+src/i18n/index.js:593:  deleteGalleryError: "Failed to delete gallery photo.",
+src/i18n/index.js:597:  loadGalleryError: "Failed to load gallery.",
+src/i18n/index.js:605:  updateGalleryStatusError: "Failed to update gallery status.",
+src/i18n/index.js:606:  uploadGalleryError: "Failed to upload gallery photo.",
+src/i18n/index.js:695:        phone: '电话',
+src/i18n/index.js:710:        noReservation: '暂无预订',
+src/i18n/index.js:717:        reservation: '预订',
+src/i18n/index.js:718:        gallery: '画廊',
+src/i18n/index.js:726:        reservations: '预订',
+src/i18n/index.js:735:        viewGallery: '查看画廊',
+src/i18n/index.js:738:        openingHours: '营业时间',
+src/i18n/index.js:742:        whatsapp: 'WhatsApp',
+src/i18n/index.js:743:        instagram: 'Instagram',
+src/i18n/index.js:747:        theGallery: '画廊',
+src/i18n/index.js:755:galleryDescription: '一览餐厅空间、餐桌以及其中发生的美好时刻。',
+src/i18n/index.js:759:  instagramLink: "Instagram",
+src/i18n/index.js:776:      gallery: {
+src/i18n/index.js:785:      reservation: {
+src/i18n/index.js:799:        whatsapp: 'WhatsApp',
+src/i18n/index.js:834:        reservationManagement: '在管理后台管理顾客预订和餐桌状态。',
+src/i18n/index.js:835:        searchReservation: '搜索预订',
+src/i18n/index.js:836:        reservationSearchPlaceholder: '代码、姓名或电话号码',
+src/i18n/index.js:839:        reservationsFound: '找到 {{count}} 个预订',
+src/i18n/index.js:840:        loadingReservations: '正在加载预订数据...',
+src/i18n/index.js:841:        noReservations: '暂无预订',
+src/i18n/index.js:842:        changeReservationFilter: '请尝试更改搜索条件或日期。',
+src/i18n/index.js:843:        reservationDetail: '预订详情',
+src/i18n/index.js:849:        deleteReservationConfirm: '确定删除 {{name}} 的预订 {{code}} 吗？此操作无法撤销。',
+src/i18n/index.js:850:        loadReservationError: '获取预订失败。',
+src/i18n/index.js:851:        updateReservationStatusError: '更新预订状态失败。',
+src/i18n/index.js:852:        deleteReservationError: '删除预订失败。',
+src/i18n/index.js:864:        heroPhoto: 'Hero 图片',
+src/i18n/index.js:877:        reservation: '预订管理',
+src/i18n/index.js:878:        gallery: '画廊管理',
+src/i18n/index.js:879:        promo: '促销管理',
+src/i18n/index.js:881:        hero: 'Hero',
+src/i18n/index.js:882:        restaurantAbout: '餐厅介绍',
+src/i18n/index.js:883:        reservations: '预订',
+src/i18n/index.js:884:        contactInfo: '联系方式与信息',
+src/i18n/index.js:885:        promotionManagement: '促销管理',
+src/i18n/index.js:896:        reservationList: '预订列表',
+src/i18n/index.js:905:        phone: '电话',
+src/i18n/index.js:915:  deleteGalleryError: "删除图库照片失败。",
+src/i18n/index.js:919:  loadGalleryError: "加载图库失败。",
+src/i18n/index.js:927:  updateGalleryStatusError: "更新图库状态失败。",
+src/i18n/index.js:928:  uploadGalleryError: "上传图库照片失败。",

@@ -1,0 +1,19 @@
+COREÉATERY FULL PROJECT AUDIT
+Wed Sep 16 18:47:57 UTC 2026
+ROOT: /data/data/com.termux/files/home/coreeatery
+
+origin	https://github.com/coreeatery/coreeatery.git (fetch)
+origin	https://github.com/coreeatery/coreeatery.git (push)
+?? AUDIT_PUBLIC_CMS_20260916_183133.txt
+?? COREATERY_FULL_PROJECT_AUDIT_20260916_184757/
+?? "CORE\303\211ATERY_FULL_AUDIT_20260912_155918.txt"
+?? audit_coreeatery.sh
+?? audit_public_cms.sh
+?? src/components/admin/AdminSidebar.jsx.backup-20260916-120651
+?? src/features/admin/dashboard.js.bak
+?? src/features/admin/dashboard.js.before-error-debug
+?? src/features/admin/dashboard.js.before-po-fix
+?? src/features/admin/dashboard.js.before-reservation-fix
+?? supabase/.temp/
+93e714f fix: improve responsive admin navigation styling
+main

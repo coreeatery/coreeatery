@@ -81,14 +81,44 @@ export async function createReservation(payload) {
   }
 
   const { data, error } = await supabase
-    .from('reservations')
-    .insert(payload)
-    .select(RESERVATION_SELECT)
-    .single()
+    .rpc('create_public_reservation', {
+      p_customer_name: payload.customer_name,
+      p_customer_phone: payload.customer_phone,
+      p_customer_email: payload.customer_email,
+      p_reservation_date: payload.reservation_date,
+      p_reservation_time: payload.reservation_time,
+      p_guest_count: payload.guest_count,
+      p_occasion: payload.occasion,
+      p_notes: payload.notes,
+    })
 
   if (error) throw error
 
-  return data
+  const reservation = Array.isArray(data) ? data[0] : data
+
+  if (!reservation) {
+    throw new Error('Reservation response is empty.')
+  }
+
+  return reservation
+}
+
+export async function getAvailableReservationSlots(date, guestCount) {
+  if (!supabase || !date || !Number.isInteger(guestCount) || guestCount <= 0) {
+    return []
+  }
+
+  const { data, error } = await supabase.rpc(
+    'get_available_reservation_slots',
+    {
+      p_reservation_date: date,
+      p_guest_count: guestCount,
+    },
+  )
+
+  if (error) throw error
+
+  return (data ?? []).map((slot) => slot.reservation_time?.slice(0, 5)).filter(Boolean)
 }
 
 export async function updateReservation(id, payload) {

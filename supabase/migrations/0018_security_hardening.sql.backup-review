@@ -1,0 +1,166 @@
+-- COREÉATERY
+-- Migration: 0018_security_hardening
+--
+-- Purpose
+--   1. Close privilege-escalation paths through public.profiles.role and
+--      public.profiles.is_active (both are authorization fields).
+--   2. Make SECURITY DEFINER functions use a trusted, deterministic
+--      search_path and remove implicit EXECUTE grants.
+--   3. Restore only the least-privilege EXECUTE grants required by the
+--      existing application RPC surface.
+--
+-- Important
+--   This migration deliberately does not change any RPC name, signature, or
+--   return type. Role and activation changes must be made by a trusted server
+--   using the service_role/database owner, not through the client Data API.
+--
+-- Risk / deployment notes
+--   * Direct authenticated UPDATEs of profiles.role/is_active will fail after
+--     this migration. This is intentional; test any back-office provisioning
+--     workflow with a service-role server before deployment.
+--   * SECURITY DEFINER functions not listed in the explicit grants below
+--     remain non-callable from API roles. Add a reviewed, least-privilege
+--     GRANT before exposing a newly added RPC.
+--   * The migration assumes the standard Supabase `extensions` schema exists.
+--     It is placed after trusted schemas so extension helpers remain resolvable.
+--
+-- Rollback plan (perform only after approving the security trade-off)
+--   1. Restore the previous profiles_update_self policy and table/column
+--      privileges from migration 0002.
+--   2. Restore EXECUTE only for a specifically identified RPC caller; do not
+--      re-grant EXECUTE to PUBLIC.
+--   3. If a legacy function cannot operate with this search_path, alter only
+--      that function to a reviewed trusted path; never re-enable CREATE on
+--      schema public for API roles.
+
+begin;
+
+-- -------------------------------------------------------------------------
+-- 1. TRUSTED SCHEMAS FOR SECURITY DEFINER
+-- -------------------------------------------------------------------------
+-- SECURITY DEFINER functions resolve unqualified identifiers at execution
+-- time. API roles must not be able to create objects in a schema searched by
+-- those functions. pg_temp is explicit and last, preventing its implicit
+-- precedence over trusted schemas.
+revoke create on schema public from public;
+revoke create on schema public from anon;
+revoke create on schema public from authenticated;
+grant usage on schema public to anon, authenticated;
+
+-- Apply the same safe search_path and remove implicit invocation rights from
+-- every current public SECURITY DEFINER function. Using pg_proc keeps this
+-- migration forward-compatible with functions introduced by prior migrations
+-- without changing their signatures or bodies.
+do $$
+declare
+  v_function record;
+begin
+  for v_function in
+    select p.oid::regprocedure as identity
+    from pg_catalog.pg_proc p
+    join pg_catalog.pg_namespace n
+      on n.oid = p.pronamespace
+    where n.nspname = 'public'
+      and p.prosecdef
+  loop
+    execute format(
+      'alter function %s set search_path to pg_catalog, public, extensions, pg_temp',
+      v_function.identity
+    );
+    execute format(
+      'revoke all on function %s from public',
+      v_function.identity
+    );
+    execute format(
+      'revoke all on function %s from anon',
+      v_function.identity
+    );
+  end loop;
+end;
+$$;
+
+-- -------------------------------------------------------------------------
+-- 2. PROFILES: CLIENTS MAY EDIT IDENTITY DATA, NEVER AUTHORIZATION DATA
+-- -------------------------------------------------------------------------
+-- The previous policy allowed owner/admin client sessions to update any
+-- profile. Combined with the old trigger exception, an admin could promote
+-- itself to owner or alter is_active. Restrict Data API writes to the caller's
+-- own non-authorization columns. Service-role/database-owner maintenance is
+-- unaffected because auth.uid() is NULL there and those roles bypass RLS.
+revoke insert, delete on public.profiles from anon, authenticated;
+revoke update on public.profiles from anon, authenticated;
+grant update (full_name, phone, avatar_url) on public.profiles to authenticated;
+
+drop policy if exists profiles_update_self on public.profiles;
+create policy profiles_update_self
+on public.profiles
+for update
+to authenticated
+using (id = auth.uid())
+with check (id = auth.uid());
+
+-- Defence in depth: column privileges stop normal Data API writes, while this
+-- trigger blocks a future broad UPDATE grant or a mistakenly widened RLS
+-- policy. It also covers is_active, which is an authorization field alongside
+-- role. Trusted service-role/database-owner maintenance has no auth.uid().
+create or replace function public.protect_profile_privileged_fields()
+returns trigger
+language plpgsql
+security definer
+set search_path = pg_catalog, public, extensions, pg_temp
+as $$
+begin
+  if auth.uid() is not null
+     and (
+       new.role is distinct from old.role
+       or new.is_active is distinct from old.is_active
+     ) then
+    raise exception
+      'role and is_active may only be changed by trusted server-side administration';
+  end if;
+
+  return new;
+end;
+$$;
+
+-- CREATE OR REPLACE preserves the existing trigger binding. Explicitly revoke
+-- grants again because replacing a function does not itself reset privileges.
+revoke all on function public.protect_profile_privileged_fields() from public, anon;
+
+-- -------------------------------------------------------------------------
+-- 3. EXPLICIT RPC ALLOWLIST
+-- -------------------------------------------------------------------------
+-- PUBLIC and anon stay revoked by the loop above. These authenticated grants
+-- preserve the existing frontend RPC contracts and the has_role() helper used
+-- by RLS policies.
+grant execute on function public.get_my_role() to authenticated;
+grant execute on function public.has_role(public.user_role[]) to authenticated;
+
+grant execute on function public.create_order_transaction(
+  uuid, text, text, numeric, numeric, numeric, jsonb, text
+) to authenticated;
+grant execute on function public.process_payment_transaction(
+  uuid, numeric, public.payment_method, text, text
+) to authenticated;
+grant execute on function public.update_order_status(
+  uuid, public.order_status
+) to authenticated;
+grant execute on function public.recalculate_order_totals(uuid) to authenticated;
+grant execute on function public.open_cash_register_shift(text, numeric) to authenticated;
+grant execute on function public.close_cash_register_shift(uuid, numeric) to authenticated;
+grant execute on function public.get_current_cash_register_shift_schedule(timestamptz) to authenticated;
+
+grant execute on function public.generate_daily_sales_summary(date) to authenticated;
+grant execute on function public.create_kitchen_ticket_for_order(uuid) to authenticated;
+grant execute on function public.receive_inventory(
+  uuid, numeric, numeric, text, uuid, text
+) to authenticated;
+grant execute on function public.consume_inventory_for_order(uuid) to authenticated;
+
+-- This is SECURITY INVOKER, but anonymous reservation INSERTs use it as a
+-- column default. Revoke the implicit PUBLIC grant and retain the narrowly
+-- required anon/authenticated compatibility grant.
+revoke all on function public.generate_reservation_code() from public;
+grant execute on function public.generate_reservation_code() to anon, authenticated;
+
+commit;

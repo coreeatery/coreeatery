@@ -1,0 +1,795 @@
+===== SECURITY AND RLS =====
+src/App.jsx:37:          <svg className="icon" role="presentation" aria-hidden="true">
+src/App.jsx:58:          <svg className="icon" role="presentation" aria-hidden="true">
+src/App.jsx:68:                  role="presentation"
+src/App.jsx:80:                  role="presentation"
+src/App.jsx:92:                  role="presentation"
+src/App.jsx:104:                  role="presentation"
+src/app/router/index.jsx:4:import AdminLayout from '../../layouts/AdminLayout'
+src/app/router/index.jsx:5:import CashierLayout from '../../layouts/CashierLayout'
+src/app/router/index.jsx:18:import AdminDashboardPage from '../../pages/admin/AdminDashboardPage'
+src/app/router/index.jsx:19:import AdminHomepagePage from '../../pages/admin/AdminHomepagePage'
+src/app/router/index.jsx:20:import AdminMenuPage from '../../pages/admin/AdminMenuPage'
+src/app/router/index.jsx:21:import AdminReservationPage from '../../pages/admin/AdminReservationPage'
+src/app/router/index.jsx:22:import AdminGalleryPage from '../../pages/admin/AdminGalleryPage'
+src/app/router/index.jsx:23:import AdminPromoPage from '../../pages/admin/AdminPromoPage'
+src/app/router/index.jsx:24:import AdminSettingsPage from '../../pages/admin/AdminSettingsPage'
+src/app/router/index.jsx:25:import OperationsHubPage from '../../pages/admin/OperationsHubPage'
+src/app/router/index.jsx:26:import { adminDashboardLoader } from '../../features/admin/dashboard'
+src/app/router/index.jsx:28:import CashierDashboardPage from '../../pages/cashier/CashierDashboardPage'
+src/app/router/index.jsx:29:import CashierOrdersPage from '../../pages/cashier/CashierOrdersPage'
+src/app/router/index.jsx:30:import NewOrderPage from '../../pages/cashier/NewOrderPage'
+src/app/router/index.jsx:31:import OrderDetailPage from '../../pages/cashier/OrderDetailPage'
+src/app/router/index.jsx:32:import CashierPaymentsPage from '../../pages/cashier/CashierPaymentsPage'
+src/app/router/index.jsx:33:import CashierTransactionsPage from '../../pages/cashier/CashierTransactionsPage'
+src/app/router/index.jsx:34:import CashierRegisterPage from '../../pages/cashier/CashierRegisterPage'
+src/app/router/index.jsx:35:import CashierReportsPage from '../../pages/cashier/CashierReportsPage'
+src/app/router/index.jsx:36:import CashierSettingsPage from '../../pages/cashier/CashierSettingsPage'
+src/app/router/index.jsx:62:    element: <ProtectedRoute allowedRoles={['owner', 'admin', 'manager']} />,
+src/app/router/index.jsx:65:        path: '/admin',
+src/app/router/index.jsx:66:        element: <AdminLayout />,
+src/app/router/index.jsx:68:          { index: true, element: <AdminDashboardPage />, loader: adminDashboardLoader },
+src/app/router/index.jsx:69:          { path: 'homepage', element: <AdminHomepagePage /> },
+src/app/router/index.jsx:70:          { path: 'menu', element: <AdminMenuPage /> },
+src/app/router/index.jsx:71:          { path: 'reservasi', element: <AdminReservationPage /> },
+src/app/router/index.jsx:72:          { path: 'galeri', element: <AdminGalleryPage /> },
+src/app/router/index.jsx:73:          { path: 'promo', element: <AdminPromoPage /> },
+src/app/router/index.jsx:74:          { path: 'settings', element: <AdminSettingsPage /> },
+src/app/router/index.jsx:82:    element: <ProtectedRoute allowedRoles={['owner', 'admin', 'manager', 'cashier']} />,
+src/app/router/index.jsx:85:        path: '/cashier',
+src/app/router/index.jsx:86:        element: <CashierLayout />,
+src/app/router/index.jsx:88:          { index: true, element: <CashierDashboardPage /> },
+src/app/router/index.jsx:89:          { path: 'orders', element: <CashierOrdersPage /> },
+src/app/router/index.jsx:92:          { path: 'payments', element: <CashierPaymentsPage /> },
+src/app/router/index.jsx:93:          { path: 'transactions', element: <CashierTransactionsPage /> },
+src/app/router/index.jsx:94:          { path: 'register', element: <CashierRegisterPage /> },
+src/app/router/index.jsx:95:          { path: 'reports', element: <CashierReportsPage /> },
+src/app/router/index.jsx:96:          { path: 'settings', element: <CashierSettingsPage /> },
+src/app/providers/AuthProvider.jsx:90:    role: profile?.role ?? null,
+src/components/admin/AdminSidebar.jsx:50:export default function AdminSidebar() {
+src/components/admin/AdminSidebar.jsx:57:    [t('admin.dashboard', 'Dashboard'), '/admin'],
+src/components/admin/AdminSidebar.jsx:58:    [t('admin.homepage', 'Homepage'), '/admin/homepage'],
+src/components/admin/AdminSidebar.jsx:59:    [t('admin.menu', 'Menu'), '/admin/menu'],
+src/components/admin/AdminSidebar.jsx:60:    [t('admin.reservation', 'Reservasi'), '/admin/reservasi'],
+src/components/admin/AdminSidebar.jsx:61:    [t('admin.gallery', 'Galeri'), '/admin/galeri'],
+src/components/admin/AdminSidebar.jsx:62:    [t('admin.promo', 'Promo'), '/admin/promo'],
+src/components/admin/AdminSidebar.jsx:63:    [t('admin.settings', 'Pengaturan'), '/admin/settings'],
+src/components/admin/AdminSidebar.jsx:64:    ['Operations Hub', '/admin/operations'],
+src/components/admin/AdminSidebar.jsx:87:        aria-label="Admin navigation"
+src/components/admin/AdminSidebar.jsx:94:            end={to === '/admin'}
+src/components/admin/AdminSidebar.jsx:142:              Admin Panel
+src/components/admin/AdminSidebar.jsx:162:          role="dialog"
+src/components/admin/AdminSidebar.jsx:164:          aria-label="Navigasi admin"
+src/components/admin/AdminSidebar.jsx:181:                  Admin Panel
+src/components/admin/AdminSidebar.jsx:214:            Admin Panel
+src/components/cashier/CashierSidebar.jsx:24:export default function CashierSidebar() {
+src/components/cashier/CashierSidebar.jsx:34:      label: t('cashier.dashboard'),
+src/components/cashier/CashierSidebar.jsx:35:      to: '/cashier',
+src/components/cashier/CashierSidebar.jsx:39:      label: t('cashier.newOrder'),
+src/components/cashier/CashierSidebar.jsx:40:      to: '/cashier/orders/new',
+src/components/cashier/CashierSidebar.jsx:44:      label: t('cashier.activeOrders'),
+src/components/cashier/CashierSidebar.jsx:45:      to: '/cashier/orders',
+src/components/cashier/CashierSidebar.jsx:49:      label: t('cashier.payments'),
+src/components/cashier/CashierSidebar.jsx:50:      to: '/cashier/payments',
+src/components/cashier/CashierSidebar.jsx:54:      label: t('cashier.transactions'),
+src/components/cashier/CashierSidebar.jsx:55:      to: '/cashier/transactions',
+src/components/cashier/CashierSidebar.jsx:59:      label: t('cashier.register'),
+src/components/cashier/CashierSidebar.jsx:60:      to: '/cashier/register',
+src/components/cashier/CashierSidebar.jsx:64:      label: t('cashier.reports'),
+src/components/cashier/CashierSidebar.jsx:65:      to: '/cashier/reports',
+src/components/cashier/CashierSidebar.jsx:69:      label: t('cashier.settings'),
+src/components/cashier/CashierSidebar.jsx:70:      to: '/cashier/settings',
+src/components/cashier/CashierSidebar.jsx:112:                {t('cashier.system')}
+src/components/cashier/CashierSidebar.jsx:128:              {profile?.full_name || t('cashier.cashier')}
+src/components/cashier/CashierSidebar.jsx:132:              {profile?.role || 'cashier'}
+src/components/cashier/CashierSidebar.jsx:141:          {t('cashier.operational')}
+src/components/cashier/CashierSidebar.jsx:149:              end={to === '/cashier'}
+src/components/cashier/CashierSidebar.jsx:224:            {t('cashier.systemActive')}
+src/components/cashier/CashierSidebar.jsx:240:            {loggingOut ? t('common.loggingOut') : t('cashier.logout')}
+src/components/cashier/CashierSidebar.jsx:260:            <p className="text-[10px] text-stone-500">{t('cashier.cashier')}</p>
+src/components/cashier/CashierSidebar.jsx:268:          aria-label={t("cashier.openMenu")}
+src/components/cashier/CashierSidebar.jsx:284:            aria-label={t("cashier.closeMenu")}
+src/components/auth/ProtectedRoute.jsx:4:export default function ProtectedRoute({ allowedRoles }) {
+src/components/auth/ProtectedRoute.jsx:31:    allowedRoles?.length &&
+src/components/auth/ProtectedRoute.jsx:32:    !allowedRoles.includes(profile.role)
+src/layouts/AdminLayout.jsx:2:import AdminSidebar from '../components/admin/AdminSidebar'
+src/layouts/AdminLayout.jsx:4:export default function AdminLayout() {
+src/layouts/AdminLayout.jsx:8:        <AdminSidebar />
+src/layouts/CashierLayout.jsx:2:import CashierSidebar from '../components/cashier/CashierSidebar'
+src/layouts/CashierLayout.jsx:4:export default function CashierLayout() {
+src/layouts/CashierLayout.jsx:8:        <CashierSidebar />
+src/pages/public/HomePage.jsx:82:    return <main className="flex min-h-[70vh] items-center justify-center bg-[#f5f1e8] px-6"><div className="max-w-xl text-center"><p className="text-xs uppercase tracking-[0.4em] text-[#9b8355]">COREÉATERY</p><h1 className="mt-6 font-serif text-4xl">{t('common.noData')}</h1><Link to="/admin/homepage" className="mt-8 inline-flex bg-[#201d18] px-7 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">{t('admin.homepage')}</Link></div></main>
+src/pages/admin/AdminDashboardPage.jsx:5:import { getAdminDashboardData } from '../../features/admin/dashboard'
+src/pages/admin/AdminDashboardPage.jsx:103:export default function AdminDashboardPage() {
+src/pages/admin/AdminDashboardPage.jsx:117:      setData(await getAdminDashboardData())
+src/pages/admin/AdminDashboardPage.jsx:162:                : t('admin.operationalStatus')}
+src/pages/admin/AdminDashboardPage.jsx:514:              <QuickAction href="/cashier/orders/new" label="Pesanan Baru" />
+src/pages/admin/AdminDashboardPage.jsx:515:              <QuickAction href="/admin/operations" label="Operasional" />
+src/pages/admin/AdminDashboardPage.jsx:516:              <QuickAction href="/admin/menu" label="Kelola Menu" />
+src/pages/admin/AdminDashboardPage.jsx:517:              <QuickAction href="/admin/reservasi" label="Reservasi" />
+src/pages/admin/AdminHomepagePage.jsx:36:export default function AdminHomepagePage() {
+src/pages/admin/AdminHomepagePage.jsx:72:          setError(err.message || t('admin.loadHomepageError'))
+src/pages/admin/AdminHomepagePage.jsx:112:      setSuccess(t('admin.photoUploadedSaveHomepage'))
+src/pages/admin/AdminHomepagePage.jsx:114:      setError(err.message || t('admin.uploadPhotoError'))
+src/pages/admin/AdminHomepagePage.jsx:164:      setSuccess(t('admin.homepageSaved'))
+src/pages/admin/AdminHomepagePage.jsx:166:      setError(err.message || t('admin.saveHomepageError'))
+src/pages/admin/AdminHomepagePage.jsx:176:          {t('admin.loadingHomepage')}
+src/pages/admin/AdminHomepagePage.jsx:190:            {t('admin.homepage')}
+src/pages/admin/AdminHomepagePage.jsx:214:            <h2 className="text-xl font-bold">{t('admin.hero')}</h2>
+src/pages/admin/AdminHomepagePage.jsx:255:            label={t('admin.heroPhoto')}
+src/pages/admin/AdminHomepagePage.jsx:273:            <h2 className="text-xl font-bold">{t('admin.restaurantAbout')}</h2>
+src/pages/admin/AdminHomepagePage.jsx:400:            <h2 className="text-xl font-bold">{t('admin.contactInfo')}</h2>
+src/pages/admin/AdminHomepagePage.jsx:454:            {saving ? t('common.saving') : t('admin.saveHomepage')}
+src/pages/admin/AdminHomepagePage.jsx:556:                ? t('admin.uploadingPhoto')
+src/pages/admin/AdminHomepagePage.jsx:557:                : t('admin.choosePhoto')}
+src/pages/admin/AdminMenuPage.jsx:46:export default function AdminMenuPage() {
+src/pages/admin/AdminMenuPage.jsx:74:      setError(err.message || t('admin.loadMenuError'))
+src/pages/admin/AdminMenuPage.jsx:155:      setError(err.message || t('admin.uploadMenuPhotoError'))
+src/pages/admin/AdminMenuPage.jsx:174:      setError(t('admin.menuNameRequired'))
+src/pages/admin/AdminMenuPage.jsx:179:      setError(t('admin.priceCannotBeNegative'))
+src/pages/admin/AdminMenuPage.jsx:216:      setError(err.message || t('admin.saveMenuError'))
+src/pages/admin/AdminMenuPage.jsx:235:      setError(err.message || t('admin.deleteMenuError'))
+src/pages/admin/AdminMenuPage.jsx:253:      setError(err.message || t('admin.updateMenuStatusError'))
+src/pages/admin/AdminMenuPage.jsx:279:          + {t('admin.addMenu')}
+src/pages/admin/AdminMenuPage.jsx:321:                {editingId ? t('admin.editMenu') : t('admin.addMenu')}
+src/pages/admin/AdminMenuPage.jsx:434:                      alt={form.name_id || t('admin.menuPhoto')}
+src/pages/admin/AdminMenuPage.jsx:460:                      ? t('admin.uploading')
+src/pages/admin/AdminMenuPage.jsx:462:                        ? t('admin.changePhoto')
+src/pages/admin/AdminMenuPage.jsx:472:                      {t('admin.deletePhoto')}
+src/pages/admin/AdminMenuPage.jsx:551:              {saving ? t('common.saving') : t('admin.saveMenu')}
+src/pages/admin/AdminMenuPage.jsx:560:            {t('admin.loadingMenu')}
+src/pages/admin/AdminMenuPage.jsx:566:              {t('admin.emptyMenu')}
+src/pages/admin/AdminMenuPage.jsx:626:                    {item.is_available ? t('admin.markUnavailable') : t('admin.activate')}
+src/pages/admin/AdminReservationPage.jsx:55:      {statusKey ? t(`admin.${statusKey}`) : getReservationStatusLabel(status)}
+src/pages/admin/AdminReservationPage.jsx:60:export default function AdminReservationPage() {
+src/pages/admin/AdminReservationPage.jsx:109:        setError(err.message || t('admin.loadReservationError'))
+src/pages/admin/AdminReservationPage.jsx:145:      setError(err.message || t('admin.updateReservationStatusError'))
+src/pages/admin/AdminReservationPage.jsx:153:      t('admin.deleteReservationConfirm', { code: reservation.reservation_code, name: reservation.customer_name }),
+src/pages/admin/AdminReservationPage.jsx:176:      setError(err.message || t('admin.deleteReservationError'))
+src/pages/admin/AdminReservationPage.jsx:184:    [t('admin.pending'), summary.pending],
+src/pages/admin/AdminReservationPage.jsx:185:    [t('admin.confirmed'), summary.confirmed],
+src/pages/admin/AdminReservationPage.jsx:186:    [t('admin.seated'), summary.seated ?? 0],
+src/pages/admin/AdminReservationPage.jsx:187:    [t('admin.completed'), summary.completed],
+src/pages/admin/AdminReservationPage.jsx:188:    [t('admin.cancelled'), summary.cancelled],
+src/pages/admin/AdminReservationPage.jsx:189:    [t('admin.noShow'), summary.noShow],
+src/pages/admin/AdminReservationPage.jsx:202:          {t('admin.reservationManagement')}
+src/pages/admin/AdminReservationPage.jsx:222:              {t('admin.searchReservation')}
+src/pages/admin/AdminReservationPage.jsx:228:              placeholder={t('admin.reservationSearchPlaceholder')}
+src/pages/admin/AdminReservationPage.jsx:254:              <option value="">{t('admin.allStatuses')}</option>
+src/pages/admin/AdminReservationPage.jsx:257:                  {t(`admin.${option.value === 'no_show' ? 'noShow' : option.value}`)}
+src/pages/admin/AdminReservationPage.jsx:274:            <h2 className="font-semibold">{t('admin.reservationList')}</h2>
+src/pages/admin/AdminReservationPage.jsx:276:              {t('admin.reservationsFound', { count: reservations.length })}
+src/pages/admin/AdminReservationPage.jsx:286:            {loading ? t('common.loading') : t('admin.refresh')}
+src/pages/admin/AdminReservationPage.jsx:292:            {t('admin.loadingReservations')}
+src/pages/admin/AdminReservationPage.jsx:296:            <p className="font-medium">{t('admin.noReservations')}</p>
+src/pages/admin/AdminReservationPage.jsx:298:              {t('admin.changeReservationFilter')}
+src/pages/admin/AdminReservationPage.jsx:306:                  <th className="px-5 py-3">{t('admin.reservation')}</th>
+src/pages/admin/AdminReservationPage.jsx:307:                  <th className="px-5 py-3">{t('admin.customer')}</th>
+src/pages/admin/AdminReservationPage.jsx:309:                  <th className="px-5 py-3">{t('admin.guests')}</th>
+src/pages/admin/AdminReservationPage.jsx:310:                  <th className="px-5 py-3">{t('admin.table')}</th>
+src/pages/admin/AdminReservationPage.jsx:312:                  <th className="px-5 py-3">{t('admin.action')}</th>
+src/pages/admin/AdminReservationPage.jsx:342:                      {reservation.guest_count} {t('admin.person')}
+src/pages/admin/AdminReservationPage.jsx:347:                        ? t('admin.tableNumber', { number: reservation.restaurant_tables.table_number })
+src/pages/admin/AdminReservationPage.jsx:383:                              {t(`admin.${option.value === 'no_show' ? 'noShow' : option.value}`)}
+src/pages/admin/AdminReservationPage.jsx:417:                  {t('admin.reservationDetail')}
+src/pages/admin/AdminReservationPage.jsx:475:                <span className="text-neutral-500">{t('admin.guestCount')}</span>
+src/pages/admin/AdminReservationPage.jsx:477:                  {selectedReservation.guest_count} {t('admin.person')}
+src/pages/admin/AdminReservationPage.jsx:485:                    ? t('admin.tableNumber', { number: selectedReservation.restaurant_tables.table_number })
+src/pages/admin/AdminReservationPage.jsx:486:                    : t('admin.tableNotAssigned')}
+src/pages/admin/AdminReservationPage.jsx:492:                  <span className="text-neutral-500">{t('admin.event')}</span>
+src/pages/admin/AdminReservationPage.jsx:501:                  <p className="text-neutral-500">{t('admin.notes')}</p>
+src/pages/admin/AdminGalleryPage.jsx:14:export default function AdminGalleryPage() {
+src/pages/admin/AdminGalleryPage.jsx:29:      setError(err.message || t('admin.loadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:73:      setError(err.message || t('admin.uploadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:96:      setError(err.message || t('admin.updateGalleryStatusError'))
+src/pages/admin/AdminGalleryPage.jsx:102:      `Hapus foto "${item.title || t('admin.photo')}"?`,
+src/pages/admin/AdminGalleryPage.jsx:128:      setError(err.message || t('admin.deleteGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:150:          {uploading ? t('admin.uploading') : '+ Upload Foto'}
+src/pages/admin/AdminGalleryPage.jsx:179:            Upload foto pertama dari galeri HP admin.
+src/pages/admin/AdminGalleryPage.jsx:200:                    {item.title || t('admin.restaurantPhoto')}
+src/pages/admin/AdminGalleryPage.jsx:205:                      ? t('admin.visibleOnWebsite')
+src/pages/admin/AdminGalleryPage.jsx:206:                      : t('admin.hidden')}
+src/pages/admin/AdminGalleryPage.jsx:217:                      ? t('admin.hide')
+src/pages/admin/AdminGalleryPage.jsx:218:                      : t('admin.show')}
+src/pages/admin/AdminPromoPage.jsx:1:export default function AdminPromoPage() {
+src/pages/admin/AdminSettingsPage.jsx:1:export default function AdminSettingsPage() {
+src/pages/admin/AdminSettingsPage.jsx:2:  return <div><h1 className="text-3xl font-bold">Admin Settings</h1></div>
+src/pages/cashier/CashierDashboardPage.jsx:1:export default function CashierDashboardPage() {
+src/pages/cashier/CashierDashboardPage.jsx:4:      <h1 className="text-3xl font-bold">Cashier Dashboard</h1>
+src/pages/cashier/CashierOrdersPage.jsx:28:export default function CashierOrdersPage() {
+src/pages/cashier/CashierOrdersPage.jsx:49:      setError(err.message || t('cashier.loadOrdersError'))
+src/pages/cashier/CashierOrdersPage.jsx:75:          setError(err.message || t('cashier.loadOrdersError'))
+src/pages/cashier/CashierOrdersPage.jsx:97:      setError(err.message || t('cashier.updateOrderStatusError'))
+src/pages/cashier/CashierOrdersPage.jsx:112:          to="/cashier/orders/new"
+src/pages/cashier/CashierOrdersPage.jsx:174:                        to={`/cashier/orders/${order.id}`}
+src/pages/cashier/CashierOrdersPage.jsx:191:                      {order.customer_name || t('cashier.generalCustomer')}
+src/pages/cashier/CashierOrdersPage.jsx:197:                        : t('cashier.noTable')}
+src/pages/cashier/CashierOrdersPage.jsx:227:                      to={`/cashier/orders/${order.id}`}
+src/pages/cashier/NewOrderPage.jsx:67:        setError(err.message || t('cashier.loadOrderDataError'))
+src/pages/cashier/NewOrderPage.jsx:203:      setError(t('cashier.minimumOneMenu'))
+src/pages/cashier/NewOrderPage.jsx:228:      navigate(`/cashier/orders/${order.id}`)
+src/pages/cashier/NewOrderPage.jsx:230:      setError(err.message || t('cashier.createOrderError'))
+src/pages/cashier/NewOrderPage.jsx:553:              {saving ? t('common.saving') : t('cashier.saveOrder')}
+src/pages/cashier/OrderDetailPage.jsx:65:            err.message || t('cashier.loadOrderDetailError'),
+src/pages/cashier/OrderDetailPage.jsx:102:        err.message || t('cashier.updateOrderStatusError'),
+src/pages/cashier/OrderDetailPage.jsx:126:        err.message || t('cashier.recalculateTotalError'),
+src/pages/cashier/OrderDetailPage.jsx:145:          to="/cashier/orders"
+src/pages/cashier/OrderDetailPage.jsx:152:          {error || t('cashier.orderNotFound')}
+src/pages/cashier/OrderDetailPage.jsx:165:            to="/cashier/orders"
+src/pages/cashier/OrderDetailPage.jsx:364:            to={`/cashier/payments?order=${order.id}`}
+src/pages/cashier/CashierPaymentsPage.jsx:52:export default function CashierPaymentsPage() {
+src/pages/cashier/CashierPaymentsPage.jsx:194:          to="/cashier/orders"
+src/pages/cashier/CashierPaymentsPage.jsx:223:          to="/cashier/orders"
+src/pages/cashier/CashierPaymentsPage.jsx:324:            to={`/cashier/orders/${order.id}`}
+src/pages/cashier/CashierPaymentsPage.jsx:331:            to="/cashier/orders/new"
+src/pages/cashier/CashierPaymentsPage.jsx:347:          to={`/cashier/orders/${order.id}`}
+src/pages/cashier/CashierTransactionsPage.jsx:37:export default function CashierTransactionsPage() {
+src/pages/cashier/CashierTransactionsPage.jsx:286:                        to={`/cashier/orders/${payment.order_id}`}
+src/pages/cashier/CashierRegisterPage.jsx:20:export default function CashierRegisterPage() {
+src/pages/cashier/CashierReportsPage.jsx:40:export default function CashierReportsPage() {
+src/pages/cashier/CashierReportsPage.jsx:123:            to="/cashier"
+src/pages/cashier/CashierReportsPage.jsx:387:                      to={`/cashier/orders/${order.id}`}
+src/pages/cashier/CashierReportsPage.jsx:445:                      to={`/cashier/orders/${order.id}`}
+src/pages/cashier/CashierSettingsPage.jsx:1:export default function CashierSettingsPage() {
+src/pages/cashier/CashierSettingsPage.jsx:2:  return <div><h1 className="text-3xl font-bold">Cashier Settings</h1></div>
+src/pages/auth/LoginPage.jsx:14:function getRoleDestination(role) {
+src/pages/auth/LoginPage.jsx:15:  switch (role) {
+src/pages/auth/LoginPage.jsx:16:    case 'cashier':
+src/pages/auth/LoginPage.jsx:17:      return '/cashier'
+src/pages/auth/LoginPage.jsx:20:    case 'admin':
+src/pages/auth/LoginPage.jsx:21:    case 'manager':
+src/pages/auth/LoginPage.jsx:22:      return '/admin'
+src/pages/auth/LoginPage.jsx:41:    const destination = getRoleDestination(profile.role)
+src/pages/auth/LoginPage.jsx:59:      const role = result?.user?.user_metadata?.role
+src/pages/auth/LoginPage.jsx:61:      if (role) {
+src/pages/auth/LoginPage.jsx:62:        navigate(getRoleDestination(role), { replace: true })
+src/pages/auth/LoginPage.jsx:68:       * Kita tidak memaksa redirect ke /admin di sini karena
+src/pages/auth/LoginPage.jsx:69:       * cashier harus masuk ke /cashier.
+src/pages/auth/LoginPage.jsx:75:        !destination.startsWith('/admin') &&
+src/pages/auth/LoginPage.jsx:86:       * otomatis melakukan redirect berdasarkan profile.role.
+src/pages/auth/LoginPage.jsx:228:                      placeholder="admin@coreeatery.com"
+src/pages/auth/LoginPage.jsx:307:                  Akses sistem dibatasi berdasarkan role akun.
+src/features/auth/roles.js:1:export const ROLES = {
+src/features/auth/roles.js:3:  ADMIN: 'admin',
+src/features/auth/roles.js:4:  MANAGER: 'manager',
+src/features/auth/roles.js:5:  CASHIER: 'cashier',
+src/features/auth/roles.js:10:export const ROLE_LABELS = {
+src/features/auth/roles.js:12:  admin: 'Administrator',
+src/features/auth/roles.js:13:  manager: 'Manager',
+src/features/auth/roles.js:14:  cashier: 'Kasir',
+src/features/auth/permissions.js:1:export const PERMISSIONS = {
+src/features/auth/permissions.js:2:  VIEW_ADMIN: 'view_admin',
+src/features/auth/permissions.js:9:  VIEW_CASHIER: 'view_cashier',
+src/features/auth/permissions.js:19:export const ROLE_PERMISSIONS = {
+src/features/auth/permissions.js:20:  owner: Object.values(PERMISSIONS),
+src/features/auth/permissions.js:22:  admin: [
+src/features/auth/permissions.js:23:    PERMISSIONS.VIEW_ADMIN,
+src/features/auth/permissions.js:24:    PERMISSIONS.MANAGE_MENU,
+src/features/auth/permissions.js:25:    PERMISSIONS.MANAGE_RESERVATIONS,
+src/features/auth/permissions.js:26:    PERMISSIONS.MANAGE_GALLERY,
+src/features/auth/permissions.js:27:    PERMISSIONS.MANAGE_PROMOTIONS,
+src/features/auth/permissions.js:28:    PERMISSIONS.MANAGE_SETTINGS,
+src/features/auth/permissions.js:29:    PERMISSIONS.VIEW_CASHIER,
+src/features/auth/permissions.js:30:    PERMISSIONS.VIEW_REPORTS,
+src/features/auth/permissions.js:31:    PERMISSIONS.MANAGE_INVENTORY,
+src/features/auth/permissions.js:34:  manager: [
+src/features/auth/permissions.js:35:    PERMISSIONS.VIEW_ADMIN,
+src/features/auth/permissions.js:36:    PERMISSIONS.MANAGE_MENU,
+src/features/auth/permissions.js:37:    PERMISSIONS.MANAGE_RESERVATIONS,
+src/features/auth/permissions.js:38:    PERMISSIONS.MANAGE_PROMOTIONS,
+src/features/auth/permissions.js:39:    PERMISSIONS.VIEW_CASHIER,
+src/features/auth/permissions.js:40:    PERMISSIONS.CREATE_ORDER,
+src/features/auth/permissions.js:41:    PERMISSIONS.MANAGE_ORDERS,
+src/features/auth/permissions.js:42:    PERMISSIONS.PROCESS_PAYMENT,
+src/features/auth/permissions.js:43:    PERMISSIONS.MANAGE_REGISTER,
+src/features/auth/permissions.js:44:    PERMISSIONS.VIEW_REPORTS,
+src/features/auth/permissions.js:45:    PERMISSIONS.MANAGE_INVENTORY,
+src/features/auth/permissions.js:48:  cashier: [
+src/features/auth/permissions.js:49:    PERMISSIONS.VIEW_CASHIER,
+src/features/auth/permissions.js:50:    PERMISSIONS.CREATE_ORDER,
+src/features/auth/permissions.js:51:    PERMISSIONS.MANAGE_ORDERS,
+src/features/auth/permissions.js:52:    PERMISSIONS.PROCESS_PAYMENT,
+src/features/auth/permissions.js:53:    PERMISSIONS.MANAGE_REGISTER,
+src/features/auth/permissions.js:54:    PERMISSIONS.VIEW_REPORTS,
+src/features/auth/permissions.js:58:    PERMISSIONS.MANAGE_ORDERS,
+src/features/auth/permissions.js:62:    PERMISSIONS.VIEW_CASHIER,
+src/features/auth/permissions.js:66:export function hasPermission(role, permission) {
+src/features/auth/permissions.js:67:  return ROLE_PERMISSIONS[role]?.includes(permission) ?? false
+src/features/auth/permissions.js:70:export function hasAnyPermission(role, permissions = []) {
+src/features/auth/permissions.js:71:  return permissions.some((permission) =>
+src/features/auth/permissions.js:72:    hasPermission(role, permission),
+src/features/auth/profile.js:16:    .select('id, full_name, phone, avatar_url, role, is_active')
+src/features/orders/orders.js:16:  cashier_id,
+src/features/payments/payments.js:34:    throw new Error('CASHIER_NOT_LOGGED_IN')
+src/features/admin/dashboard.js:72:export async function getAdminDashboardData() {
+src/features/admin/dashboard.js:308:export async function adminDashboardLoader() {
+src/features/admin/dashboard.js:310:    return await getAdminDashboardData()
+src/i18n/index.js:169:      admin: {
+src/i18n/index.js:217:        admin: 'Admin',
+src/i18n/index.js:234:        adminSettings: 'Pengaturan Admin',
+src/i18n/index.js:283:      cashier: {
+src/i18n/index.js:297:        cashier: 'Kasir',
+src/i18n/index.js:498:      admin: {
+src/i18n/index.js:546:        admin: 'Admin',
+src/i18n/index.js:564:        adminSettings: 'Admin Settings',
+src/i18n/index.js:612:      cashier: {
+src/i18n/index.js:613:        system: 'Cashier System',
+src/i18n/index.js:626:        cashier: 'Cashier',
+src/i18n/index.js:820:      admin: {
+src/i18n/index.js:868:        admin: '管理员',
+src/i18n/index.js:886:        adminSettings: '管理员设置',
+src/i18n/index.js:934:      cashier: {
+src/i18n/index.js:948:        cashier: '收银员',
+supabase/migrations/0001_initial_schema.sql:11:create type public.user_role as enum (
+supabase/migrations/0001_initial_schema.sql:13:  'admin',
+supabase/migrations/0001_initial_schema.sql:14:  'manager',
+supabase/migrations/0001_initial_schema.sql:15:  'cashier',
+supabase/migrations/0001_initial_schema.sql:71:  role public.user_role not null default 'staff',
+supabase/migrations/0001_initial_schema.sql:236:  cashier_id uuid references public.profiles(id)
+supabase/migrations/0002_security_rls.sql:6:-- HELPER: CURRENT USER ROLE
+supabase/migrations/0002_security_rls.sql:9:create or replace function public.get_my_role()
+supabase/migrations/0002_security_rls.sql:10:returns public.user_role
+supabase/migrations/0002_security_rls.sql:12:security definer
+supabase/migrations/0002_security_rls.sql:16:  select role
+supabase/migrations/0002_security_rls.sql:23:revoke all on function public.get_my_role() from public;
+supabase/migrations/0002_security_rls.sql:24:grant execute on function public.get_my_role() to anon, authenticated;
+supabase/migrations/0002_security_rls.sql:28:-- HELPER: ROLE CHECK
+supabase/migrations/0002_security_rls.sql:31:create or replace function public.has_role(
+supabase/migrations/0002_security_rls.sql:32:  required_roles public.user_role[]
+supabase/migrations/0002_security_rls.sql:36:security definer
+supabase/migrations/0002_security_rls.sql:45:      and role = any(required_roles)
+supabase/migrations/0002_security_rls.sql:49:revoke all on function public.has_role(public.user_role[]) from public;
+supabase/migrations/0002_security_rls.sql:50:grant execute on function public.has_role(public.user_role[]) to authenticated;
+supabase/migrations/0002_security_rls.sql:60:security definer
+supabase/migrations/0002_security_rls.sql:68:    role
+supabase/migrations/0002_security_rls.sql:97:alter table public.profiles enable row level security;
+supabase/migrations/0002_security_rls.sql:98:alter table public.menu_categories enable row level security;
+supabase/migrations/0002_security_rls.sql:99:alter table public.menu_items enable row level security;
+supabase/migrations/0002_security_rls.sql:100:alter table public.menu_variants enable row level security;
+supabase/migrations/0002_security_rls.sql:101:alter table public.restaurant_tables enable row level security;
+supabase/migrations/0002_security_rls.sql:102:alter table public.reservations enable row level security;
+supabase/migrations/0002_security_rls.sql:103:alter table public.orders enable row level security;
+supabase/migrations/0002_security_rls.sql:104:alter table public.order_items enable row level security;
+supabase/migrations/0002_security_rls.sql:105:alter table public.payments enable row level security;
+supabase/migrations/0002_security_rls.sql:113:create policy profiles_select_self
+supabase/migrations/0002_security_rls.sql:119:  or public.has_role(
+supabase/migrations/0002_security_rls.sql:120:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:125:create policy profiles_update_self
+supabase/migrations/0002_security_rls.sql:131:  or public.has_role(
+supabase/migrations/0002_security_rls.sql:132:    array['owner','admin']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:137:  or public.has_role(
+supabase/migrations/0002_security_rls.sql:138:    array['owner','admin']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:148:create policy menu_categories_public_read
+supabase/migrations/0002_security_rls.sql:157:create policy menu_categories_staff_all
+supabase/migrations/0002_security_rls.sql:162:  public.has_role(
+supabase/migrations/0002_security_rls.sql:163:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:167:  public.has_role(
+supabase/migrations/0002_security_rls.sql:168:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:174:create policy menu_items_public_read
+supabase/migrations/0002_security_rls.sql:184:create policy menu_items_staff_all
+supabase/migrations/0002_security_rls.sql:189:  public.has_role(
+supabase/migrations/0002_security_rls.sql:190:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:194:  public.has_role(
+supabase/migrations/0002_security_rls.sql:195:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:201:create policy menu_variants_public_read
+supabase/migrations/0002_security_rls.sql:217:create policy menu_variants_staff_all
+supabase/migrations/0002_security_rls.sql:222:  public.has_role(
+supabase/migrations/0002_security_rls.sql:223:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:227:  public.has_role(
+supabase/migrations/0002_security_rls.sql:228:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:238:create policy restaurant_tables_staff_read
+supabase/migrations/0002_security_rls.sql:243:  public.has_role(
+supabase/migrations/0002_security_rls.sql:246:      'admin',
+supabase/migrations/0002_security_rls.sql:247:      'manager',
+supabase/migrations/0002_security_rls.sql:248:      'cashier',
+supabase/migrations/0002_security_rls.sql:251:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:256:create policy restaurant_tables_management
+supabase/migrations/0002_security_rls.sql:261:  public.has_role(
+supabase/migrations/0002_security_rls.sql:262:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:266:  public.has_role(
+supabase/migrations/0002_security_rls.sql:267:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:280:create policy reservations_public_insert
+supabase/migrations/0002_security_rls.sql:291:create policy reservations_staff_read
+supabase/migrations/0002_security_rls.sql:296:  public.has_role(
+supabase/migrations/0002_security_rls.sql:299:      'admin',
+supabase/migrations/0002_security_rls.sql:300:      'manager',
+supabase/migrations/0002_security_rls.sql:301:      'cashier',
+supabase/migrations/0002_security_rls.sql:303:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:308:create policy reservations_management
+supabase/migrations/0002_security_rls.sql:313:  public.has_role(
+supabase/migrations/0002_security_rls.sql:316:      'admin',
+supabase/migrations/0002_security_rls.sql:317:      'manager',
+supabase/migrations/0002_security_rls.sql:318:      'cashier'
+supabase/migrations/0002_security_rls.sql:319:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:323:  public.has_role(
+supabase/migrations/0002_security_rls.sql:326:      'admin',
+supabase/migrations/0002_security_rls.sql:327:      'manager',
+supabase/migrations/0002_security_rls.sql:328:      'cashier'
+supabase/migrations/0002_security_rls.sql:329:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:334:create policy reservations_delete_management
+supabase/migrations/0002_security_rls.sql:339:  public.has_role(
+supabase/migrations/0002_security_rls.sql:340:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:350:create policy orders_staff_read
+supabase/migrations/0002_security_rls.sql:355:  public.has_role(
+supabase/migrations/0002_security_rls.sql:358:      'admin',
+supabase/migrations/0002_security_rls.sql:359:      'manager',
+supabase/migrations/0002_security_rls.sql:360:      'cashier',
+supabase/migrations/0002_security_rls.sql:363:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:368:create policy orders_operational_insert
+supabase/migrations/0002_security_rls.sql:373:  public.has_role(
+supabase/migrations/0002_security_rls.sql:376:      'admin',
+supabase/migrations/0002_security_rls.sql:377:      'manager',
+supabase/migrations/0002_security_rls.sql:378:      'cashier',
+supabase/migrations/0002_security_rls.sql:380:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:385:create policy orders_operational_update
+supabase/migrations/0002_security_rls.sql:390:  public.has_role(
+supabase/migrations/0002_security_rls.sql:393:      'admin',
+supabase/migrations/0002_security_rls.sql:394:      'manager',
+supabase/migrations/0002_security_rls.sql:395:      'cashier',
+supabase/migrations/0002_security_rls.sql:398:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:402:  public.has_role(
+supabase/migrations/0002_security_rls.sql:405:      'admin',
+supabase/migrations/0002_security_rls.sql:406:      'manager',
+supabase/migrations/0002_security_rls.sql:407:      'cashier',
+supabase/migrations/0002_security_rls.sql:410:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:415:create policy orders_management_delete
+supabase/migrations/0002_security_rls.sql:420:  public.has_role(
+supabase/migrations/0002_security_rls.sql:421:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:431:create policy order_items_staff_read
+supabase/migrations/0002_security_rls.sql:436:  public.has_role(
+supabase/migrations/0002_security_rls.sql:439:      'admin',
+supabase/migrations/0002_security_rls.sql:440:      'manager',
+supabase/migrations/0002_security_rls.sql:441:      'cashier',
+supabase/migrations/0002_security_rls.sql:444:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:449:create policy order_items_staff_insert
+supabase/migrations/0002_security_rls.sql:454:  public.has_role(
+supabase/migrations/0002_security_rls.sql:457:      'admin',
+supabase/migrations/0002_security_rls.sql:458:      'manager',
+supabase/migrations/0002_security_rls.sql:459:      'cashier',
+supabase/migrations/0002_security_rls.sql:461:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:466:create policy order_items_staff_update
+supabase/migrations/0002_security_rls.sql:471:  public.has_role(
+supabase/migrations/0002_security_rls.sql:474:      'admin',
+supabase/migrations/0002_security_rls.sql:475:      'manager',
+supabase/migrations/0002_security_rls.sql:476:      'cashier',
+supabase/migrations/0002_security_rls.sql:479:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:483:  public.has_role(
+supabase/migrations/0002_security_rls.sql:486:      'admin',
+supabase/migrations/0002_security_rls.sql:487:      'manager',
+supabase/migrations/0002_security_rls.sql:488:      'cashier',
+supabase/migrations/0002_security_rls.sql:491:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:496:create policy order_items_management_delete
+supabase/migrations/0002_security_rls.sql:501:  public.has_role(
+supabase/migrations/0002_security_rls.sql:502:    array['owner','admin','manager','cashier']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:512:create policy payments_staff_read
+supabase/migrations/0002_security_rls.sql:517:  public.has_role(
+supabase/migrations/0002_security_rls.sql:520:      'admin',
+supabase/migrations/0002_security_rls.sql:521:      'manager',
+supabase/migrations/0002_security_rls.sql:522:      'cashier'
+supabase/migrations/0002_security_rls.sql:523:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:527:drop policy if exists payments_cashier_insert on public.payments;
+supabase/migrations/0002_security_rls.sql:528:create policy payments_cashier_insert
+supabase/migrations/0002_security_rls.sql:533:  public.has_role(
+supabase/migrations/0002_security_rls.sql:536:      'admin',
+supabase/migrations/0002_security_rls.sql:537:      'manager',
+supabase/migrations/0002_security_rls.sql:538:      'cashier'
+supabase/migrations/0002_security_rls.sql:539:    ]::public.user_role[]
+supabase/migrations/0002_security_rls.sql:544:create policy payments_management_update
+supabase/migrations/0002_security_rls.sql:549:  public.has_role(
+supabase/migrations/0002_security_rls.sql:550:    array['owner','admin','manager','cashier']::public.user_role[]
+supabase/migrations/0002_security_rls.sql:554:  public.has_role(
+supabase/migrations/0002_security_rls.sql:555:    array['owner','admin','manager','cashier']::public.user_role[]
+supabase/migrations/0003_cash_register.sql:152:alter table public.cash_register_shifts enable row level security;
+supabase/migrations/0003_cash_register.sql:153:alter table public.cash_register_movements enable row level security;
+supabase/migrations/0003_cash_register.sql:162:create policy cash_register_shifts_read
+supabase/migrations/0003_cash_register.sql:167:  public.has_role(
+supabase/migrations/0003_cash_register.sql:170:      'admin',
+supabase/migrations/0003_cash_register.sql:171:      'manager',
+supabase/migrations/0003_cash_register.sql:172:      'cashier'
+supabase/migrations/0003_cash_register.sql:173:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:180:create policy cash_register_shifts_insert
+supabase/migrations/0003_cash_register.sql:185:  public.has_role(
+supabase/migrations/0003_cash_register.sql:188:      'admin',
+supabase/migrations/0003_cash_register.sql:189:      'manager',
+supabase/migrations/0003_cash_register.sql:190:      'cashier'
+supabase/migrations/0003_cash_register.sql:191:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:199:create policy cash_register_shifts_update
+supabase/migrations/0003_cash_register.sql:204:  public.has_role(
+supabase/migrations/0003_cash_register.sql:207:      'admin',
+supabase/migrations/0003_cash_register.sql:208:      'manager',
+supabase/migrations/0003_cash_register.sql:209:      'cashier'
+supabase/migrations/0003_cash_register.sql:210:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:214:  public.has_role(
+supabase/migrations/0003_cash_register.sql:217:      'admin',
+supabase/migrations/0003_cash_register.sql:218:      'manager',
+supabase/migrations/0003_cash_register.sql:219:      'cashier'
+supabase/migrations/0003_cash_register.sql:220:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:231:create policy cash_register_movements_read
+supabase/migrations/0003_cash_register.sql:236:  public.has_role(
+supabase/migrations/0003_cash_register.sql:239:      'admin',
+supabase/migrations/0003_cash_register.sql:240:      'manager',
+supabase/migrations/0003_cash_register.sql:241:      'cashier'
+supabase/migrations/0003_cash_register.sql:242:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:249:create policy cash_register_movements_insert
+supabase/migrations/0003_cash_register.sql:254:  public.has_role(
+supabase/migrations/0003_cash_register.sql:257:      'admin',
+supabase/migrations/0003_cash_register.sql:258:      'manager',
+supabase/migrations/0003_cash_register.sql:259:      'cashier'
+supabase/migrations/0003_cash_register.sql:260:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:268:create policy cash_register_movements_update
+supabase/migrations/0003_cash_register.sql:273:  public.has_role(
+supabase/migrations/0003_cash_register.sql:276:      'admin',
+supabase/migrations/0003_cash_register.sql:277:      'manager'
+supabase/migrations/0003_cash_register.sql:278:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:282:  public.has_role(
+supabase/migrations/0003_cash_register.sql:285:      'admin',
+supabase/migrations/0003_cash_register.sql:286:      'manager'
+supabase/migrations/0003_cash_register.sql:287:    ]::public.user_role[]
+supabase/migrations/0003_cash_register.sql:294:create policy cash_register_movements_delete
+supabase/migrations/0003_cash_register.sql:299:  public.has_role(
+supabase/migrations/0003_cash_register.sql:302:      'admin',
+supabase/migrations/0003_cash_register.sql:303:      'manager'
+supabase/migrations/0003_cash_register.sql:304:    ]::public.user_role[]
+supabase/migrations/0004_payment_shift.sql:2:-- Link payments to cashier shifts
+supabase/migrations/0004_payment_shift.sql:5:alter table public.payments
+supabase/migrations/0005_cashier_payment_integrity.sql:2:-- Cashier / Payment Integrity
+supabase/migrations/0005_cashier_payment_integrity.sql:3:-- Migration: 0005_cashier_payment_integrity
+supabase/migrations/0005_cashier_payment_integrity.sql:9:alter table public.payments
+supabase/migrations/0005_cashier_payment_integrity.sql:27:alter table public.payments enable row level security;
+supabase/migrations/0005_cashier_payment_integrity.sql:32:create policy payments_staff_read
+supabase/migrations/0005_cashier_payment_integrity.sql:37:  public.has_role(
+supabase/migrations/0005_cashier_payment_integrity.sql:40:      'admin',
+supabase/migrations/0005_cashier_payment_integrity.sql:41:      'manager',
+supabase/migrations/0005_cashier_payment_integrity.sql:42:      'cashier'
+supabase/migrations/0005_cashier_payment_integrity.sql:43:    ]::public.user_role[]
+supabase/migrations/0005_cashier_payment_integrity.sql:47:drop policy if exists payments_cashier_insert
+supabase/migrations/0005_cashier_payment_integrity.sql:50:create policy payments_cashier_insert
+supabase/migrations/0005_cashier_payment_integrity.sql:55:  public.has_role(
+supabase/migrations/0005_cashier_payment_integrity.sql:58:      'admin',
+supabase/migrations/0005_cashier_payment_integrity.sql:59:      'manager',
+supabase/migrations/0005_cashier_payment_integrity.sql:60:      'cashier'
+supabase/migrations/0005_cashier_payment_integrity.sql:61:    ]::public.user_role[]
+supabase/migrations/0005_cashier_payment_integrity.sql:72:create policy payments_management_update
+supabase/migrations/0005_cashier_payment_integrity.sql:77:  public.has_role(
+supabase/migrations/0005_cashier_payment_integrity.sql:80:      'admin',
+supabase/migrations/0005_cashier_payment_integrity.sql:81:      'manager',
+supabase/migrations/0005_cashier_payment_integrity.sql:82:      'cashier'
+supabase/migrations/0005_cashier_payment_integrity.sql:83:    ]::public.user_role[]
+supabase/migrations/0005_cashier_payment_integrity.sql:87:  public.has_role(
+supabase/migrations/0005_cashier_payment_integrity.sql:90:      'admin',
+supabase/migrations/0005_cashier_payment_integrity.sql:91:      'manager',
+supabase/migrations/0005_cashier_payment_integrity.sql:92:      'cashier'
+supabase/migrations/0005_cashier_payment_integrity.sql:93:    ]::public.user_role[]
+supabase/migrations/0005_cashier_payment_integrity.sql:102:  'Cashier shift that received this payment.';
+supabase/migrations/0005_cashier_payment_integrity.sql:108:  'Physical cash counted by cashier when closing the shift.';
+supabase/migrations/0006_homepage_cms.sql:176:alter table public.homepage_settings enable row level security;
+supabase/migrations/0006_homepage_cms.sql:177:alter table public.homepage_hero_slides enable row level security;
+supabase/migrations/0006_homepage_cms.sql:178:alter table public.gallery_items enable row level security;
+supabase/migrations/0006_homepage_cms.sql:179:alter table public.promotions enable row level security;
+supabase/migrations/0006_homepage_cms.sql:183:create policy homepage_settings_public_read
+supabase/migrations/0006_homepage_cms.sql:190:create policy homepage_hero_public_read
+supabase/migrations/0006_homepage_cms.sql:197:create policy gallery_public_read
+supabase/migrations/0006_homepage_cms.sql:204:create policy promotions_public_read
+supabase/migrations/0006_homepage_cms.sql:212:create policy homepage_settings_management
+supabase/migrations/0006_homepage_cms.sql:217:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:218:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:222:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:223:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:228:create policy homepage_hero_management
+supabase/migrations/0006_homepage_cms.sql:233:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:234:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:238:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:239:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:244:create policy gallery_management
+supabase/migrations/0006_homepage_cms.sql:249:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:250:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:254:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:255:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:260:create policy promotions_management
+supabase/migrations/0006_homepage_cms.sql:265:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:266:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0006_homepage_cms.sql:270:  public.has_role(
+supabase/migrations/0006_homepage_cms.sql:271:    array['owner','admin','manager']::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:43:create policy restaurant_media_public_read
+supabase/migrations/0007_restaurant_media_storage.sql:55:create policy restaurant_media_management_insert
+supabase/migrations/0007_restaurant_media_storage.sql:61:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:64:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:65:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:66:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:74:create policy restaurant_media_management_update
+supabase/migrations/0007_restaurant_media_storage.sql:80:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:83:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:84:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:85:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:90:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:93:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:94:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:95:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:103:create policy restaurant_media_management_delete
+supabase/migrations/0007_restaurant_media_storage.sql:109:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:112:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:113:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:114:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:126:create policy cms_media_public_read
+supabase/migrations/0007_restaurant_media_storage.sql:138:create policy cms_media_management_insert
+supabase/migrations/0007_restaurant_media_storage.sql:144:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:147:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:148:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:149:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:157:create policy cms_media_management_update
+supabase/migrations/0007_restaurant_media_storage.sql:163:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:166:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:167:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:168:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:173:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:176:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:177:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:178:    ]::public.user_role[]
+supabase/migrations/0007_restaurant_media_storage.sql:186:create policy cms_media_management_delete
+supabase/migrations/0007_restaurant_media_storage.sql:192:  and public.has_role(
+supabase/migrations/0007_restaurant_media_storage.sql:195:      'admin',
+supabase/migrations/0007_restaurant_media_storage.sql:196:      'manager'
+supabase/migrations/0007_restaurant_media_storage.sql:197:    ]::public.user_role[]
+supabase/migrations/0008_pos_integrity_v1.sql:27:security definer
+supabase/migrations/0008_pos_integrity_v1.sql:42:  v_role public.user_role;
+supabase/migrations/0008_pos_integrity_v1.sql:52:  if not public.has_role(
+supabase/migrations/0008_pos_integrity_v1.sql:54:      'owner'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:55:      'admin'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:56:      'manager'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:57:      'cashier'::public.user_role
+supabase/migrations/0008_pos_integrity_v1.sql:60:    raise exception 'Insufficient permission to create orders';
+supabase/migrations/0008_pos_integrity_v1.sql:194:    cashier_id,
+supabase/migrations/0008_pos_integrity_v1.sql:310:security definer
+supabase/migrations/0008_pos_integrity_v1.sql:328:  if not public.has_role(
+supabase/migrations/0008_pos_integrity_v1.sql:330:      'owner'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:331:      'admin'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:332:      'manager'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:333:      'cashier'::public.user_role
+supabase/migrations/0008_pos_integrity_v1.sql:336:    raise exception 'Insufficient permission to process payment';
+supabase/migrations/0008_pos_integrity_v1.sql:517:security definer
+supabase/migrations/0008_pos_integrity_v1.sql:528:  if not public.has_role(
+supabase/migrations/0008_pos_integrity_v1.sql:530:      'owner'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:531:      'admin'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:532:      'manager'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:533:      'cashier'::public.user_role
+supabase/migrations/0008_pos_integrity_v1.sql:536:    raise exception 'Insufficient permissions';
+supabase/migrations/0008_pos_integrity_v1.sql:586:security definer
+supabase/migrations/0008_pos_integrity_v1.sql:621:  -- Permission:
+supabase/migrations/0008_pos_integrity_v1.sql:622:  -- cashier can close own shift.
+supabase/migrations/0008_pos_integrity_v1.sql:628:    or public.has_role(
+supabase/migrations/0008_pos_integrity_v1.sql:630:        'owner'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:631:        'admin'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:632:        'manager'::public.user_role
+supabase/migrations/0008_pos_integrity_v1.sql:636:    raise exception 'Insufficient permission to close this shift';
+supabase/migrations/0008_pos_integrity_v1.sql:705:security definer
+supabase/migrations/0008_pos_integrity_v1.sql:715:  if not public.has_role(
+supabase/migrations/0008_pos_integrity_v1.sql:717:      'owner'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:718:      'admin'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:719:      'manager'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:720:      'cashier'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:721:      'kitchen'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:722:      'staff'::public.user_role
+supabase/migrations/0008_pos_integrity_v1.sql:725:    raise exception 'Insufficient permissions';
+supabase/migrations/0008_pos_integrity_v1.sql:804:security definer
+supabase/migrations/0008_pos_integrity_v1.sql:816:  if not public.has_role(
+supabase/migrations/0008_pos_integrity_v1.sql:818:      'owner'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:819:      'admin'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:820:      'manager'::public.user_role,
+supabase/migrations/0008_pos_integrity_v1.sql:821:      'cashier'::public.user_role
+supabase/migrations/0008_pos_integrity_v1.sql:824:    raise exception 'Insufficient permissions';
+supabase/migrations/0009_hardening_and_accounting.sql:5:-- 1. Prevent authenticated users from changing their own role/is_active.
+supabase/migrations/0009_hardening_and_accounting.sql:6:-- 2. Force POS writes through SECURITY DEFINER transaction RPCs.
+supabase/migrations/0009_hardening_and_accounting.sql:20:security definer
+supabase/migrations/0009_hardening_and_accounting.sql:25:     and not public.has_role(
+supabase/migrations/0009_hardening_and_accounting.sql:26:       array['owner'::public.user_role, 'admin'::public.user_role]
+supabase/migrations/0009_hardening_and_accounting.sql:28:    if new.role is distinct from old.role then
+supabase/migrations/0009_hardening_and_accounting.sql:29:      raise exception 'Users cannot change their own role';
+supabase/migrations/0009_hardening_and_accounting.sql:80:security definer
+supabase/migrations/0009_hardening_and_accounting.sql:97:  if not public.has_role(array['owner','admin','manager','cashier']::public.user_role[]) then
+supabase/migrations/0009_hardening_and_accounting.sql:98:    raise exception 'Insufficient permission to create orders';
+supabase/migrations/0009_hardening_and_accounting.sql:153:    order_number, table_id, customer_name, notes, cashier_id, status, payment_status,
+supabase/migrations/0009_hardening_and_accounting.sql:203:security definer
+supabase/migrations/0009_hardening_and_accounting.sql:216:  if not public.has_role(array['owner','admin','manager','cashier']::public.user_role[]) then
+supabase/migrations/0009_hardening_and_accounting.sql:217:    raise exception 'Insufficient permission to process payment';
+supabase/migrations/0009_hardening_and_accounting.sql:300:alter table public.reservations
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:23:security definer
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:44:  if not public.has_role(
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:45:    array['owner','admin','manager','cashier']::public.user_role[]
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:47:    raise exception 'Insufficient permission to create orders';
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:164:    cashier_id,
+supabase/migrations/0013_cash_register_shift_schedule.sql:35:alter table public.cash_register_shifts
+supabase/migrations/0013_cash_register_shift_schedule.sql:51:alter table public.cash_register_shifts
+supabase/migrations/0013_cash_register_shift_schedule.sql:54:alter table public.cash_register_shifts
+supabase/migrations/0013_cash_register_shift_schedule.sql:67:alter table public.cash_register_shifts
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:39:security definer
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:151:security definer
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:244:security definer
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:249:  v_role public.user_role;
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:261:  select role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:262:  into v_role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:266:  if v_role not in (
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:268:    'admin',
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:269:    'manager',
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:270:    'cashier'
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:272:    raise exception 'Insufficient permissions';
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:365:security definer
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:370:  v_role public.user_role;
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:389:  -- Get caller role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:392:  select role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:393:  into v_role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:397:  if v_role is null then
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:425:  -- Permission
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:428:  if v_role not in (
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:430:    'admin',
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:431:    'manager'
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:434:    raise exception 'You do not have permission to close this shift';
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:491:alter table public.cash_register_shift_schedules enable row level security;
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:497:create policy cash_register_shift_schedules_select
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:502:  public.has_role(
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:504:      'owner'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:505:      'admin'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:506:      'manager'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:507:      'cashier'::public.user_role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:516:create policy cash_register_shift_schedules_insert
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:521:  public.has_role(
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:523:      'owner'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:524:      'admin'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:525:      'manager'::public.user_role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:534:create policy cash_register_shift_schedules_update
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:539:  public.has_role(
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:541:      'owner'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:542:      'admin'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:543:      'manager'::public.user_role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:548:  public.has_role(
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:550:      'owner'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:551:      'admin'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:552:      'manager'::public.user_role
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:561:create policy cash_register_shift_schedules_delete
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:566:  public.has_role(
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:568:      'owner'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:569:      'admin'::public.user_role,
+supabase/migrations/0014_cash_register_shift_schedule_logic.sql:570:      'manager'::public.user_role
+supabase/migrations/0015_business_system.sql:128:returns public.daily_sales_summaries language plpgsql security definer set search_path = public, auth as $$
+supabase/migrations/0015_business_system.sql:131:  if auth.uid() is not null and not public.has_role(array['owner','admin','manager']::public.user_role[]) then
+supabase/migrations/0015_business_system.sql:132:    raise exception 'Insufficient permission';
+supabase/migrations/0015_business_system.sql:155:returns public.kitchen_tickets language plpgsql security definer set search_path=public,auth as $$
+supabase/migrations/0015_business_system.sql:168:returns public.inventory_items language plpgsql security definer set search_path=public,auth as $$
+supabase/migrations/0015_business_system.sql:171:  if auth.uid() is null or not public.has_role(array['owner','admin','manager']::public.user_role[]) then
+supabase/migrations/0015_business_system.sql:172:    raise exception 'Insufficient permission';
+supabase/migrations/0015_business_system.sql:186:returns integer language plpgsql security definer set search_path=public,auth as $$
+supabase/migrations/0015_business_system.sql:208:alter table public.suppliers enable row level security;
+supabase/migrations/0015_business_system.sql:209:alter table public.inventory_items enable row level security;
+supabase/migrations/0015_business_system.sql:210:alter table public.inventory_movements enable row level security;
+supabase/migrations/0015_business_system.sql:211:alter table public.recipes enable row level security;
+supabase/migrations/0015_business_system.sql:212:alter table public.purchase_orders enable row level security;
+supabase/migrations/0015_business_system.sql:213:alter table public.purchase_order_items enable row level security;
+supabase/migrations/0015_business_system.sql:214:alter table public.kitchen_tickets enable row level security;
+supabase/migrations/0015_business_system.sql:215:alter table public.notifications enable row level security;
+supabase/migrations/0015_business_system.sql:216:alter table public.daily_sales_summaries enable row level security;
+supabase/migrations/0015_business_system.sql:219:create policy suppliers_select on public.suppliers for select to authenticated using (public.has_role(array['owner','admin','manager','cashier','kitchen','staff']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:221:create policy suppliers_manage on public.suppliers for all to authenticated using (public.has_role(array['owner','admin','manager']::public.user_role[])) with check (public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:224:create policy inventory_select on public.inventory_items for select to authenticated using (public.has_role(array['owner','admin','manager','cashier','kitchen','staff']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:226:create policy inventory_manage on public.inventory_items for all to authenticated using (public.has_role(array['owner','admin','manager']::public.user_role[])) with check (public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:229:create policy inventory_movements_select on public.inventory_movements for select to authenticated using (public.has_role(array['owner','admin','manager','cashier','kitchen','staff']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:232:create policy recipes_select on public.recipes for select to authenticated using (public.has_role(array['owner','admin','manager','kitchen','staff']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:234:create policy recipes_manage on public.recipes for all to authenticated using (public.has_role(array['owner','admin','manager']::public.user_role[])) with check (public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:237:create policy purchase_orders_all on public.purchase_orders for all to authenticated using (public.has_role(array['owner','admin','manager']::public.user_role[])) with check (public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:239:create policy purchase_order_items_all on public.purchase_order_items for all to authenticated using (public.has_role(array['owner','admin','manager']::public.user_role[])) with check (public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:242:create policy kitchen_tickets_select on public.kitchen_tickets for select to authenticated using (public.has_role(array['owner','admin','manager','kitchen']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:244:create policy kitchen_tickets_update on public.kitchen_tickets for update to authenticated using (public.has_role(array['owner','admin','manager','kitchen']::public.user_role[])) with check (public.has_role(array['owner','admin','manager','kitchen']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:247:create policy notifications_select on public.notifications for select to authenticated using (user_id=auth.uid() or public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:249:create policy notifications_update on public.notifications for update to authenticated using (user_id=auth.uid() or public.has_role(array['owner','admin','manager']::public.user_role[])) with check (user_id=auth.uid() or public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0015_business_system.sql:252:create policy daily_sales_select on public.daily_sales_summaries for select to authenticated using (public.has_role(array['owner','admin','manager']::public.user_role[]));
+supabase/migrations/0016_harden_business_rpc.sql:6:security definer
+supabase/migrations/0016_harden_business_rpc.sql:13:     or not public.has_role(
+supabase/migrations/0016_harden_business_rpc.sql:14:       array['owner','admin','manager','kitchen']::public.user_role[]
+supabase/migrations/0016_harden_business_rpc.sql:16:    raise exception 'Insufficient permission';
+supabase/migrations/0016_harden_business_rpc.sql:32:security definer
+supabase/migrations/0016_harden_business_rpc.sql:41:     or not public.has_role(
+supabase/migrations/0016_harden_business_rpc.sql:42:       array['owner','admin','manager','kitchen']::public.user_role[]
+supabase/migrations/0016_harden_business_rpc.sql:44:    raise exception 'Insufficient permission';
+supabase/migrations/0017_inventory_atomicity_and_idempotency.sql:18:security definer
+supabase/migrations/0017_inventory_atomicity_and_idempotency.sql:32:     or not public.has_role(
+supabase/migrations/0017_inventory_atomicity_and_idempotency.sql:33:       array['owner','admin','manager','kitchen']::public.user_role[]
+supabase/migrations/0017_inventory_atomicity_and_idempotency.sql:35:    raise exception 'Insufficient permission';
+supabase/migrations/0017_inventory_atomicity_and_idempotency.sql:204:-- EXECUTION PERMISSION

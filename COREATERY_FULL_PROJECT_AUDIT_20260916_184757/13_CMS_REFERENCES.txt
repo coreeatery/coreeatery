@@ -1,0 +1,401 @@
+===== CMS REFERENCES =====
+src/app/router/index.jsx:9:import HomePage from '../../pages/public/HomePage'
+src/app/router/index.jsx:13:import GalleryPage from '../../pages/public/GalleryPage'
+src/app/router/index.jsx:19:import AdminHomepagePage from '../../pages/admin/AdminHomepagePage'
+src/app/router/index.jsx:22:import AdminGalleryPage from '../../pages/admin/AdminGalleryPage'
+src/app/router/index.jsx:24:import AdminSettingsPage from '../../pages/admin/AdminSettingsPage'
+src/app/router/index.jsx:36:import CashierSettingsPage from '../../pages/cashier/CashierSettingsPage'
+src/app/router/index.jsx:43:      { index: true, element: <HomePage /> },
+src/app/router/index.jsx:47:      { path: 'galeri', element: <GalleryPage /> },
+src/app/router/index.jsx:69:          { path: 'homepage', element: <AdminHomepagePage /> },
+src/app/router/index.jsx:72:          { path: 'galeri', element: <AdminGalleryPage /> },
+src/app/router/index.jsx:74:          { path: 'settings', element: <AdminSettingsPage /> },
+src/app/router/index.jsx:96:          { path: 'settings', element: <CashierSettingsPage /> },
+src/components/public/PublicFooter.jsx:22:              <Link to="/galeri" className="hover:text-white">{t('nav.gallery')}</Link>
+src/components/public/PublicFooter.jsx:26:            <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.reservations')}</p>
+src/components/public/PublicNavbar.jsx:9:  { to: '/galeri', key: 'gallery' },
+src/components/admin/AdminSidebar.jsx:58:    [t('admin.homepage', 'Homepage'), '/admin/homepage'],
+src/components/admin/AdminSidebar.jsx:61:    [t('admin.gallery', 'Galeri'), '/admin/galeri'],
+src/components/admin/AdminSidebar.jsx:63:    [t('admin.settings', 'Pengaturan'), '/admin/settings'],
+src/components/cashier/CashierSidebar.jsx:13:  Settings,
+src/components/cashier/CashierSidebar.jsx:69:      label: t('cashier.settings'),
+src/components/cashier/CashierSidebar.jsx:70:      to: '/cashier/settings',
+src/components/cashier/CashierSidebar.jsx:71:      icon: Settings,
+src/pages/public/GalleryPage.jsx:4:import { getGalleryItems } from '../../features/cms/gallery'
+src/pages/public/GalleryPage.jsx:6:export default function GalleryPage() {
+src/pages/public/GalleryPage.jsx:13:    getGalleryItems()
+src/pages/public/GalleryPage.jsx:19:  if (loading) return <main className="flex min-h-[80vh] items-center justify-center bg-[#f5f1e8]"><p className="font-serif italic text-[#6e6659]">{t('gallery.loading')}</p></main>
+src/pages/public/GalleryPage.jsx:22:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="bg-[#201d18] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28"><div className="mx-auto max-w-[1400px]"><p className="text-[9px] uppercase tracking-[0.45em] text-[#dbc38f]">{t('gallery.visualJournal')}</p><h1 className="mt-5 font-serif text-5xl sm:text-7xl">{t('gallery.title')}</h1><p className="mt-6 max-w-xl text-sm leading-8 text-white/50">{t('gallery.description')}</p></div></section><section className="mx-auto max-w-[1400px] px-6 py-12 sm:px-10 lg:px-16 lg:py-20">{items.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('gallery.empty')}</p></div> : <div className="grid auto-rows-[190px] grid-cols-2 gap-3 sm:auto-rows-[240px] sm:grid-cols-3 lg:auto-rows-[300px]">{items.map((item, index) => <figure key={item.id} className={`group relative overflow-hidden bg-[#ddd4c4] ${index % 7 === 0 ? 'col-span-2 row-span-2' : index % 5 === 0 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />{item.title && <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-5 pb-5 pt-14 text-xs text-white/85 opacity-0 transition group-hover:opacity-100">{item.title}</figcaption>}</figure>)}</div>}<div className="mt-14 border-t border-[#d2c8b7] pt-8"><Link to="/reservasi" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('gallery.reserveTable')} ↗</Link></div></section></main>
+src/pages/public/HomePage.jsx:5:import { getHomepageSettings } from '../../features/cms/homepage'
+src/pages/public/HomePage.jsx:6:import { getGalleryItems } from '../../features/cms/gallery'
+src/pages/public/HomePage.jsx:7:import { getActivePromotions } from '../../features/cms/promotions'
+src/pages/public/HomePage.jsx:33:export default function HomePage() {
+src/pages/public/HomePage.jsx:36:  const [settings, setSettings] = useState(null)
+src/pages/public/HomePage.jsx:38:  const [gallery, setGallery] = useState([])
+src/pages/public/HomePage.jsx:39:  const [promotions, setPromotions] = useState([])
+src/pages/public/HomePage.jsx:47:        const [homepage, menu, galleryData, promoData] = await Promise.all([
+src/pages/public/HomePage.jsx:48:          getHomepageSettings(),
+src/pages/public/HomePage.jsx:50:          getGalleryItems(),
+src/pages/public/HomePage.jsx:51:          getActivePromotions(),
+src/pages/public/HomePage.jsx:54:        setSettings(homepage)
+src/pages/public/HomePage.jsx:56:        setGallery(galleryData.filter((item) => item.is_active).slice(0, 6))
+src/pages/public/HomePage.jsx:57:        setPromotions(promoData.slice(0, 2))
+src/pages/public/HomePage.jsx:59:        if (mounted) setError(err.message || 'Gagal memuat homepage.')
+src/pages/public/HomePage.jsx:69:    const number = settings?.whatsapp_number?.replace(/\D/g, '')
+src/pages/public/HomePage.jsx:71:  }, [settings])
+src/pages/public/HomePage.jsx:81:  if (!settings) {
+src/pages/public/HomePage.jsx:82:    return <main className="flex min-h-[70vh] items-center justify-center bg-[#f5f1e8] px-6"><div className="max-w-xl text-center"><p className="text-xs uppercase tracking-[0.4em] text-[#9b8355]">COREÉATERY</p><h1 className="mt-6 font-serif text-4xl">{t('common.noData')}</h1><Link to="/admin/homepage" className="mt-8 inline-flex bg-[#201d18] px-7 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">{t('admin.homepage')}</Link></div></main>
+src/pages/public/HomePage.jsx:85:  const heroTitle = pickLanguage(settings, 'hero_title', language) || 'Nikmati Pengalaman Kuliner Terbaik'
+src/pages/public/HomePage.jsx:86:  const heroSubtitle = pickLanguage(settings, 'hero_subtitle', language)
+src/pages/public/HomePage.jsx:87:  const aboutTitle = pickLanguage(settings, 'about_title', language) || 'Rasa yang dibuat dengan niat.'
+src/pages/public/HomePage.jsx:88:  const aboutDescription = pickLanguage(settings, 'about_description', language)
+src/pages/public/HomePage.jsx:89:  const reservationTitle = pickLanguage(settings, 'reservation_title', language) || t('public.findYourTable')
+src/pages/public/HomePage.jsx:90:  const reservationDescription = pickLanguage(settings, 'reservation_description', language)
+src/pages/public/HomePage.jsx:91:  const reservationButton = pickLanguage(settings, 'reservation_button_text', language).trim() || 'Reservasi Sekarang'
+src/pages/public/HomePage.jsx:96:        {settings.hero_image_url && <img src={settings.hero_image_url} alt={heroTitle} className="absolute inset-0 h-full w-full object-cover" />}
+src/pages/public/HomePage.jsx:112:      {promotions.length > 0 && <section className="border-b border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto grid max-w-[1400px] md:grid-cols-2">{promotions.map((promo) => <article key={promo.id} className="grid min-h-[260px] grid-cols-[1fr_0.9fr] border-b border-[#d8d0c1] last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"><div className="flex flex-col justify-center p-7 sm:p-10"><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('public.limitedOffering')}</p><h2 className="mt-4 font-serif text-2xl sm:text-3xl">{pickLanguage(promo, 'title', language) || promo.title_id}</h2>{promo.discount_text && <p className="mt-3 text-sm text-[#9b8355]">{promo.discount_text}</p>}</div>{promo.image_url ? <img src={promo.image_url} alt={pickLanguage(promo, 'title', language)} className="h-full min-h-[260px] w-full object-cover" /> : <div className="bg-[#dcd3c2]" />}</article>)}</div></section>}
+src/pages/public/HomePage.jsx:114:      {(settings.about_title_id || settings.about_description_id || settings.about_image_url) && <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24"><div className="order-2 lg:order-1"><SectionLabel>{t('public.ourPhilosophy')}</SectionLabel><h2 className="mt-7 max-w-xl font-serif text-4xl font-normal leading-tight sm:text-5xl lg:text-6xl">{aboutTitle}</h2>{aboutDescription && <p className="mt-7 max-w-xl whitespace-pre-line text-sm leading-8 text-[#6e6659] sm:text-base">{aboutDescription}</p>}<div className="mt-9 flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-[#9b8355]"><span className="h-px w-8 bg-[#b79b63]" />{t('public.craftedWithIntention')}</div></div>{settings.about_image_url && <div className="order-1 lg:order-2"><div className="relative"><div className="absolute -bottom-4 -left-4 h-full w-full border border-[#c9b589]/60" /><img src={settings.about_image_url} alt={aboutTitle} className="relative aspect-[4/5] w-full object-cover sm:aspect-[4/3]" /></div></div>}</div></section>}
+src/pages/public/HomePage.jsx:116:      {featured.length > 0 && <section className="border-y border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><SectionLabel>{t('public.signatureMenu')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.signatureDescription')}</h2></div><Link to="/menu" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('public.viewFullMenu')} ↗</Link></div><div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{featured.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#d9d1c2]">{item.image_url ? <img src={item.image_url} alt={item.name_id} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.25em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex items-start justify-between gap-4"><div><p className="text-[9px] uppercase tracking-[0.22em] text-[#9b8355]">{item.menu_categories?.name_id || t('menu.signature')}</p><h3 className="mt-2 font-serif text-xl">{pickLanguage(item, 'name', language) || item.name_id}</h3></div><span className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</span></div></Link>)}</div></div></section>}
+src/pages/public/HomePage.jsx:118:      {gallery.length > 0 && <section className="bg-[#f5f1e8]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex items-end justify-between gap-8"><div><SectionLabel>{t('public.theExperience')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.insideCoreatery')}</h2></div><Link to="/galeri" className="hidden text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:block">{t('public.viewGallery')} ↗</Link></div><div className="mt-12 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] sm:grid-cols-3 lg:auto-rows-[260px]">{gallery.map((item, index) => <Link key={item.id} to="/galeri" className={`group overflow-hidden ${index === 0 ? 'col-span-2 row-span-2' : index === 3 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></Link>)}</div><Link to="/galeri" className="mt-8 inline-flex text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:hidden">{t('public.viewGallery')} ↗</Link></div></section>}
+src/pages/public/HomePage.jsx:120:      <section className="relative overflow-hidden bg-[#171512] text-white"><div className="mx-auto grid max-w-[1400px] lg:grid-cols-2"><div className="flex min-h-[500px] items-center px-6 py-20 sm:px-10 lg:px-16"><div className="max-w-xl"><SectionLabel light>{t('public.privateDining')}</SectionLabel><h2 className="mt-7 font-serif text-4xl leading-tight sm:text-5xl">{t('public.makeTheMoment')}<br /><span className="italic text-[#cdb47e]">{t('public.trulyYours')}</span></h2><p className="mt-7 text-sm leading-8 text-white/55 sm:text-base">{t('public.privateDiningDescription')}</p><Link to="/reservasi" className="mt-9 inline-flex items-center gap-4 border border-white/25 px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] transition hover:border-[#c7aa70] hover:bg-[#c7aa70] hover:text-[#171512]">{t('public.planYourVisit')} ↗</Link></div></div><div className="relative min-h-[360px] lg:min-h-[500px]">{settings.about_image_url && <img src={settings.about_image_url} alt="COREÉATERY dining experience" className="absolute inset-0 h-full w-full object-cover opacity-70" />}<div className="absolute inset-0 bg-gradient-to-r from-[#171512] via-transparent to-transparent" /></div></div></section>
+src/pages/public/HomePage.jsx:124:      <section className="bg-[#201d18] text-white"><div className="mx-auto grid max-w-[1400px] gap-10 px-6 py-16 sm:grid-cols-3 sm:px-10 lg:px-16">{settings.address && <div><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.visitUs')}</p><p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/50">{settings.address}</p>{settings.google_maps_url && <a href={settings.google_maps_url} target="_blank" rel="noreferrer" className="mt-4 inline-block text-[9px] uppercase tracking-[0.25em] text-white/70 underline underline-offset-4">{t('public.openMaps')} ↗</a>}</div>}{settings.opening_hours && <div><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.openingHours')}</p><p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/50">{settings.opening_hours}</p></div>}{settings.instagram_url && <div><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#c7aa70]">{t('public.followAlong')}</p><a href={settings.instagram_url} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm text-white/65 underline decoration-white/20 underline-offset-4 hover:text-white">{t('public.instagramLink')} ↗</a></div>}</div></section>
+src/pages/public/MenuDetailPage.jsx:37:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="mx-auto grid max-w-[1400px] lg:grid-cols-2"><div className="min-h-[520px] bg-[#ddd4c4] lg:min-h-[720px]">{item.image_url ? <img src={item.image_url} alt={name} className="h-full w-full object-cover" /> : <div className="flex h-full min-h-[520px] items-center justify-center text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">COREÉATERY</div>}</div><div className="flex items-center px-6 py-16 sm:px-10 lg:px-16"><div className="max-w-xl"><Link to="/menu" className="text-[9px] uppercase tracking-[0.28em] text-[#9b8355]">← {t('menu.backToMenu')}</Link><p className="mt-12 text-[9px] uppercase tracking-[0.35em] text-[#9b8355]">{item.menu_categories?.name_id || 'COREÉATERY'}</p><h1 className="mt-5 font-serif text-5xl leading-tight sm:text-6xl">{name}</h1><p className="mt-6 text-xl text-[#6e6659]">{formatRupiah(item.base_price)}</p>{description && <p className="mt-7 whitespace-pre-line text-sm leading-8 text-[#6e6659]">{description}</p>}{variants.length > 0 && <div className="mt-10 border-t border-[#d2c8b7] pt-7"><p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#9b8355]">{t('menu.availableVariants')}</p><div className="mt-4 space-y-3">{variants.map((variant) => <div key={variant.id} className="flex justify-between gap-5 border-b border-[#e2dbcf] pb-3 text-sm"><span>{pick(variant, 'name', i18n.language) || variant.name_id}</span><span className="text-[#6e6659]">{formatRupiah(variant.price)}</span></div>)}</div></div>}<Link to="/reservasi" className="mt-10 inline-flex bg-[#201d18] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[#9b8355]">{t('menu.reserveTable')} ↗</Link></div></div></section></main>
+src/pages/public/MenuPage.jsx:50:        {filteredItems.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('menu.noAvailable')}</p></div> : <div className="grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{filteredItems.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#ddd4c4]">{item.image_url ? <img src={item.image_url} alt={pick(item, 'name', i18n.language)} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex justify-between gap-5"><div><p className="text-[9px] uppercase tracking-[0.2em] text-[#9b8355]">{item.menu_categories?.name_id || 'COREÉATERY'}</p><h2 className="mt-2 font-serif text-2xl">{pick(item, 'name', i18n.language) || item.name_id}</h2>{pick(item, 'description', i18n.language) && <p className="mt-2 line-clamp-2 text-xs leading-6 text-[#6e6659]">{pick(item, 'description', i18n.language)}</p>}</div><p className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</p></div></Link>)}</div>}
+src/pages/public/ReservationPage.jsx:3:import { createReservation } from '../../features/reservations/reservations'
+src/pages/admin/AdminDashboardPage.jsx:256:              value={stats.todayReservations || 0}
+src/pages/admin/AdminHomepagePage.jsx:4:  getHomepageSettings,
+src/pages/admin/AdminHomepagePage.jsx:5:  saveHomepageSettings,
+src/pages/admin/AdminHomepagePage.jsx:6:} from '../../features/cms/homepage'
+src/pages/admin/AdminHomepagePage.jsx:36:export default function AdminHomepagePage() {
+src/pages/admin/AdminHomepagePage.jsx:62:        const data = await getHomepageSettings()
+src/pages/admin/AdminHomepagePage.jsx:72:          setError(err.message || t('admin.loadHomepageError'))
+src/pages/admin/AdminHomepagePage.jsx:112:      setSuccess(t('admin.photoUploadedSaveHomepage'))
+src/pages/admin/AdminHomepagePage.jsx:129:      await saveHomepageSettings({
+src/pages/admin/AdminHomepagePage.jsx:164:      setSuccess(t('admin.homepageSaved'))
+src/pages/admin/AdminHomepagePage.jsx:166:      setError(err.message || t('admin.saveHomepageError'))
+src/pages/admin/AdminHomepagePage.jsx:176:          {t('admin.loadingHomepage')}
+src/pages/admin/AdminHomepagePage.jsx:190:            {t('admin.homepage')}
+src/pages/admin/AdminHomepagePage.jsx:194:          Kelola isi homepage restoran tanpa mengubah kode.
+src/pages/admin/AdminHomepagePage.jsx:263:                'homepage/hero',
+src/pages/admin/AdminHomepagePage.jsx:318:                'homepage/about',
+src/pages/admin/AdminHomepagePage.jsx:454:            {saving ? t('common.saving') : t('admin.saveHomepage')}
+src/pages/admin/AdminMenuPage.jsx:611:                      {item.menu_categories?.name_id || t('common.noCategory')}
+src/pages/admin/AdminReservationPage.jsx:5:  getReservations,
+src/pages/admin/AdminReservationPage.jsx:6:  getReservationSummary,
+src/pages/admin/AdminReservationPage.jsx:7:  updateReservationStatus,
+src/pages/admin/AdminReservationPage.jsx:9:} from '../../features/reservations/reservations'
+src/pages/admin/AdminReservationPage.jsx:12:  getReservationStatusLabel,
+src/pages/admin/AdminReservationPage.jsx:13:} from '../../features/reservations/reservationStatus'
+src/pages/admin/AdminReservationPage.jsx:55:      {statusKey ? t(`admin.${statusKey}`) : getReservationStatusLabel(status)}
+src/pages/admin/AdminReservationPage.jsx:62:  const [reservations, setReservations] = useState([])
+src/pages/admin/AdminReservationPage.jsx:93:          getReservations({
+src/pages/admin/AdminReservationPage.jsx:98:          getReservationSummary(date),
+src/pages/admin/AdminReservationPage.jsx:103:        setReservations(reservationData)
+src/pages/admin/AdminReservationPage.jsx:129:      const updated = await updateReservationStatus(id, nextStatus)
+src/pages/admin/AdminReservationPage.jsx:131:      setReservations((current) =>
+src/pages/admin/AdminReservationPage.jsx:141:      const nextSummary = await getReservationSummary(date)
+src/pages/admin/AdminReservationPage.jsx:145:      setError(err.message || t('admin.updateReservationStatusError'))
+src/pages/admin/AdminReservationPage.jsx:164:      setReservations((current) =>
+src/pages/admin/AdminReservationPage.jsx:172:      const nextSummary = await getReservationSummary(date)
+src/pages/admin/AdminReservationPage.jsx:228:              placeholder={t('admin.reservationSearchPlaceholder')}
+src/pages/admin/AdminReservationPage.jsx:276:              {t('admin.reservationsFound', { count: reservations.length })}
+src/pages/admin/AdminReservationPage.jsx:292:            {t('admin.loadingReservations')}
+src/pages/admin/AdminReservationPage.jsx:294:        ) : reservations.length === 0 ? (
+src/pages/admin/AdminReservationPage.jsx:296:            <p className="font-medium">{t('admin.noReservations')}</p>
+src/pages/admin/AdminReservationPage.jsx:317:                {reservations.map((reservation) => (
+src/pages/admin/AdminGalleryPage.jsx:4:  createGalleryItem,
+src/pages/admin/AdminGalleryPage.jsx:5:  deleteGalleryItem,
+src/pages/admin/AdminGalleryPage.jsx:6:  getGalleryItems,
+src/pages/admin/AdminGalleryPage.jsx:7:  updateGalleryItem,
+src/pages/admin/AdminGalleryPage.jsx:8:} from '../../features/cms/gallery'
+src/pages/admin/AdminGalleryPage.jsx:14:export default function AdminGalleryPage() {
+src/pages/admin/AdminGalleryPage.jsx:21:  const loadGallery = useCallback(async () => {
+src/pages/admin/AdminGalleryPage.jsx:26:      const data = await getGalleryItems()
+src/pages/admin/AdminGalleryPage.jsx:29:      setError(err.message || t('admin.loadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:39:    loadGallery()
+src/pages/admin/AdminGalleryPage.jsx:40:  }, [loadGallery])
+src/pages/admin/AdminGalleryPage.jsx:55:        'gallery',
+src/pages/admin/AdminGalleryPage.jsx:59:        await createGalleryItem({
+src/pages/admin/AdminGalleryPage.jsx:71:      await loadGallery()
+src/pages/admin/AdminGalleryPage.jsx:73:      setError(err.message || t('admin.uploadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:81:      await updateGalleryItem(item.id, {
+src/pages/admin/AdminGalleryPage.jsx:96:      setError(err.message || t('admin.updateGalleryStatusError'))
+src/pages/admin/AdminGalleryPage.jsx:110:      await deleteGalleryItem(item.id)
+src/pages/admin/AdminGalleryPage.jsx:128:      setError(err.message || t('admin.deleteGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:192:                  alt={item.alt_text || item.title || t("gallery.title")}
+src/pages/admin/AdminSettingsPage.jsx:1:export default function AdminSettingsPage() {
+src/pages/admin/AdminSettingsPage.jsx:2:  return <div><h1 className="text-3xl font-bold">Admin Settings</h1></div>
+src/pages/cashier/NewOrderPage.jsx:80:      const categoryData = item.menu_categories
+src/pages/cashier/CashierSettingsPage.jsx:1:export default function CashierSettingsPage() {
+src/pages/cashier/CashierSettingsPage.jsx:2:  return <div><h1 className="text-3xl font-bold">Cashier Settings</h1></div>
+src/features/auth/permissions.js:4:  MANAGE_RESERVATIONS: 'manage_reservations',
+src/features/auth/permissions.js:5:  MANAGE_GALLERY: 'manage_gallery',
+src/features/auth/permissions.js:6:  MANAGE_PROMOTIONS: 'manage_promotions',
+src/features/auth/permissions.js:7:  MANAGE_SETTINGS: 'manage_settings',
+src/features/auth/permissions.js:25:    PERMISSIONS.MANAGE_RESERVATIONS,
+src/features/auth/permissions.js:26:    PERMISSIONS.MANAGE_GALLERY,
+src/features/auth/permissions.js:27:    PERMISSIONS.MANAGE_PROMOTIONS,
+src/features/auth/permissions.js:28:    PERMISSIONS.MANAGE_SETTINGS,
+src/features/auth/permissions.js:37:    PERMISSIONS.MANAGE_RESERVATIONS,
+src/features/auth/permissions.js:38:    PERMISSIONS.MANAGE_PROMOTIONS,
+src/features/menu/menu.js:7:    .from('menu_categories')
+src/features/menu/menu.js:19:    .from('menu_items')
+src/features/menu/menu.js:22:      menu_categories (
+src/features/menu/menu.js:48:    .from('menu_categories')
+src/features/menu/menu.js:61:    .from('menu_categories')
+src/features/menu/menu.js:75:    .from('menu_categories')
+src/features/menu/menu.js:86:    .from('menu_items')
+src/features/menu/menu.js:99:    .from('menu_items')
+src/features/menu/menu.js:113:    .from('menu_items')
+src/features/reservations/reservations.js:26:export async function getReservations({
+src/features/reservations/reservations.js:34:    .from('reservations')
+src/features/reservations/reservations.js:68:    .from('reservations')
+src/features/reservations/reservations.js:84:    .from('reservations')
+src/features/reservations/reservations.js:100:    .from('reservations')
+src/features/reservations/reservations.js:111:export async function updateReservationStatus(id, status) {
+src/features/reservations/reservations.js:121:    .from('reservations')
+src/features/reservations/reservations.js:128:export async function getReservationSummary(date = '') {
+src/features/reservations/reservations.js:142:    .from('reservations')
+src/features/reservations/reservationStatus.js:46:export function getReservationStatusLabel(status) {
+src/features/cms/homepage.js:3:const TABLE = 'homepage_settings'
+src/features/cms/homepage.js:5:export async function getHomepageSettings() {
+src/features/cms/homepage.js:21:export async function saveHomepageSettings(payload) {
+src/features/cms/gallery.js:3:const TABLE = 'gallery_items'
+src/features/cms/gallery.js:5:export async function getGalleryItems() {
+src/features/cms/gallery.js:21:export async function createGalleryItem(payload) {
+src/features/cms/gallery.js:37:export async function updateGalleryItem(id, payload) {
+src/features/cms/gallery.js:54:export async function deleteGalleryItem(id) {
+src/features/cms/promotions.js:3:export async function getActivePromotions() {
+src/features/cms/promotions.js:8:    .from('promotions')
+src/features/admin/dashboard.js:50:      todayReservations: 0,
+src/features/admin/dashboard.js:83:    todayReservationsResult,
+src/features/admin/dashboard.js:109:      .from('reservations')
+src/features/admin/dashboard.js:115:      .from('menu_items')
+src/features/admin/dashboard.js:193:    todayReservationsResult.error,
+src/features/admin/dashboard.js:208:      reservations: todayReservationsResult.error,
+src/features/admin/dashboard.js:289:      todayReservations: todayReservationsResult.count ?? 0,
+src/i18n/index.js:60:        gallery: 'Galeri',
+src/i18n/index.js:68:        reservations: 'Reservasi',
+src/i18n/index.js:77:        viewGallery: 'Lihat galeri',
+src/i18n/index.js:89:        theGallery: 'Galeri',
+src/i18n/index.js:97:        galleryDescription:
+src/i18n/index.js:120:      gallery: {
+src/i18n/index.js:182:        loadHomepageError: 'Gagal mengambil pengaturan homepage.',
+src/i18n/index.js:185:        reservationSearchPlaceholder: 'Kode, nama, atau nomor HP',
+src/i18n/index.js:188:        reservationsFound: '{{count}} reservasi ditemukan',
+src/i18n/index.js:189:        loadingReservations: 'Memuat data reservasi...',
+src/i18n/index.js:190:        noReservations: 'Belum ada reservasi',
+src/i18n/index.js:200:        updateReservationStatusError: 'Gagal mengubah status reservasi.',
+src/i18n/index.js:210:        homepageSaved: 'Homepage berhasil disimpan.',
+src/i18n/index.js:211:        saveHomepageError: 'Gagal menyimpan homepage.',
+src/i18n/index.js:212:        loadingHomepage: 'Memuat Homepage CMS...',
+src/i18n/index.js:214:        saveHomepage: 'Simpan Homepage',
+src/i18n/index.js:224:        homepage: 'Homepage',
+src/i18n/index.js:226:        gallery: 'Galeri',
+src/i18n/index.js:228:        settings: 'Pengaturan',
+src/i18n/index.js:231:        reservations: 'Reservasi',
+src/i18n/index.js:234:        adminSettings: 'Pengaturan Admin',
+src/i18n/index.js:264:  deleteGalleryError: "Gagal menghapus foto galeri.",
+src/i18n/index.js:268:  loadGalleryError: "Gagal memuat galeri.",
+src/i18n/index.js:272:  photoUploadedSaveHomepage: "Foto berhasil diunggah. Simpan homepage untuk menerapkan perubahan.",
+src/i18n/index.js:276:  updateGalleryStatusError: "Gagal memperbarui status galeri.",
+src/i18n/index.js:277:  uploadGalleryError: "Gagal mengunggah foto galeri.",
+src/i18n/index.js:296:        settings: 'Pengaturan',
+src/i18n/index.js:381:        noReservation: 'No reservations',
+src/i18n/index.js:389:        gallery: 'Gallery',
+src/i18n/index.js:397:        reservations: 'Reservations',
+src/i18n/index.js:406:        viewGallery: 'View gallery',
+src/i18n/index.js:418:        theGallery: 'The Gallery',
+src/i18n/index.js:426:galleryDescription:
+src/i18n/index.js:449:      gallery: {
+src/i18n/index.js:450:        loading: 'Opening the gallery...',
+src/i18n/index.js:451:        title: 'The Gallery',
+src/i18n/index.js:466:        title: 'Reservations',
+src/i18n/index.js:473:          'Reservations are submitted as requests first. Final confirmation is handled by the restaurant team.',
+src/i18n/index.js:511:        loadHomepageError: 'Failed to load homepage settings.',
+src/i18n/index.js:512:        reservationManagement: 'Manage customer reservations and table status from the dashboard.',
+src/i18n/index.js:513:        searchReservation: 'Search reservations',
+src/i18n/index.js:514:        reservationSearchPlaceholder: 'Code, name, or phone number',
+src/i18n/index.js:517:        reservationsFound: '{{count}} reservations found',
+src/i18n/index.js:518:        loadingReservations: 'Loading reservation data...',
+src/i18n/index.js:519:        noReservations: 'No reservations yet',
+src/i18n/index.js:528:        loadReservationError: 'Failed to load reservations.',
+src/i18n/index.js:529:        updateReservationStatusError: 'Failed to update reservation status.',
+src/i18n/index.js:539:        homepageSaved: 'Homepage saved successfully.',
+src/i18n/index.js:540:        saveHomepageError: 'Failed to save homepage.',
+src/i18n/index.js:541:        loadingHomepage: 'Loading Homepage CMS...',
+src/i18n/index.js:543:        saveHomepage: 'Save Homepage',
+src/i18n/index.js:553:        homepage: 'Homepage',
+src/i18n/index.js:555:        reservation: 'Reservations',
+src/i18n/index.js:556:        gallery: 'Gallery',
+src/i18n/index.js:557:        promo: 'Promotions',
+src/i18n/index.js:558:        settings: 'Settings',
+src/i18n/index.js:561:        reservations: 'Reservations',
+src/i18n/index.js:564:        adminSettings: 'Admin Settings',
+src/i18n/index.js:593:  deleteGalleryError: "Failed to delete gallery photo.",
+src/i18n/index.js:597:  loadGalleryError: "Failed to load gallery.",
+src/i18n/index.js:601:  photoUploadedSaveHomepage: "Photo uploaded. Save the homepage to apply the changes.",
+src/i18n/index.js:605:  updateGalleryStatusError: "Failed to update gallery status.",
+src/i18n/index.js:606:  uploadGalleryError: "Failed to upload gallery photo.",
+src/i18n/index.js:625:        settings: 'Settings',
+src/i18n/index.js:718:        gallery: '画廊',
+src/i18n/index.js:726:        reservations: '预订',
+src/i18n/index.js:735:        viewGallery: '查看画廊',
+src/i18n/index.js:747:        theGallery: '画廊',
+src/i18n/index.js:755:galleryDescription: '一览餐厅空间、餐桌以及其中发生的美好时刻。',
+src/i18n/index.js:776:      gallery: {
+src/i18n/index.js:833:        loadHomepageError: '获取主页设置失败。',
+src/i18n/index.js:836:        reservationSearchPlaceholder: '代码、姓名或电话号码',
+src/i18n/index.js:839:        reservationsFound: '找到 {{count}} 个预订',
+src/i18n/index.js:840:        loadingReservations: '正在加载预订数据...',
+src/i18n/index.js:841:        noReservations: '暂无预订',
+src/i18n/index.js:851:        updateReservationStatusError: '更新预订状态失败。',
+src/i18n/index.js:861:        homepageSaved: '主页保存成功。',
+src/i18n/index.js:862:        saveHomepageError: '保存主页失败。',
+src/i18n/index.js:863:        loadingHomepage: '正在加载主页 CMS...',
+src/i18n/index.js:865:        saveHomepage: '保存主页',
+src/i18n/index.js:875:        homepage: '首页管理',
+src/i18n/index.js:878:        gallery: '画廊管理',
+src/i18n/index.js:880:        settings: '设置',
+src/i18n/index.js:883:        reservations: '预订',
+src/i18n/index.js:886:        adminSettings: '管理员设置',
+src/i18n/index.js:915:  deleteGalleryError: "删除图库照片失败。",
+src/i18n/index.js:919:  loadGalleryError: "加载图库失败。",
+src/i18n/index.js:923:  photoUploadedSaveHomepage: "照片上传成功。保存主页以应用更改。",
+src/i18n/index.js:927:  updateGalleryStatusError: "更新图库状态失败。",
+src/i18n/index.js:928:  uploadGalleryError: "上传图库照片失败。",
+src/i18n/index.js:947:        settings: '设置',
+supabase/migrations/0001_initial_schema.sql:81:create table public.menu_categories (
+supabase/migrations/0001_initial_schema.sql:101:create table public.menu_items (
+supabase/migrations/0001_initial_schema.sql:103:  category_id uuid references public.menu_categories(id) on delete set null,
+supabase/migrations/0001_initial_schema.sql:139:    references public.menu_items(id)
+supabase/migrations/0001_initial_schema.sql:177:-- RESERVATIONS
+supabase/migrations/0001_initial_schema.sql:180:create table public.reservations (
+supabase/migrations/0001_initial_schema.sql:261:    references public.menu_items(id)
+supabase/migrations/0001_initial_schema.sql:323:create index idx_menu_items_category
+supabase/migrations/0001_initial_schema.sql:324:  on public.menu_items(category_id);
+supabase/migrations/0001_initial_schema.sql:326:create index idx_menu_items_status
+supabase/migrations/0001_initial_schema.sql:327:  on public.menu_items(status);
+supabase/migrations/0001_initial_schema.sql:329:create index idx_menu_items_featured
+supabase/migrations/0001_initial_schema.sql:330:  on public.menu_items(is_featured);
+supabase/migrations/0001_initial_schema.sql:332:create index idx_reservations_date
+supabase/migrations/0001_initial_schema.sql:333:  on public.reservations(reservation_date);
+supabase/migrations/0001_initial_schema.sql:335:create index idx_reservations_status
+supabase/migrations/0001_initial_schema.sql:336:  on public.reservations(status);
+supabase/migrations/0001_initial_schema.sql:368:create trigger menu_categories_updated_at
+supabase/migrations/0001_initial_schema.sql:369:before update on public.menu_categories
+supabase/migrations/0001_initial_schema.sql:372:create trigger menu_items_updated_at
+supabase/migrations/0001_initial_schema.sql:373:before update on public.menu_items
+supabase/migrations/0001_initial_schema.sql:380:create trigger reservations_updated_at
+supabase/migrations/0001_initial_schema.sql:381:before update on public.reservations
+supabase/migrations/0002_security_rls.sql:98:alter table public.menu_categories enable row level security;
+supabase/migrations/0002_security_rls.sql:99:alter table public.menu_items enable row level security;
+supabase/migrations/0002_security_rls.sql:102:alter table public.reservations enable row level security;
+supabase/migrations/0002_security_rls.sql:147:drop policy if exists menu_categories_public_read on public.menu_categories;
+supabase/migrations/0002_security_rls.sql:148:create policy menu_categories_public_read
+supabase/migrations/0002_security_rls.sql:149:on public.menu_categories
+supabase/migrations/0002_security_rls.sql:156:drop policy if exists menu_categories_staff_all on public.menu_categories;
+supabase/migrations/0002_security_rls.sql:157:create policy menu_categories_staff_all
+supabase/migrations/0002_security_rls.sql:158:on public.menu_categories
+supabase/migrations/0002_security_rls.sql:173:drop policy if exists menu_items_public_read on public.menu_items;
+supabase/migrations/0002_security_rls.sql:174:create policy menu_items_public_read
+supabase/migrations/0002_security_rls.sql:175:on public.menu_items
+supabase/migrations/0002_security_rls.sql:183:drop policy if exists menu_items_staff_all on public.menu_items;
+supabase/migrations/0002_security_rls.sql:184:create policy menu_items_staff_all
+supabase/migrations/0002_security_rls.sql:185:on public.menu_items
+supabase/migrations/0002_security_rls.sql:209:    from public.menu_items mi
+supabase/migrations/0002_security_rls.sql:273:-- RESERVATIONS
+supabase/migrations/0002_security_rls.sql:279:drop policy if exists reservations_public_insert on public.reservations;
+supabase/migrations/0002_security_rls.sql:280:create policy reservations_public_insert
+supabase/migrations/0002_security_rls.sql:281:on public.reservations
+supabase/migrations/0002_security_rls.sql:290:drop policy if exists reservations_staff_read on public.reservations;
+supabase/migrations/0002_security_rls.sql:291:create policy reservations_staff_read
+supabase/migrations/0002_security_rls.sql:292:on public.reservations
+supabase/migrations/0002_security_rls.sql:307:drop policy if exists reservations_management on public.reservations;
+supabase/migrations/0002_security_rls.sql:308:create policy reservations_management
+supabase/migrations/0002_security_rls.sql:309:on public.reservations
+supabase/migrations/0002_security_rls.sql:333:drop policy if exists reservations_delete_management on public.reservations;
+supabase/migrations/0002_security_rls.sql:334:create policy reservations_delete_management
+supabase/migrations/0002_security_rls.sql:335:on public.reservations
+supabase/migrations/0002_security_rls.sql:565:revoke all on public.menu_categories from anon;
+supabase/migrations/0002_security_rls.sql:566:revoke all on public.menu_items from anon;
+supabase/migrations/0002_security_rls.sql:573:grant select on public.menu_categories to anon;
+supabase/migrations/0002_security_rls.sql:574:grant select on public.menu_items to anon;
+supabase/migrations/0002_security_rls.sql:576:grant insert on public.reservations to anon;
+supabase/migrations/0002_security_rls.sql:583:on public.menu_categories
+supabase/migrations/0002_security_rls.sql:587:on public.menu_items
+supabase/migrations/0002_security_rls.sql:599:on public.reservations
+supabase/migrations/0006_homepage_cms.sql:2:-- Homepage CMS
+supabase/migrations/0006_homepage_cms.sql:3:-- Migration: 0006_homepage_cms
+supabase/migrations/0006_homepage_cms.sql:5:create table if not exists public.homepage_settings (
+supabase/migrations/0006_homepage_cms.sql:49:create unique index if not exists idx_homepage_settings_active
+supabase/migrations/0006_homepage_cms.sql:50:on public.homepage_settings(is_active)
+supabase/migrations/0006_homepage_cms.sql:53:create trigger homepage_settings_updated_at
+supabase/migrations/0006_homepage_cms.sql:54:before update on public.homepage_settings
+supabase/migrations/0006_homepage_cms.sql:60:-- HOMEPAGE HERO SLIDES
+supabase/migrations/0006_homepage_cms.sql:63:create table if not exists public.homepage_hero_slides (
+supabase/migrations/0006_homepage_cms.sql:87:create index if not exists idx_homepage_hero_slides_sort
+supabase/migrations/0006_homepage_cms.sql:88:on public.homepage_hero_slides(sort_order);
+supabase/migrations/0006_homepage_cms.sql:90:create index if not exists idx_homepage_hero_slides_active
+supabase/migrations/0006_homepage_cms.sql:91:on public.homepage_hero_slides(is_active);
+supabase/migrations/0006_homepage_cms.sql:93:create trigger homepage_hero_slides_updated_at
+supabase/migrations/0006_homepage_cms.sql:94:before update on public.homepage_hero_slides
+supabase/migrations/0006_homepage_cms.sql:100:-- GALLERY
+supabase/migrations/0006_homepage_cms.sql:103:create table if not exists public.gallery_items (
+supabase/migrations/0006_homepage_cms.sql:120:create index if not exists idx_gallery_items_sort
+supabase/migrations/0006_homepage_cms.sql:121:on public.gallery_items(sort_order);
+supabase/migrations/0006_homepage_cms.sql:123:create index if not exists idx_gallery_items_active
+supabase/migrations/0006_homepage_cms.sql:124:on public.gallery_items(is_active);
+supabase/migrations/0006_homepage_cms.sql:126:create trigger gallery_items_updated_at
+supabase/migrations/0006_homepage_cms.sql:127:before update on public.gallery_items
+supabase/migrations/0006_homepage_cms.sql:133:-- PROMOTIONS
+supabase/migrations/0006_homepage_cms.sql:136:create table if not exists public.promotions (
+supabase/migrations/0006_homepage_cms.sql:160:create index if not exists idx_promotions_active
+supabase/migrations/0006_homepage_cms.sql:161:on public.promotions(is_active);
+supabase/migrations/0006_homepage_cms.sql:163:create index if not exists idx_promotions_dates
+supabase/migrations/0006_homepage_cms.sql:164:on public.promotions(start_date, end_date);
+supabase/migrations/0006_homepage_cms.sql:166:create trigger promotions_updated_at
+supabase/migrations/0006_homepage_cms.sql:167:before update on public.promotions
+supabase/migrations/0006_homepage_cms.sql:176:alter table public.homepage_settings enable row level security;
+supabase/migrations/0006_homepage_cms.sql:177:alter table public.homepage_hero_slides enable row level security;
+supabase/migrations/0006_homepage_cms.sql:178:alter table public.gallery_items enable row level security;
+supabase/migrations/0006_homepage_cms.sql:179:alter table public.promotions enable row level security;
+supabase/migrations/0006_homepage_cms.sql:183:create policy homepage_settings_public_read
+supabase/migrations/0006_homepage_cms.sql:184:on public.homepage_settings
+supabase/migrations/0006_homepage_cms.sql:190:create policy homepage_hero_public_read
+supabase/migrations/0006_homepage_cms.sql:191:on public.homepage_hero_slides
+supabase/migrations/0006_homepage_cms.sql:197:create policy gallery_public_read
+supabase/migrations/0006_homepage_cms.sql:198:on public.gallery_items
+supabase/migrations/0006_homepage_cms.sql:204:create policy promotions_public_read
+supabase/migrations/0006_homepage_cms.sql:205:on public.promotions
+supabase/migrations/0006_homepage_cms.sql:212:create policy homepage_settings_management
+supabase/migrations/0006_homepage_cms.sql:213:on public.homepage_settings
+supabase/migrations/0006_homepage_cms.sql:228:create policy homepage_hero_management
+supabase/migrations/0006_homepage_cms.sql:229:on public.homepage_hero_slides
+supabase/migrations/0006_homepage_cms.sql:244:create policy gallery_management
+supabase/migrations/0006_homepage_cms.sql:245:on public.gallery_items
+supabase/migrations/0006_homepage_cms.sql:260:create policy promotions_management
+supabase/migrations/0006_homepage_cms.sql:261:on public.promotions
+supabase/migrations/0006_homepage_cms.sql:280:grant select on public.homepage_settings to anon, authenticated;
+supabase/migrations/0006_homepage_cms.sql:281:grant select on public.homepage_hero_slides to anon, authenticated;
+supabase/migrations/0006_homepage_cms.sql:282:grant select on public.gallery_items to anon, authenticated;
+supabase/migrations/0006_homepage_cms.sql:283:grant select on public.promotions to anon, authenticated;
+supabase/migrations/0006_homepage_cms.sql:286:on public.homepage_settings
+supabase/migrations/0006_homepage_cms.sql:290:on public.homepage_hero_slides
+supabase/migrations/0006_homepage_cms.sql:294:on public.gallery_items
+supabase/migrations/0006_homepage_cms.sql:298:on public.promotions
+supabase/migrations/0008_pos_integrity_v1.sql:33:  v_menu_item public.menu_items;
+supabase/migrations/0008_pos_integrity_v1.sql:126:    from public.menu_items
+supabase/migrations/0008_pos_integrity_v1.sql:231:    from public.menu_items
+supabase/migrations/0009_hardening_and_accounting.sql:86:  v_menu_item public.menu_items;
+supabase/migrations/0009_hardening_and_accounting.sql:121:    from public.menu_items
+supabase/migrations/0009_hardening_and_accounting.sql:163:    from public.menu_items
+supabase/migrations/0009_hardening_and_accounting.sql:300:alter table public.reservations
+supabase/migrations/0010_seed_coreeatery_pos_test_data.sql:9:insert into public.menu_categories
+supabase/migrations/0010_seed_coreeatery_pos_test_data.sql:32:insert into public.menu_items
+supabase/migrations/0010_seed_coreeatery_pos_test_data.sql:159:join public.menu_categories c
+supabase/migrations/0010_seed_coreeatery_pos_test_data.sql:196:from public.menu_items m
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:29:  v_menu_item public.menu_items;
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:104:    from public.menu_items
+supabase/migrations/0011_fix_order_item_name_snapshot.sql:200:    from public.menu_items
+supabase/migrations/0015_business_system.sql:56:  menu_item_id uuid not null references public.menu_items(id) on delete cascade,

@@ -1,0 +1,31 @@
+===== GIT HISTORY =====
+93e714f (HEAD -> main, origin/main) fix: improve responsive admin navigation styling
+83e250b feat: finalize owner business dashboard
+2638961 feat: expand business system and offline foundation
+4dee7f3 feat: add scheduled cash register shifts
+0677489 feat: complete cashier language switcher
+4a50d38 feat: add cashier language switcher
+64cf2b5 fix: avoid styling hover backgrounds as dark actions
+457544e fix: harden dark action text and CMS CTA fallback
+235d017 fix: enforce readable text on dark action blocks
+c1e0847 fix: snapshot order item name in POS transaction
+7f23154 test: seed Coreeatery POS master data
+5a7dacb fix: stabilize i18n locale formatting and lint safety
+7719b2f fix: finalize locale formatting runtime safety
+549b1b7 fix: prevent undefined locale runtime errors
+e22d69f fix: resolve missing locale imports
+c69eff7 fix: resolve runtime i18n scope errors
+14ac165 feat: complete multilingual i18n support
+9501b28 feat: harden POS and redesign public experience
+3e855be chore: update gitignore for vercel
+2585fbb fix: configure Vercel SPA routing
+0e5aeff feat: add gallery upload for menu images
+b3b9c5c feat: add restaurant CMS homepage menu gallery and media storage
+b66b0b8 feat: link payments to cashier shifts
+4550d2d feat: implement cashier sales reports
+7ace433 feat: implement cashier transaction history
+89b9a24 fix: resolve cash register effect lint
+cf9c6ac feat: add cash register shift database
+8eab958 feat: implement cashier transactions
+3d9b695 feat: connect cashier payment POS to orders
+918dd45 feat: complete payment processing flow

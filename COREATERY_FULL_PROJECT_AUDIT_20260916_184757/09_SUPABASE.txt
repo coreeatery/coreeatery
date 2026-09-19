@@ -1,0 +1,195 @@
+===== SUPABASE =====
+src/app/providers/AuthProvider.jsx:3:import { supabase } from '../../lib/supabase/client'
+src/app/providers/AuthProvider.jsx:9:  const [loading, setLoading] = useState(Boolean(supabase))
+src/app/providers/AuthProvider.jsx:12:    if (!supabase) return undefined
+src/app/providers/AuthProvider.jsx:19:      } = await supabase.auth.getSession()
+src/app/providers/AuthProvider.jsx:50:    } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+src/pages/admin/OperationsHubPage.jsx:2:import {supabase} from '../../lib/supabase/client'
+src/pages/admin/OperationsHubPage.jsx:8: async function load(){setLoading(true);const[i,s,k,q]=await Promise.all([supabase.from('inventory_items').select('*').eq('is_active',true).order('name'),supabase.from('suppliers').select('*').eq('is_active',true).order('name'),supabase.from('kitchen_tickets').select('*,orders(order_number,customer_name)').in('status',['queued','preparing','ready']).order('priority',{ascending:false}).order('queued_at'),getOfflineQueue()]);setInventory(i.data||[]);setSuppliers(s.data||[]);setKitchen(k.data||[]);setQueue(q||[]);const today=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Jakarta'});const{data}=await supabase.from('daily_sales_summaries').select('*').eq('business_date',today).maybeSingle();setSummary(data);setLoading(false)}
+src/pages/admin/OperationsHubPage.jsx:9: async function generateSummary(){await supabase.rpc('generate_daily_sales_summary');await load()}
+src/pages/cashier/NewOrderPage.jsx:87:    return Array.from(map.entries()).map(([id, name]) => ({
+src/pages/cashier/CashierRegisterPage.jsx:3:import { supabase } from '../../lib/supabase/client'
+src/pages/cashier/CashierRegisterPage.jsx:33:      if (!supabase) {
+src/pages/cashier/CashierRegisterPage.jsx:43:          await supabase.auth.getUser()
+src/pages/cashier/CashierRegisterPage.jsx:55:        const { data, error: shiftError } = await supabase
+src/pages/cashier/CashierRegisterPage.jsx:56:          .from('cash_register_shifts')
+src/pages/cashier/CashierRegisterPage.jsx:101:    if (!supabase) {
+src/pages/cashier/CashierRegisterPage.jsx:112:        await supabase.auth.getUser()
+src/pages/cashier/CashierRegisterPage.jsx:125:        await supabase
+src/pages/cashier/CashierRegisterPage.jsx:126:          .from('cash_register_shifts')
+src/pages/cashier/CashierRegisterPage.jsx:142:      const { data, error } = await supabase.rpc(
+src/pages/cashier/CashierRegisterPage.jsx:181:    if (!supabase) {
+src/pages/cashier/CashierRegisterPage.jsx:191:      const { data, error } = await supabase.rpc(
+src/features/auth/auth.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/auth/auth.js:4:  if (!supabase) {
+src/features/auth/auth.js:8:  const { data, error } = await supabase.auth.signInWithPassword({
+src/features/auth/auth.js:19:  if (!supabase) return
+src/features/auth/auth.js:21:  const { error } = await supabase.auth.signOut()
+src/features/auth/profile.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/auth/profile.js:4:  if (!supabase) return null
+src/features/auth/profile.js:9:  } = await supabase.auth.getUser()
+src/features/auth/profile.js:14:  const { data, error } = await supabase
+src/features/auth/profile.js:15:    .from('profiles')
+src/features/menu/menu.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/menu/menu.js:4:  if (!supabase) return []
+src/features/menu/menu.js:6:  const { data, error } = await supabase
+src/features/menu/menu.js:7:    .from('menu_categories')
+src/features/menu/menu.js:16:  if (!supabase) return []
+src/features/menu/menu.js:18:  const { data, error } = await supabase
+src/features/menu/menu.js:19:    .from('menu_items')
+src/features/menu/menu.js:45:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:47:  const { data, error } = await supabase
+src/features/menu/menu.js:48:    .from('menu_categories')
+src/features/menu/menu.js:58:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:60:  const { data, error } = await supabase
+src/features/menu/menu.js:61:    .from('menu_categories')
+src/features/menu/menu.js:72:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:74:  const { error } = await supabase
+src/features/menu/menu.js:75:    .from('menu_categories')
+src/features/menu/menu.js:83:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:85:  const { data, error } = await supabase
+src/features/menu/menu.js:86:    .from('menu_items')
+src/features/menu/menu.js:96:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:98:  const { data, error } = await supabase
+src/features/menu/menu.js:99:    .from('menu_items')
+src/features/menu/menu.js:110:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:112:  const { error } = await supabase
+src/features/menu/menu.js:113:    .from('menu_items')
+src/features/menu/menu.js:121:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:123:  const { data, error } = await supabase
+src/features/menu/menu.js:124:    .from('menu_variants')
+src/features/menu/menu.js:134:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:136:  const { data, error } = await supabase
+src/features/menu/menu.js:137:    .from('menu_variants')
+src/features/menu/menu.js:148:  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+src/features/menu/menu.js:150:  const { error } = await supabase
+src/features/menu/menu.js:151:    .from('menu_variants')
+src/features/reservations/reservations.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/reservations/reservations.js:31:  if (!supabase) return []
+src/features/reservations/reservations.js:33:  let query = supabase
+src/features/reservations/reservations.js:34:    .from('reservations')
+src/features/reservations/reservations.js:63:  if (!supabase) {
+src/features/reservations/reservations.js:67:  const { data, error } = await supabase
+src/features/reservations/reservations.js:68:    .from('reservations')
+src/features/reservations/reservations.js:79:  if (!supabase) {
+src/features/reservations/reservations.js:83:  const { data, error } = await supabase
+src/features/reservations/reservations.js:84:    .from('reservations')
+src/features/reservations/reservations.js:95:  if (!supabase) {
+src/features/reservations/reservations.js:99:  const { data, error } = await supabase
+src/features/reservations/reservations.js:100:    .from('reservations')
+src/features/reservations/reservations.js:116:  if (!supabase) {
+src/features/reservations/reservations.js:120:  const { error } = await supabase
+src/features/reservations/reservations.js:121:    .from('reservations')
+src/features/reservations/reservations.js:129:  if (!supabase) {
+src/features/reservations/reservations.js:141:  let query = supabase
+src/features/reservations/reservations.js:142:    .from('reservations')
+src/features/orders/orders.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/orders/orders.js:44:  if (!supabase) {
+src/features/orders/orders.js:57:  let query = supabase
+src/features/orders/orders.js:58:    .from('orders')
+src/features/orders/orders.js:94:  const { data, error } = await supabase
+src/features/orders/orders.js:95:    .from('orders')
+src/features/orders/orders.js:108:  const { data, error } = await supabase.rpc(
+src/features/orders/orders.js:138:  const { data, error } = await supabase.rpc(
+src/features/orders/orders.js:192:  const { data, error } = await supabase.rpc(
+src/features/payments/payments.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/payments/payments.js:19:  if (!supabase) {
+src/features/payments/payments.js:27:  const { data, error } = await supabase.auth.getUser()
+src/features/payments/payments.js:50:  let query = supabase
+src/features/payments/payments.js:51:    .from('payments')
+src/features/payments/payments.js:89:  const { data, error } = await supabase
+src/features/payments/payments.js:90:    .from('payments')
+src/features/payments/payments.js:109:  const { data, error } = await supabase
+src/features/payments/payments.js:110:    .from('cash_register_shifts')
+src/features/payments/payments.js:142:  const { data, error } = await supabase.rpc(
+src/features/reports/reports.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/reports/reports.js:4:  if (!supabase) {
+src/features/reports/reports.js:30:    supabase
+src/features/reports/reports.js:31:      .from('orders')
+src/features/reports/reports.js:48:    supabase
+src/features/reports/reports.js:49:      .from('payments')
+src/features/cms/media.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/cms/media.js:13:  if (!supabase) {
+src/features/cms/media.js:32:  const { error: uploadError } = await supabase.storage
+src/features/cms/media.js:33:    .from(BUCKET)
+src/features/cms/media.js:46:  } = supabase.storage
+src/features/cms/media.js:47:    .from(BUCKET)
+src/features/cms/media.js:57:  if (!supabase) {
+src/features/cms/media.js:63:  const { error } = await supabase.storage
+src/features/cms/media.js:64:    .from(BUCKET)
+src/features/cms/homepage.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/cms/homepage.js:6:  if (!supabase) {
+src/features/cms/homepage.js:10:  const { data, error } = await supabase
+src/features/cms/homepage.js:11:    .from(TABLE)
+src/features/cms/homepage.js:22:  if (!supabase) {
+src/features/cms/homepage.js:26:  const { data: existing, error: existingError } = await supabase
+src/features/cms/homepage.js:27:    .from(TABLE)
+src/features/cms/homepage.js:35:    const { data, error } = await supabase
+src/features/cms/homepage.js:36:      .from(TABLE)
+src/features/cms/homepage.js:47:  const { data, error } = await supabase
+src/features/cms/homepage.js:48:    .from(TABLE)
+src/features/cms/gallery.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/cms/gallery.js:6:  if (!supabase) {
+src/features/cms/gallery.js:10:  const { data, error } = await supabase
+src/features/cms/gallery.js:11:    .from(TABLE)
+src/features/cms/gallery.js:22:  if (!supabase) {
+src/features/cms/gallery.js:26:  const { data, error } = await supabase
+src/features/cms/gallery.js:27:    .from(TABLE)
+src/features/cms/gallery.js:38:  if (!supabase) {
+src/features/cms/gallery.js:42:  const { data, error } = await supabase
+src/features/cms/gallery.js:43:    .from(TABLE)
+src/features/cms/gallery.js:55:  if (!supabase) {
+src/features/cms/gallery.js:59:  const { error } = await supabase
+src/features/cms/gallery.js:60:    .from(TABLE)
+src/features/cms/promotions.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/cms/promotions.js:4:  if (!supabase) return []
+src/features/cms/promotions.js:7:  const { data, error } = await supabase
+src/features/cms/promotions.js:8:    .from('promotions')
+src/features/admin/dashboard.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/admin/dashboard.js:73:  if (!supabase) {
+src/features/admin/dashboard.js:93:    supabase
+src/features/admin/dashboard.js:94:      .from('payments')
+src/features/admin/dashboard.js:101:    supabase
+src/features/admin/dashboard.js:102:      .from('orders')
+src/features/admin/dashboard.js:108:    supabase
+src/features/admin/dashboard.js:109:      .from('reservations')
+src/features/admin/dashboard.js:114:    supabase
+src/features/admin/dashboard.js:115:      .from('menu_items')
+src/features/admin/dashboard.js:120:    supabase
+src/features/admin/dashboard.js:121:      .from('inventory_items')
+src/features/admin/dashboard.js:125:    supabase
+src/features/admin/dashboard.js:126:      .from('kitchen_tickets')
+src/features/admin/dashboard.js:130:    supabase
+src/features/admin/dashboard.js:131:      .from('purchase_orders')
+src/features/admin/dashboard.js:135:    supabase
+src/features/admin/dashboard.js:136:      .from('payments')
+src/features/admin/dashboard.js:153:    supabase
+src/features/admin/dashboard.js:154:      .from('orders')
+src/features/admin/dashboard.js:167:    supabase
+src/features/admin/dashboard.js:168:      .from('payments')
+src/features/admin/dashboard.js:175:    supabase
+src/features/admin/dashboard.js:176:      .from('order_items')
+src/features/tables/tables.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/tables/tables.js:14:  if (!supabase) {
+src/features/tables/tables.js:24:  let query = supabase
+src/features/tables/tables.js:25:    .from('restaurant_tables')
+src/features/tables/tables.js:43:  const { data, error } = await supabase
+src/features/tables/tables.js:44:    .from('restaurant_tables')
+src/features/tables/tables.js:57:  const { data, error } = await supabase
+src/features/tables/tables.js:58:    .from('restaurant_tables')
+src/features/tables/tables.js:71:  const { data, error } = await supabase
+src/features/tables/tables.js:72:    .from('restaurant_tables')
+src/features/storage/storage.js:1:import { supabase } from '../../lib/supabase/client'
+src/features/storage/storage.js:6:  if (!supabase) {
+src/features/storage/storage.js:33:  const { error: uploadError } = await supabase.storage
+src/features/storage/storage.js:34:    .from(BUCKET)
+src/features/storage/storage.js:47:  } = supabase.storage
+src/features/storage/storage.js:48:    .from(BUCKET)
+src/features/storage/storage.js:58:  if (!supabase || !path) return
+src/features/storage/storage.js:60:  const { error } = await supabase.storage
+src/features/storage/storage.js:61:    .from(BUCKET)
+src/lib/supabase/client.js:1:import { createClient } from '@supabase/supabase-js'
+src/lib/supabase/client.js:3:const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+src/lib/supabase/client.js:4:const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+src/lib/supabase/client.js:6:export const supabase = supabaseUrl && supabaseAnonKey
+src/lib/supabase/client.js:7:  ? createClient(supabaseUrl, supabaseAnonKey)

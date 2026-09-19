@@ -1,0 +1,14 @@
+===== ROUTES =====
+src/main.jsx:3:import { RouterProvider } from 'react-router-dom'
+src/main.jsx:12:      <RouterProvider router={router} />
+src/app/router/index.jsx:1:import { createBrowserRouter } from 'react-router-dom'
+src/app/router/index.jsx:7:import ProtectedRoute from '../../components/auth/ProtectedRoute'
+src/app/router/index.jsx:38:export const router = createBrowserRouter([
+src/app/router/index.jsx:62:    element: <ProtectedRoute allowedRoles={['owner', 'admin', 'manager']} />,
+src/app/router/index.jsx:82:    element: <ProtectedRoute allowedRoles={['owner', 'admin', 'manager', 'cashier']} />,
+src/components/admin/AdminSidebar.jsx:72:      navigate('/login', { replace: true })
+src/components/cashier/CashierSidebar.jsx:86:      navigate('/login', { replace: true })
+src/components/auth/ProtectedRoute.jsx:4:export default function ProtectedRoute({ allowedRoles }) {
+src/pages/cashier/NewOrderPage.jsx:228:      navigate(`/cashier/orders/${order.id}`)
+src/pages/auth/LoginPage.jsx:62:        navigate(getRoleDestination(role), { replace: true })
+src/pages/auth/LoginPage.jsx:79:        navigate(destination, { replace: true })

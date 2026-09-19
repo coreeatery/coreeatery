@@ -1,0 +1,20 @@
+===== PUBLIC PAGES =====
+src/assets/hero.png
+src/components/public/PublicFooter.jsx
+src/components/public/PublicNavbar.jsx
+src/layouts/PublicLayout.jsx
+src/pages/public/GalleryPage.jsx
+src/pages/public/HomePage.jsx
+src/pages/public/MenuDetailPage.jsx
+src/pages/public/MenuPage.jsx
+src/pages/public/ReservationPage.jsx
+src/pages/admin/AdminHomepagePage.jsx
+src/pages/admin/AdminMenuPage.jsx
+src/pages/admin/AdminReservationPage.jsx
+src/pages/admin/AdminGalleryPage.jsx
+src/features/menu/menu.js
+src/features/reservations/reservations.js
+src/features/reservations/reservationStatus.js
+src/features/cms/homepage.js
+src/features/cms/gallery.js
+src/features/admin/dashboard.js.before-reservation-fix

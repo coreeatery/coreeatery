@@ -1,0 +1,23 @@
+===== ADMIN MANAGER CMS =====
+src/components/admin/AdminSidebar.jsx
+src/components/admin/AdminSidebar.jsx.backup-20260916-120651
+src/layouts/AdminLayout.jsx
+src/pages/admin/AdminDashboardPage.jsx
+src/pages/admin/AdminHomepagePage.jsx
+src/pages/admin/AdminMenuPage.jsx
+src/pages/admin/AdminReservationPage.jsx
+src/pages/admin/AdminGalleryPage.jsx
+src/pages/admin/AdminPromoPage.jsx
+src/pages/admin/AdminSettingsPage.jsx
+src/pages/admin/OperationsHubPage.jsx
+src/pages/cashier/CashierDashboardPage.jsx
+src/pages/cashier/CashierSettingsPage.jsx
+src/features/cms/media.js
+src/features/cms/homepage.js
+src/features/cms/gallery.js
+src/features/cms/promotions.js
+src/features/admin/dashboard.js
+src/features/admin/dashboard.js.bak
+src/features/admin/dashboard.js.before-po-fix
+src/features/admin/dashboard.js.before-error-debug
+src/features/admin/dashboard.js.before-reservation-fix

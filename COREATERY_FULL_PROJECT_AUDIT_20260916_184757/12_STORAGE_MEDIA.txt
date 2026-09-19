@@ -1,0 +1,180 @@
+===== STORAGE MEDIA =====
+src/pages/public/GalleryPage.jsx:22:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="bg-[#201d18] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28"><div className="mx-auto max-w-[1400px]"><p className="text-[9px] uppercase tracking-[0.45em] text-[#dbc38f]">{t('gallery.visualJournal')}</p><h1 className="mt-5 font-serif text-5xl sm:text-7xl">{t('gallery.title')}</h1><p className="mt-6 max-w-xl text-sm leading-8 text-white/50">{t('gallery.description')}</p></div></section><section className="mx-auto max-w-[1400px] px-6 py-12 sm:px-10 lg:px-16 lg:py-20">{items.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('gallery.empty')}</p></div> : <div className="grid auto-rows-[190px] grid-cols-2 gap-3 sm:auto-rows-[240px] sm:grid-cols-3 lg:auto-rows-[300px]">{items.map((item, index) => <figure key={item.id} className={`group relative overflow-hidden bg-[#ddd4c4] ${index % 7 === 0 ? 'col-span-2 row-span-2' : index % 5 === 0 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />{item.title && <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-5 pb-5 pt-14 text-xs text-white/85 opacity-0 transition group-hover:opacity-100">{item.title}</figcaption>}</figure>)}</div>}<div className="mt-14 border-t border-[#d2c8b7] pt-8"><Link to="/reservasi" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('gallery.reserveTable')} ↗</Link></div></section></main>
+src/pages/public/HomePage.jsx:96:        {settings.hero_image_url && <img src={settings.hero_image_url} alt={heroTitle} className="absolute inset-0 h-full w-full object-cover" />}
+src/pages/public/HomePage.jsx:112:      {promotions.length > 0 && <section className="border-b border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto grid max-w-[1400px] md:grid-cols-2">{promotions.map((promo) => <article key={promo.id} className="grid min-h-[260px] grid-cols-[1fr_0.9fr] border-b border-[#d8d0c1] last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"><div className="flex flex-col justify-center p-7 sm:p-10"><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('public.limitedOffering')}</p><h2 className="mt-4 font-serif text-2xl sm:text-3xl">{pickLanguage(promo, 'title', language) || promo.title_id}</h2>{promo.discount_text && <p className="mt-3 text-sm text-[#9b8355]">{promo.discount_text}</p>}</div>{promo.image_url ? <img src={promo.image_url} alt={pickLanguage(promo, 'title', language)} className="h-full min-h-[260px] w-full object-cover" /> : <div className="bg-[#dcd3c2]" />}</article>)}</div></section>}
+src/pages/public/HomePage.jsx:114:      {(settings.about_title_id || settings.about_description_id || settings.about_image_url) && <section className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24"><div className="order-2 lg:order-1"><SectionLabel>{t('public.ourPhilosophy')}</SectionLabel><h2 className="mt-7 max-w-xl font-serif text-4xl font-normal leading-tight sm:text-5xl lg:text-6xl">{aboutTitle}</h2>{aboutDescription && <p className="mt-7 max-w-xl whitespace-pre-line text-sm leading-8 text-[#6e6659] sm:text-base">{aboutDescription}</p>}<div className="mt-9 flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-[#9b8355]"><span className="h-px w-8 bg-[#b79b63]" />{t('public.craftedWithIntention')}</div></div>{settings.about_image_url && <div className="order-1 lg:order-2"><div className="relative"><div className="absolute -bottom-4 -left-4 h-full w-full border border-[#c9b589]/60" /><img src={settings.about_image_url} alt={aboutTitle} className="relative aspect-[4/5] w-full object-cover sm:aspect-[4/3]" /></div></div>}</div></section>}
+src/pages/public/HomePage.jsx:116:      {featured.length > 0 && <section className="border-y border-[#d8d0c1] bg-[#eee8dc]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><SectionLabel>{t('public.signatureMenu')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.signatureDescription')}</h2></div><Link to="/menu" className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] underline decoration-[#c7aa70] underline-offset-8">{t('public.viewFullMenu')} ↗</Link></div><div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{featured.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#d9d1c2]">{item.image_url ? <img src={item.image_url} alt={item.name_id} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.25em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex items-start justify-between gap-4"><div><p className="text-[9px] uppercase tracking-[0.22em] text-[#9b8355]">{item.menu_categories?.name_id || t('menu.signature')}</p><h3 className="mt-2 font-serif text-xl">{pickLanguage(item, 'name', language) || item.name_id}</h3></div><span className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</span></div></Link>)}</div></div></section>}
+src/pages/public/HomePage.jsx:118:      {gallery.length > 0 && <section className="bg-[#f5f1e8]"><div className="mx-auto max-w-[1400px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"><div className="flex items-end justify-between gap-8"><div><SectionLabel>{t('public.theExperience')}</SectionLabel><h2 className="mt-7 font-serif text-4xl sm:text-5xl">{t('public.insideCoreatery')}</h2></div><Link to="/galeri" className="hidden text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:block">{t('public.viewGallery')} ↗</Link></div><div className="mt-12 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] sm:grid-cols-3 lg:auto-rows-[260px]">{gallery.map((item, index) => <Link key={item.id} to="/galeri" className={`group overflow-hidden ${index === 0 ? 'col-span-2 row-span-2' : index === 3 ? 'row-span-2' : ''}`}><img src={item.image_url} alt={item.alt_text || item.title || 'COREÉATERY'} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></Link>)}</div><Link to="/galeri" className="mt-8 inline-flex text-[9px] font-semibold uppercase tracking-[0.28em] text-[#8f7850] sm:hidden">{t('public.viewGallery')} ↗</Link></div></section>}
+src/pages/public/HomePage.jsx:120:      <section className="relative overflow-hidden bg-[#171512] text-white"><div className="mx-auto grid max-w-[1400px] lg:grid-cols-2"><div className="flex min-h-[500px] items-center px-6 py-20 sm:px-10 lg:px-16"><div className="max-w-xl"><SectionLabel light>{t('public.privateDining')}</SectionLabel><h2 className="mt-7 font-serif text-4xl leading-tight sm:text-5xl">{t('public.makeTheMoment')}<br /><span className="italic text-[#cdb47e]">{t('public.trulyYours')}</span></h2><p className="mt-7 text-sm leading-8 text-white/55 sm:text-base">{t('public.privateDiningDescription')}</p><Link to="/reservasi" className="mt-9 inline-flex items-center gap-4 border border-white/25 px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] transition hover:border-[#c7aa70] hover:bg-[#c7aa70] hover:text-[#171512]">{t('public.planYourVisit')} ↗</Link></div></div><div className="relative min-h-[360px] lg:min-h-[500px]">{settings.about_image_url && <img src={settings.about_image_url} alt="COREÉATERY dining experience" className="absolute inset-0 h-full w-full object-cover opacity-70" />}<div className="absolute inset-0 bg-gradient-to-r from-[#171512] via-transparent to-transparent" /></div></div></section>
+src/pages/public/MenuDetailPage.jsx:37:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="mx-auto grid max-w-[1400px] lg:grid-cols-2"><div className="min-h-[520px] bg-[#ddd4c4] lg:min-h-[720px]">{item.image_url ? <img src={item.image_url} alt={name} className="h-full w-full object-cover" /> : <div className="flex h-full min-h-[520px] items-center justify-center text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">COREÉATERY</div>}</div><div className="flex items-center px-6 py-16 sm:px-10 lg:px-16"><div className="max-w-xl"><Link to="/menu" className="text-[9px] uppercase tracking-[0.28em] text-[#9b8355]">← {t('menu.backToMenu')}</Link><p className="mt-12 text-[9px] uppercase tracking-[0.35em] text-[#9b8355]">{item.menu_categories?.name_id || 'COREÉATERY'}</p><h1 className="mt-5 font-serif text-5xl leading-tight sm:text-6xl">{name}</h1><p className="mt-6 text-xl text-[#6e6659]">{formatRupiah(item.base_price)}</p>{description && <p className="mt-7 whitespace-pre-line text-sm leading-8 text-[#6e6659]">{description}</p>}{variants.length > 0 && <div className="mt-10 border-t border-[#d2c8b7] pt-7"><p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#9b8355]">{t('menu.availableVariants')}</p><div className="mt-4 space-y-3">{variants.map((variant) => <div key={variant.id} className="flex justify-between gap-5 border-b border-[#e2dbcf] pb-3 text-sm"><span>{pick(variant, 'name', i18n.language) || variant.name_id}</span><span className="text-[#6e6659]">{formatRupiah(variant.price)}</span></div>)}</div></div>}<Link to="/reservasi" className="mt-10 inline-flex bg-[#201d18] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[#9b8355]">{t('menu.reserveTable')} ↗</Link></div></div></section></main>
+src/pages/public/MenuPage.jsx:50:        {filteredItems.length === 0 ? <div className="py-24 text-center"><p className="font-serif text-2xl">{t('menu.noAvailable')}</p></div> : <div className="grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{filteredItems.map((item) => <Link key={item.id} to={`/menu/${item.id}`} className="group"><div className="aspect-[4/5] overflow-hidden bg-[#ddd4c4]">{item.image_url ? <img src={item.image_url} alt={pick(item, 'name', i18n.language)} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">COREÉATERY</div>}</div><div className="mt-5 flex justify-between gap-5"><div><p className="text-[9px] uppercase tracking-[0.2em] text-[#9b8355]">{item.menu_categories?.name_id || 'COREÉATERY'}</p><h2 className="mt-2 font-serif text-2xl">{pick(item, 'name', i18n.language) || item.name_id}</h2>{pick(item, 'description', i18n.language) && <p className="mt-2 line-clamp-2 text-xs leading-6 text-[#6e6659]">{pick(item, 'description', i18n.language)}</p>}</div><p className="pt-1 text-xs text-[#6e6659]">{formatRupiah(item.base_price)}</p></div></Link>)}</div>}
+src/pages/admin/AdminHomepagePage.jsx:7:import { uploadCmsImage } from '../../features/cms/media'
+src/pages/admin/AdminHomepagePage.jsx:14:  hero_image_url: '',
+src/pages/admin/AdminHomepagePage.jsx:20:  about_image_url: '',
+src/pages/admin/AdminHomepagePage.jsx:50:  const [uploading, setUploading] = useState('')
+src/pages/admin/AdminHomepagePage.jsx:98:  async function handleImageUpload(event, field, folder) {
+src/pages/admin/AdminHomepagePage.jsx:103:    setUploading(field)
+src/pages/admin/AdminHomepagePage.jsx:108:      const result = await uploadCmsImage(file, folder)
+src/pages/admin/AdminHomepagePage.jsx:112:      setSuccess(t('admin.photoUploadedSaveHomepage'))
+src/pages/admin/AdminHomepagePage.jsx:114:      setError(err.message || t('admin.uploadPhotoError'))
+src/pages/admin/AdminHomepagePage.jsx:116:      setUploading('')
+src/pages/admin/AdminHomepagePage.jsx:134:        hero_image_url: form.hero_image_url.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:140:        about_image_url: form.about_image_url.trim() || null,
+src/pages/admin/AdminHomepagePage.jsx:254:          <ImageUploader
+src/pages/admin/AdminHomepagePage.jsx:256:            value={form.hero_image_url}
+src/pages/admin/AdminHomepagePage.jsx:258:            uploading={uploading === 'hero_image_url'}
+src/pages/admin/AdminHomepagePage.jsx:260:              handleImageUpload(
+src/pages/admin/AdminHomepagePage.jsx:262:                'hero_image_url',
+src/pages/admin/AdminHomepagePage.jsx:266:            onRemove={() => updateField('hero_image_url', '')}
+src/pages/admin/AdminHomepagePage.jsx:309:          <ImageUploader
+src/pages/admin/AdminHomepagePage.jsx:311:            value={form.about_image_url}
+src/pages/admin/AdminHomepagePage.jsx:313:            uploading={uploading === 'about_image_url'}
+src/pages/admin/AdminHomepagePage.jsx:315:              handleImageUpload(
+src/pages/admin/AdminHomepagePage.jsx:317:                'about_image_url',
+src/pages/admin/AdminHomepagePage.jsx:321:            onRemove={() => updateField('about_image_url', '')}
+src/pages/admin/AdminHomepagePage.jsx:504:function ImageUploader({
+src/pages/admin/AdminHomepagePage.jsx:508:  uploading,
+src/pages/admin/AdminHomepagePage.jsx:549:            disabled={uploading}
+src/pages/admin/AdminHomepagePage.jsx:555:              {uploading
+src/pages/admin/AdminHomepagePage.jsx:556:                ? t('admin.uploadingPhoto')
+src/pages/admin/AdminMenuPage.jsx:11:import { uploadCmsImage } from '../../features/cms/media'
+src/pages/admin/AdminMenuPage.jsx:21:  image_url: '',
+src/pages/admin/AdminMenuPage.jsx:57:  const [uploadingImage, setUploadingImage] = useState(false)
+src/pages/admin/AdminMenuPage.jsx:124:      image_url: item.image_url ?? '',
+src/pages/admin/AdminMenuPage.jsx:143:  async function handleImageUpload(event) {
+src/pages/admin/AdminMenuPage.jsx:148:    setUploadingImage(true)
+src/pages/admin/AdminMenuPage.jsx:152:      const result = await uploadCmsImage(file, 'menu')
+src/pages/admin/AdminMenuPage.jsx:153:      updateField('image_url', result.publicUrl)
+src/pages/admin/AdminMenuPage.jsx:155:      setError(err.message || t('admin.uploadMenuPhotoError'))
+src/pages/admin/AdminMenuPage.jsx:157:      setUploadingImage(false)
+src/pages/admin/AdminMenuPage.jsx:195:      image_url: form.image_url.trim() || null,
+src/pages/admin/AdminMenuPage.jsx:431:                  {form.image_url ? (
+src/pages/admin/AdminMenuPage.jsx:433:                      src={form.image_url}
+src/pages/admin/AdminMenuPage.jsx:449:                    onChange={handleImageUpload}
+src/pages/admin/AdminMenuPage.jsx:456:                    disabled={uploadingImage}
+src/pages/admin/AdminMenuPage.jsx:459:                    {uploadingImage
+src/pages/admin/AdminMenuPage.jsx:460:                      ? t('admin.uploading')
+src/pages/admin/AdminMenuPage.jsx:461:                      : form.image_url
+src/pages/admin/AdminMenuPage.jsx:466:                  {form.image_url && (
+src/pages/admin/AdminMenuPage.jsx:469:                      onClick={() => updateField('image_url', '')}
+src/pages/admin/AdminMenuPage.jsx:578:                    {item.image_url ? (
+src/pages/admin/AdminMenuPage.jsx:580:                        src={item.image_url}
+src/pages/admin/AdminGalleryPage.jsx:11:  uploadCmsImage,
+src/pages/admin/AdminGalleryPage.jsx:12:} from '../../features/cms/media'
+src/pages/admin/AdminGalleryPage.jsx:18:  const [uploading, setUploading] = useState(false)
+src/pages/admin/AdminGalleryPage.jsx:42:  async function handleUpload(event) {
+src/pages/admin/AdminGalleryPage.jsx:49:    setUploading(true)
+src/pages/admin/AdminGalleryPage.jsx:53:      const { path, publicUrl } = await uploadCmsImage(
+src/pages/admin/AdminGalleryPage.jsx:61:          image_url: publicUrl,
+src/pages/admin/AdminGalleryPage.jsx:73:      setError(err.message || t('admin.uploadGalleryError'))
+src/pages/admin/AdminGalleryPage.jsx:75:      setUploading(false)
+src/pages/admin/AdminGalleryPage.jsx:112:      const url = item.image_url
+src/pages/admin/AdminGalleryPage.jsx:115:        const marker = '/cms-media/'
+src/pages/admin/AdminGalleryPage.jsx:150:          {uploading ? t('admin.uploading') : '+ Upload Foto'}
+src/pages/admin/AdminGalleryPage.jsx:155:            onChange={handleUpload}
+src/pages/admin/AdminGalleryPage.jsx:156:            disabled={uploading}
+src/pages/admin/AdminGalleryPage.jsx:179:            Upload foto pertama dari galeri HP admin.
+src/pages/admin/AdminGalleryPage.jsx:191:                  src={item.image_url}
+src/pages/admin/OperationsHubPage.jsx:25: {tab==='automation'&&<div className="grid gap-3 md:grid-cols-2"><Panel title="Shift auto-expiry"><p className="text-sm text-green-700">Active through scheduled cash-register shift logic.</p></Panel><Panel title="Low-stock alert"><p className="text-sm text-green-700">{lowStock.length} item(s) require attention.</p></Panel><Panel title="Daily sales summary"><p className="text-sm text-gray-500">Generated from paid payments.</p></Panel><Panel title="Notifications"><p className="text-sm text-gray-500">Notification storage is active.</p></Panel></div>}
+src/features/cms/media.js:3:const BUCKET = 'cms-media'
+src/features/cms/media.js:12:export async function uploadCmsImage(file, folder = 'general') {
+src/features/cms/media.js:32:  const { error: uploadError } = await supabase.storage
+src/features/cms/media.js:33:    .from(BUCKET)
+src/features/cms/media.js:34:    .upload(path, file, {
+src/features/cms/media.js:40:  if (uploadError) {
+src/features/cms/media.js:41:    throw uploadError
+src/features/cms/media.js:46:  } = supabase.storage
+src/features/cms/media.js:47:    .from(BUCKET)
+src/features/cms/media.js:63:  const { error } = await supabase.storage
+src/features/cms/media.js:64:    .from(BUCKET)
+src/features/storage/storage.js:3:const BUCKET = 'restaurant-media'
+src/features/storage/storage.js:5:export async function uploadRestaurantImage(file, folder = 'general') {
+src/features/storage/storage.js:33:  const { error: uploadError } = await supabase.storage
+src/features/storage/storage.js:34:    .from(BUCKET)
+src/features/storage/storage.js:35:    .upload(filePath, file, {
+src/features/storage/storage.js:41:  if (uploadError) {
+src/features/storage/storage.js:42:    throw uploadError
+src/features/storage/storage.js:47:  } = supabase.storage
+src/features/storage/storage.js:48:    .from(BUCKET)
+src/features/storage/storage.js:60:  const { error } = await supabase.storage
+src/features/storage/storage.js:61:    .from(BUCKET)
+src/i18n/index.js:171:        uploadMenuPhotoError: 'Gagal mengupload foto menu.',
+src/i18n/index.js:209:        uploadPhotoError: 'Gagal mengupload foto.',
+src/i18n/index.js:272:  photoUploadedSaveHomepage: "Foto berhasil diunggah. Simpan homepage untuk menerapkan perubahan.",
+src/i18n/index.js:277:  uploadGalleryError: "Gagal mengunggah foto galeri.",
+src/i18n/index.js:278:  uploading: "Mengunggah...",
+src/i18n/index.js:279:  uploadingPhoto: "Mengunggah foto...",
+src/i18n/index.js:500:        uploadMenuPhotoError: 'Failed to upload menu photo.',
+src/i18n/index.js:538:        uploadPhotoError: 'Failed to upload photo.',
+src/i18n/index.js:601:  photoUploadedSaveHomepage: "Photo uploaded. Save the homepage to apply the changes.",
+src/i18n/index.js:606:  uploadGalleryError: "Failed to upload gallery photo.",
+src/i18n/index.js:607:  uploading: "Uploading...",
+src/i18n/index.js:608:  uploadingPhoto: "Uploading photo...",
+src/i18n/index.js:822:        uploadMenuPhotoError: '上传菜单照片失败。',
+src/i18n/index.js:860:        uploadPhotoError: '上传照片失败。',
+src/i18n/index.js:923:  photoUploadedSaveHomepage: "照片上传成功。保存主页以应用更改。",
+src/i18n/index.js:928:  uploadGalleryError: "上传图库照片失败。",
+src/i18n/index.js:929:  uploading: "正在上传...",
+src/i18n/index.js:930:  uploadingPhoto: "正在上传照片...",
+src/i18n/index.js:986:const savedLanguage = localStorage.getItem('coreeatery-language')
+src/i18n/index.js:1001:  localStorage.setItem('coreeatery-language', language)
+supabase/migrations/0001_initial_schema.sql:90:  image_url text,
+supabase/migrations/0001_initial_schema.sql:115:  image_url text,
+supabase/migrations/0006_homepage_cms.sql:14:  hero_image_url text,
+supabase/migrations/0006_homepage_cms.sql:22:  about_image_url text,
+supabase/migrations/0006_homepage_cms.sql:72:  image_url text not null,
+supabase/migrations/0006_homepage_cms.sql:108:  image_url text not null,
+supabase/migrations/0006_homepage_cms.sql:145:  image_url text,
+supabase/migrations/0007_restaurant_media_storage.sql:2:-- Restaurant + CMS media storage
+supabase/migrations/0007_restaurant_media_storage.sql:3:-- Migration: 0007_restaurant_media_storage
+supabase/migrations/0007_restaurant_media_storage.sql:6:-- STORAGE BUCKETS
+supabase/migrations/0007_restaurant_media_storage.sql:9:insert into storage.buckets (
+supabase/migrations/0007_restaurant_media_storage.sql:15:  'restaurant-media',
+supabase/migrations/0007_restaurant_media_storage.sql:16:  'restaurant-media',
+supabase/migrations/0007_restaurant_media_storage.sql:22:insert into storage.buckets (
+supabase/migrations/0007_restaurant_media_storage.sql:28:  'cms-media',
+supabase/migrations/0007_restaurant_media_storage.sql:29:  'cms-media',
+supabase/migrations/0007_restaurant_media_storage.sql:37:-- RESTAURANT MEDIA
+supabase/migrations/0007_restaurant_media_storage.sql:40:drop policy if exists restaurant_media_public_read
+supabase/migrations/0007_restaurant_media_storage.sql:41:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:43:create policy restaurant_media_public_read
+supabase/migrations/0007_restaurant_media_storage.sql:44:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:48:  bucket_id = 'restaurant-media'
+supabase/migrations/0007_restaurant_media_storage.sql:52:drop policy if exists restaurant_media_management_insert
+supabase/migrations/0007_restaurant_media_storage.sql:53:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:55:create policy restaurant_media_management_insert
+supabase/migrations/0007_restaurant_media_storage.sql:56:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:60:  bucket_id = 'restaurant-media'
+supabase/migrations/0007_restaurant_media_storage.sql:71:drop policy if exists restaurant_media_management_update
+supabase/migrations/0007_restaurant_media_storage.sql:72:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:74:create policy restaurant_media_management_update
+supabase/migrations/0007_restaurant_media_storage.sql:75:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:79:  bucket_id = 'restaurant-media'
+supabase/migrations/0007_restaurant_media_storage.sql:89:  bucket_id = 'restaurant-media'
+supabase/migrations/0007_restaurant_media_storage.sql:100:drop policy if exists restaurant_media_management_delete
+supabase/migrations/0007_restaurant_media_storage.sql:101:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:103:create policy restaurant_media_management_delete
+supabase/migrations/0007_restaurant_media_storage.sql:104:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:108:  bucket_id = 'restaurant-media'
+supabase/migrations/0007_restaurant_media_storage.sql:120:-- CMS MEDIA
+supabase/migrations/0007_restaurant_media_storage.sql:123:drop policy if exists cms_media_public_read
+supabase/migrations/0007_restaurant_media_storage.sql:124:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:126:create policy cms_media_public_read
+supabase/migrations/0007_restaurant_media_storage.sql:127:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:131:  bucket_id = 'cms-media'
+supabase/migrations/0007_restaurant_media_storage.sql:135:drop policy if exists cms_media_management_insert
+supabase/migrations/0007_restaurant_media_storage.sql:136:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:138:create policy cms_media_management_insert
+supabase/migrations/0007_restaurant_media_storage.sql:139:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:143:  bucket_id = 'cms-media'
+supabase/migrations/0007_restaurant_media_storage.sql:154:drop policy if exists cms_media_management_update
+supabase/migrations/0007_restaurant_media_storage.sql:155:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:157:create policy cms_media_management_update
+supabase/migrations/0007_restaurant_media_storage.sql:158:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:162:  bucket_id = 'cms-media'
+supabase/migrations/0007_restaurant_media_storage.sql:172:  bucket_id = 'cms-media'
+supabase/migrations/0007_restaurant_media_storage.sql:183:drop policy if exists cms_media_management_delete
+supabase/migrations/0007_restaurant_media_storage.sql:184:on storage.objects;
+supabase/migrations/0007_restaurant_media_storage.sql:186:create policy cms_media_management_delete
+supabase/migrations/0007_restaurant_media_storage.sql:187:on storage.objects
+supabase/migrations/0007_restaurant_media_storage.sql:191:  bucket_id = 'cms-media'

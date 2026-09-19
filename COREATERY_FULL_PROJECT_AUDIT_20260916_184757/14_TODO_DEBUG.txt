@@ -1,0 +1,60 @@
+===== TODO DEBUG PLACEHOLDER =====
+src/app/providers/AuthProvider.jsx:33:          console.error('Gagal mengambil profile:', error)
+src/app/providers/AuthProvider.jsx:68:        console.error('Gagal mengambil profile:', error)
+src/components/admin/AdminSidebar.jsx:74:      console.error('Logout gagal:', error)
+src/components/cashier/CashierSidebar.jsx:88:      console.error('Logout gagal:', error)
+src/components/shared/Placeholder.jsx:1:export default function Placeholder({ title }) {
+src/pages/public/ReservationPage.jsx:43:  return <main className="bg-[#f5f1e8] pt-20 text-[#201d18]"><section className="bg-[#201d18] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28"><div className="mx-auto max-w-[1400px]"><p className="text-[9px] uppercase tracking-[0.45em] text-[#dbc38f]">{t('reservation.title')}</p><h1 className="mt-5 font-serif text-5xl sm:text-7xl">{t('reservation.pageTitle')}</h1><p className="mt-6 max-w-xl text-sm leading-8 text-white/50">{t('reservation.intro')}</p></div></section><section className="mx-auto grid max-w-[1200px] gap-12 px-6 py-16 sm:px-10 lg:grid-cols-[0.65fr_1.35fr] lg:px-16 lg:py-24"><aside><p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#9b8355]">{t('reservation.beforeVisit')}</p><h2 className="mt-5 font-serif text-3xl">{t('reservation.details')}</h2><p className="mt-5 text-sm leading-8 text-[#6e6659]">{t('reservation.note')}</p><div className="mt-8 border-t border-[#d2c8b7] pt-6"><p className="text-[9px] uppercase tracking-[0.3em] text-[#9b8355]">{t('reservation.availableSlots')}</p><p className="mt-3 text-sm leading-7 text-[#6e6659]">10:00 · 12:00 · 14:00<br />16:00 · 18:00 · 20:00</p></div></aside><form onSubmit={submit} className="border border-[#d2c8b7] bg-[#eee8dc] p-6 sm:p-9">{error && <div className="mb-7 border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}<div className="grid gap-6 sm:grid-cols-2"><Field label={t('reservation.name')} value={form.customer_name} onChange={(v) => update('customer_name', v)} required /><Field label={t('reservation.whatsapp')} type="tel" value={form.customer_phone} onChange={(v) => update('customer_phone', v)} required /><Field label={t('reservation.email')} type="email" value={form.customer_email} onChange={(v) => update('customer_email', v)} /><Field label={t('reservation.guestCount')} type="number" min="1" max="50" value={form.guest_count} onChange={(v) => update('guest_count', v)} required /><Field label={t('reservation.date')} type="date" min={minDate} value={form.reservation_date} onChange={(v) => update('reservation_date', v)} required /><label className="block"><span className="mb-2 block text-[9px] font-semibold uppercase tracking-[0.25em] text-[#6e6659]">{t('reservation.time')}</span><select value={form.reservation_time} onChange={(e) => update('reservation_time', e.target.value)} required className="h-12 w-full border border-[#cfc5b3] bg-[#f8f4eb] px-4 text-sm outline-none focus:border-[#9b8355]"><option value="">{t('reservation.selectTime')}</option>{TIME_SLOTS.map((slot) => <option key={slot} value={slot}>{slot}</option>)}</select></label><Field label={t('reservation.occasion')} value={form.occasion} onChange={(v) => update('occasion', v)} /></div><label className="mt-6 block"><span className="mb-2 block text-[9px] font-semibold uppercase tracking-[0.25em] text-[#6e6659]">{t('reservation.notes')}</span><textarea value={form.notes} onChange={(e) => update('notes', e.target.value)} rows="4" placeholder={t('reservation.notesPlaceholder')} className="w-full border border-[#cfc5b3] bg-[#f8f4eb] px-4 py-3 text-sm outline-none focus:border-[#9b8355]" /></label><button disabled={saving} className="mt-8 w-full bg-[#201d18] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[#9b8355] disabled:cursor-not-allowed disabled:opacity-50">{saving ? t('reservation.sending') : `${t('reservation.request')} ↗`}</button></form></section></main>
+src/pages/admin/AdminHomepagePage.jsx:225:              placeholder="Nikmati Pengalaman Kuliner Terbaik"
+src/pages/admin/AdminHomepagePage.jsx:232:              placeholder="Enjoy the Ultimate Dining Experience"
+src/pages/admin/AdminHomepagePage.jsx:241:              placeholder="Makanan lezat, suasana nyaman, dan pengalaman yang berkesan."
+src/pages/admin/AdminHomepagePage.jsx:250:              placeholder="Delicious food, cozy atmosphere, memorable experience."
+src/pages/admin/AdminHomepagePage.jsx:410:              placeholder="628xxxxxxxxxx"
+src/pages/admin/AdminHomepagePage.jsx:419:              placeholder="10.00 - 22.00"
+src/pages/admin/AdminHomepagePage.jsx:434:              placeholder="https://maps.google.com/..."
+src/pages/admin/AdminHomepagePage.jsx:443:              placeholder="https://instagram.com/..."
+src/pages/admin/AdminHomepagePage.jsx:466:  placeholder = '',
+src/pages/admin/AdminHomepagePage.jsx:476:        placeholder={placeholder}
+src/pages/admin/AdminHomepagePage.jsx:487:  placeholder = '',
+src/pages/admin/AdminHomepagePage.jsx:496:        placeholder={placeholder}
+src/pages/admin/AdminMenuPage.jsx:294:          placeholder="Cari menu..."
+src/pages/admin/AdminMenuPage.jsx:347:                placeholder="Nasi Goreng Spesial"
+src/pages/admin/AdminMenuPage.jsx:396:                placeholder="25000"
+src/pages/admin/AdminMenuPage.jsx:410:                placeholder="Deskripsi menu..."
+src/pages/admin/AdminReservationPage.jsx:108:        console.error(err)
+src/pages/admin/AdminReservationPage.jsx:144:      console.error(err)
+src/pages/admin/AdminReservationPage.jsx:175:      console.error(err)
+src/pages/admin/AdminReservationPage.jsx:228:              placeholder={t('admin.reservationSearchPlaceholder')}
+src/pages/cashier/CashierOrdersPage.jsx:48:      console.error(err)
+src/pages/cashier/CashierOrdersPage.jsx:72:        console.error(err)
+src/pages/cashier/CashierOrdersPage.jsx:96:      console.error(err)
+src/pages/cashier/CashierOrdersPage.jsx:124:          placeholder="Cari nomor order atau nama pelanggan..."
+src/pages/cashier/NewOrderPage.jsx:299:                  placeholder="Opsional"
+src/pages/cashier/NewOrderPage.jsx:313:                placeholder="Cari menu..."
+src/pages/cashier/NewOrderPage.jsx:537:                placeholder="Catatan order..."
+src/pages/cashier/OrderDetailPage.jsx:61:        console.error(err)
+src/pages/cashier/OrderDetailPage.jsx:100:      console.error(err)
+src/pages/cashier/OrderDetailPage.jsx:124:      console.error(err)
+src/pages/cashier/CashierPaymentsPage.jsx:85:        console.error(err)
+src/pages/cashier/CashierPaymentsPage.jsx:165:      console.error(err)
+src/pages/cashier/CashierPaymentsPage.jsx:526:                placeholder="Contoh: 100000"
+src/pages/cashier/CashierPaymentsPage.jsx:631:                placeholder="Nomor transaksi / referensi"
+src/pages/cashier/CashierPaymentsPage.jsx:649:              placeholder="Catatan pembayaran..."
+src/pages/cashier/CashierTransactionsPage.jsx:63:        console.error(err)
+src/pages/cashier/CashierRegisterPage.jsx:73:        console.error(err)
+src/pages/cashier/CashierRegisterPage.jsx:158:      console.error(err)
+src/pages/cashier/CashierRegisterPage.jsx:207:      console.error(err)
+src/pages/cashier/CashierRegisterPage.jsx:315:                placeholder="0"
+src/pages/cashier/CashierRegisterPage.jsx:367:                placeholder="0"
+src/pages/cashier/CashierReportsPage.jsx:66:        console.error(err)
+src/pages/auth/LoginPage.jsx:228:                      placeholder="admin@coreeatery.com"
+src/pages/auth/LoginPage.jsx:231:                      className="h-12 w-full rounded-xl border border-white/10 bg-black/20 pl-11 pr-4 text-sm text-white outline-none transition-all placeholder:text-stone-600 focus:border-orange-500/60 focus:bg-black/30 focus:ring-4 focus:ring-orange-500/10"
+src/pages/auth/LoginPage.jsx:251:                      placeholder="Masukkan password"
+src/pages/auth/LoginPage.jsx:254:                      className="h-12 w-full rounded-xl border border-white/10 bg-black/20 pl-11 pr-12 text-sm text-white outline-none transition-all placeholder:text-stone-600 focus:border-orange-500/60 focus:bg-black/30 focus:ring-4 focus:ring-orange-500/10"
+src/features/admin/dashboard.js:205:    console.error('DASHBOARD_QUERY_ERRORS', {
+src/i18n/index.js:155:        notesPlaceholder: 'Contoh: ulang tahun, anniversary, catatan diet...',
+src/i18n/index.js:185:        reservationSearchPlaceholder: 'Kode, nama, atau nomor HP',
+src/i18n/index.js:484:        notesPlaceholder: 'Example: birthday, anniversary, dietary notes...',
+src/i18n/index.js:514:        reservationSearchPlaceholder: 'Code, name, or phone number',
+src/i18n/index.js:807:        notesPlaceholder: '例如：生日、纪念日、饮食需求...',
+src/i18n/index.js:836:        reservationSearchPlaceholder: '代码、姓名或电话号码',
