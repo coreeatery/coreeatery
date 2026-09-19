@@ -372,12 +372,14 @@ export default function OrderDetailPage() {
             </div>
           </section>
 
+          {order.status === 'ready' && order.payment_status !== 'paid' && (
           <Link
             to={`/cashier/payments?order=${order.id}`}
             className="block rounded-xl bg-black px-5 py-4 text-center font-semibold text-white hover:opacity-80"
           >
             Proses Pembayaran
           </Link>
+        )}
         </div>
       </div>
     </div>

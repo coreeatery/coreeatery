@@ -123,6 +123,11 @@ export default function CashierPaymentsPage() {
       return
     }
 
+    if (order.status !== 'ready') {
+      setError('Pembayaran hanya dapat diproses ketika order berstatus Ready.')
+      return
+    }
+
     if (order.payment_status === 'paid') {
       setError('Order ini sudah dibayar.')
       return
