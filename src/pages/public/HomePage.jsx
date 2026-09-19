@@ -52,7 +52,8 @@ export default function HomePage() {
         setGallery(galleryData.filter((item) => item.is_active).slice(0, 6))
         console.log('[PUBLIC PROMO] Data:', promoData)
         setPromotions(promoData.slice(0, 2))
-      } catch {
+      } catch (error) {
+        console.error('[PUBLIC HOME] Load error:', error)
         if (mounted) setError(t('public.loadHomepageError'))
       } finally {
         if (mounted) setLoading(false)
