@@ -3,7 +3,9 @@ import { supabase } from '../../lib/supabase/client'
 export async function getActivePromotions() {
   if (!supabase) return []
 
-  const today = new Date().toISOString().slice(0, 10)
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jakarta',
+  }).format(new Date())
   const { data, error } = await supabase
     .from('promotions')
     .select('*')
