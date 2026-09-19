@@ -48,7 +48,7 @@ function LogoutIcon() {
 }
 
 export default function AdminSidebar() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [open, setOpen] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
   const navigate = useNavigate()
@@ -79,6 +79,49 @@ export default function AdminSidebar() {
 
   function closeMobileMenu() {
     setOpen(false)
+  }
+
+  async function handleLanguageChange(event) {
+    const language = event.target.value
+    const currentLanguage = (
+      i18n.resolvedLanguage ||
+      i18n.language ||
+      'id'
+    ).split('-')[0]
+
+    if (!language || language === currentLanguage) return
+
+    await i18n.changeLanguage(language)
+  }
+
+  function renderLanguageSwitcher() {
+    const currentLanguage = (
+      i18n.resolvedLanguage ||
+      i18n.language ||
+      'id'
+    ).split('-')[0]
+
+    return (
+      <div className="mb-3 rounded-xl border border-gray-200 bg-gray-50 p-3">
+        <label
+          htmlFor="admin-language"
+          className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500"
+        >
+          {t('common.language', 'Bahasa')}
+        </label>
+
+        <select
+          id="admin-language"
+          value={currentLanguage}
+          onChange={handleLanguageChange}
+          className="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 outline-none transition focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10"
+        >
+          <option value="id">🇮🇩 Indonesia</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="zh">🇨🇳 中文</option>
+        </select>
+      </div>
+    )
   }
 
   function renderNavLinks(isMobile = false) {
@@ -197,7 +240,8 @@ export default function AdminSidebar() {
             </div>
 
             <div className="border-t border-gray-200 p-4">
-              {renderLogoutButton()}
+              {renderLanguageSwitcher()}
+            {renderLogoutButton()}
             </div>
           </aside>
         </div>
@@ -220,7 +264,8 @@ export default function AdminSidebar() {
         </div>
 
         <div className="border-t border-gray-200 p-4">
-          {renderLogoutButton()}
+          {renderLanguageSwitcher()}
+            {renderLogoutButton()}
         </div>
       </aside>
     </>
