@@ -50,6 +50,7 @@ export default function HomePage() {
         setSettings(homepage)
         setFeatured(menu.filter((item) => item.status === 'active' && item.is_available && item.is_featured).slice(0, 4))
         setGallery(galleryData.filter((item) => item.is_active).slice(0, 6))
+        console.log('[PUBLIC PROMO] Data:', promoData)
         setPromotions(promoData.slice(0, 2))
       } catch {
         if (mounted) setError(t('public.loadHomepageError'))
