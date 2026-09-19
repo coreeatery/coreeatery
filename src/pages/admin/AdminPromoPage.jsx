@@ -19,6 +19,7 @@ export default function AdminPromoPage() {
 
   const handleImageUpload = async (event) => {
     const file = event.target.files?.[0]
+    console.log("[PROMO UPLOAD] File dipilih:", file?.name, file?.size, file?.type)
     if (!file) return
 
     setUploading(true)
@@ -26,7 +27,9 @@ export default function AdminPromoPage() {
     setSuccess("")
 
     try {
+      console.log("[PROMO UPLOAD] Memulai upload...")
       const result = await uploadCmsImage(file, "promotions")
+      console.log("[PROMO UPLOAD] Hasil:", result)
       update("image_url", result.publicUrl)
       setSuccess("Gambar promosi berhasil diunggah.")
     } catch (err) {
