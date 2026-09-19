@@ -40,6 +40,19 @@ const EMPTY_FORM = {
   opening_hours: '',
 }
 
+function normalizeForm(data, defaults) {
+  return Object.fromEntries(
+    Object.keys(defaults).map((field) => [
+      field,
+      data?.[field] ?? defaults[field],
+    ]),
+  )
+}
+
+function trimToNull(value) {
+  return String(value ?? '').trim() || null
+}
+
 export default function AdminHomepagePage() {
   const { t } = useTranslation()
 
@@ -69,10 +82,7 @@ export default function AdminHomepagePage() {
         const data = await getHomepageSettings()
 
         if (mounted && data) {
-          setForm({
-            ...emptyForm,
-            ...data,
-          })
+          setForm(normalizeForm(data, emptyForm))
         }
       } catch (err) {
         if (mounted) {
@@ -134,48 +144,48 @@ export default function AdminHomepagePage() {
 
     try {
       await saveHomepageSettings({
-        hero_title_id: form.hero_title_id.trim() || null,
-        hero_title_en: form.hero_title_en.trim() || null,
-        hero_title_zh: form.hero_title_zh.trim() || null,
-        hero_subtitle_id: form.hero_subtitle_id.trim() || null,
-        hero_subtitle_en: form.hero_subtitle_en.trim() || null,
-        hero_subtitle_zh: form.hero_subtitle_zh.trim() || null,
-        hero_image_url: form.hero_image_url.trim() || null,
+        hero_title_id: trimToNull(form.hero_title_id),
+        hero_title_en: trimToNull(form.hero_title_en),
+        hero_title_zh: trimToNull(form.hero_title_zh),
+        hero_subtitle_id: trimToNull(form.hero_subtitle_id),
+        hero_subtitle_en: trimToNull(form.hero_subtitle_en),
+        hero_subtitle_zh: trimToNull(form.hero_subtitle_zh),
+        hero_image_url: trimToNull(form.hero_image_url),
 
-        about_title_id: form.about_title_id.trim() || null,
-        about_title_en: form.about_title_en.trim() || null,
-        about_title_zh: form.about_title_zh.trim() || null,
-        about_description_id: form.about_description_id.trim() || null,
-        about_description_en: form.about_description_en.trim() || null,
-        about_description_zh: form.about_description_zh.trim() || null,
-        about_image_url: form.about_image_url.trim() || null,
+        about_title_id: trimToNull(form.about_title_id),
+        about_title_en: trimToNull(form.about_title_en),
+        about_title_zh: trimToNull(form.about_title_zh),
+        about_description_id: trimToNull(form.about_description_id),
+        about_description_en: trimToNull(form.about_description_en),
+        about_description_zh: trimToNull(form.about_description_zh),
+        about_image_url: trimToNull(form.about_image_url),
 
         reservation_title_id:
-          form.reservation_title_id.trim() || null,
+          trimToNull(form.reservation_title_id),
         reservation_title_en:
-          form.reservation_title_en.trim() || null,
+          trimToNull(form.reservation_title_en),
         reservation_title_zh:
-          form.reservation_title_zh.trim() || null,
+          trimToNull(form.reservation_title_zh),
         reservation_description_id:
-          form.reservation_description_id.trim() || null,
+          trimToNull(form.reservation_description_id),
         reservation_description_en:
-          form.reservation_description_en.trim() || null,
+          trimToNull(form.reservation_description_en),
         reservation_description_zh:
-          form.reservation_description_zh.trim() || null,
+          trimToNull(form.reservation_description_zh),
         reservation_button_text_id:
-          form.reservation_button_text_id.trim() ||
+          trimToNull(form.reservation_button_text_id) ||
           t('reservation.request'),
         reservation_button_text_en:
-          form.reservation_button_text_en.trim() ||
+          trimToNull(form.reservation_button_text_en) ||
           t('public.reserveTable'),
         reservation_button_text_zh:
-          form.reservation_button_text_zh.trim() || null,
+          trimToNull(form.reservation_button_text_zh),
 
-        whatsapp_number: form.whatsapp_number.trim() || null,
-        address: form.address.trim() || null,
-        google_maps_url: form.google_maps_url.trim() || null,
-        instagram_url: form.instagram_url.trim() || null,
-        opening_hours: form.opening_hours.trim() || null,
+        whatsapp_number: trimToNull(form.whatsapp_number),
+        address: trimToNull(form.address),
+        google_maps_url: trimToNull(form.google_maps_url),
+        instagram_url: trimToNull(form.instagram_url),
+        opening_hours: trimToNull(form.opening_hours),
       })
 
       setSuccess(t('admin.homepageSaved'))
