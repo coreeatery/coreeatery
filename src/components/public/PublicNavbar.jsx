@@ -64,6 +64,13 @@ export default function PublicNavbar() {
           </select>
 
           <Link
+            to="/login"
+            className="hidden border border-white/20 px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/70 transition hover:border-[#c7aa70] hover:text-[#dbc38f] sm:inline-flex"
+          >
+            Login
+          </Link>
+
+          <Link
             to="/reservasi"
             className="hidden items-center gap-3 border border-[#c7aa70]/70 px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] transition hover:bg-[#c7aa70] hover:text-[#171512] sm:inline-flex"
           >
@@ -128,9 +135,17 @@ export default function PublicNavbar() {
             </select>
 
             <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="border border-white/20 px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/70 transition hover:border-[#c7aa70] hover:text-[#dbc38f]"
+            >
+              Login
+            </Link>
+
+            <Link
               to="/reservasi"
               onClick={() => setOpen(false)}
-              className="border border-[#c7aa70] px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#dbc38f] transition hover:bg-[#c7aa70] hover:text-[#171512]"
+              className="ml-auto border border-[#c7aa70] px-5 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#dbc38f] transition hover:bg-[#c7aa70] hover:text-[#171512]"
             >
               {t('public.reserveTable')} ↗
             </Link>
